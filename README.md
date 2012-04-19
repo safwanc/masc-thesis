@@ -1,4 +1,9 @@
-## MASc Thesis
+<!-- Embedded CSS -->
+<style type="text/css">
+	/* img[alt=center] { float: right; } */
+	.center { text-align: center; }
+</style>
+
 
 <!--
 Safwan Choudhury, MASc   
@@ -8,11 +13,20 @@ Adaptive Systems Laboratory
 University of Waterloo. Ontario, Canada.
 -->
 
-This thesis focuses on the control aspect of humanoid robots, specifically in the area of biped locomotion. This is particularly challenging research problem due to the complexity required to maintain balance of a naturally unstable and non-linear dynamic system.  
+## MASc Thesis
 
-To verify the efficiency and efficacy of a novel walking control strategy presented in this thesis, I built a 14DOF bipedal robot (CAD render below). For more information pertaining to my research and/or the biped, click on the card: 
+This thesis focuses on the control aspect of humanoid robots, specifically in the area of biped locomotion. This is particularly challenging research problem due to the complexity required to maintain balance of a naturally unstable and non-linear dynamic system. This research was completed under the supervision of [Professor Dana Kuli&cacute;][3] at the [University of Waterloo][6]. 
 
-[![](http://safwanc.com/github/gitmasc.png)][1]
+To verify the efficiency and efficacy of a novel walking control strategy presented in this thesis, I built a 14DOF bipedal robot (CAD render below). For more information pertaining to my research and/or the biped:
+
+<!-- Inlining HTML to get image to be centered.. Markdown attempts failed. -->
+<!-- [![center](http://safwanc.com/github/gitmasc.png)][1] -->
+
+<div class="center">
+	<a href="http://ece.uwaterloo.ca/~schoudhu/">
+		<img src="http://safwanc.com/github/gitmasc.png" />
+	</a>
+</div>
 
 ### Remarks
 
@@ -42,3 +56,4 @@ Please [contact me][4] directly if you need to to reuse/alter anything listed un
 [3]: https://ece.uwaterloo.ca/~dkulic/people-dana.html
 [4]: https://ece.uwaterloo.ca/~schoudhu/contact/
 [5]: https://github.com/wspr/thesis
+[6]: https://www.uwaterloo.ca/
