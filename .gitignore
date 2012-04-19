@@ -42,5 +42,9 @@
 *.vrb
 *.xdy
 
-# Outputs
+# LaTeX Outputs
 *.pdf
+
+# Latexian.app
+TSWLatexianTemp*
+
