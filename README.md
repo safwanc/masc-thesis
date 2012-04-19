@@ -12,7 +12,7 @@ This thesis focuses on the control aspect of humanoid robots, specifically in th
 
 To verify the efficiency and efficacy of a novel walking control strategy presented in this thesis, I built a 14DOF bipedal robot (CAD render below). For more information pertaining to my research and/or the biped, click on the card: 
 
-[![](http://safwanc.com/github/gitreadme.png)][1]
+[![](http://safwanc.com/github/gitmasc.png)][1]
 
 ### Remarks
 
