@@ -8,11 +8,12 @@ University of Waterloo. Ontario, Canada.
 
 ## MASc Thesis
 
+[![center](http://safwanc.com/github/gitreadme.png)][1]
+
 This thesis focuses on the control aspect of humanoid robots, specifically in the area of biped locomotion. This is particularly challenging research problem due to the complexity required to maintain balance of a naturally unstable and non-linear dynamic system. This research was completed under the supervision of [Professor Dana Kulic][3] at the [University of Waterloo][6]. 
 
-To verify the efficiency and efficacy of a novel walking control strategy presented in this thesis, I built a 14DOF bipedal robot (CAD render below). For more information pertaining to my research and/or the biped:
+To verify the efficiency and efficacy of a novel walking control strategy presented in this thesis, I built a 14DOF bipedal robot (picture above). For more information pertaining to my research and/or the biped, click [here][1].
 
-[![center](http://safwanc.com/github/gitreadme.png)][1]
 
 ### Remarks
 
