@@ -1,10 +1,3 @@
-<!-- Embedded CSS -->
-<style type="text/css">
-	/* img[alt=center] { float: right; } */
-	.center { text-align: center; }
-</style>
-
-
 <!--
 Safwan Choudhury, MASc   
 Electrical Engineering, Systems & Controls   
@@ -15,18 +8,11 @@ University of Waterloo. Ontario, Canada.
 
 ## MASc Thesis
 
-This thesis focuses on the control aspect of humanoid robots, specifically in the area of biped locomotion. This is particularly challenging research problem due to the complexity required to maintain balance of a naturally unstable and non-linear dynamic system. This research was completed under the supervision of [Professor Dana Kuli&cacute;][3] at the [University of Waterloo][6]. 
+This thesis focuses on the control aspect of humanoid robots, specifically in the area of biped locomotion. This is particularly challenging research problem due to the complexity required to maintain balance of a naturally unstable and non-linear dynamic system. This research was completed under the supervision of [Professor Dana Kulic][3] at the [University of Waterloo][6]. 
 
 To verify the efficiency and efficacy of a novel walking control strategy presented in this thesis, I built a 14DOF bipedal robot (CAD render below). For more information pertaining to my research and/or the biped:
 
-<!-- Inlining HTML to get image to be centered.. Markdown attempts failed. -->
-<!-- [![center](http://safwanc.com/github/gitmasc.png)][1] -->
-
-<div class="center">
-	<a href="http://ece.uwaterloo.ca/~schoudhu/">
-		<img src="http://safwanc.com/github/gitmasc.png" />
-	</a>
-</div>
+[![center](http://safwanc.com/github/gitmasc.png)][1]
 
 ### Remarks
 
