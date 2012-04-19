@@ -1,0 +1,337 @@
+% uWaterloo Thesis Template for LaTeX 
+% Last Updated May 24, 2011 by Stephen Carr, IST Client Services
+% FOR ASSISTANCE, please send mail to rt-IST-CSmathsci@ist.uwaterloo.ca
+
+% Effective October 2006, the University of Waterloo 
+% requires electronic thesis submission. See the uWaterloo thesis regulations at
+% http://www.grad.uwaterloo.ca/Thesis_Regs/thesistofc.asp.
+
+% DON'T FORGET TO ADD YOUR OWN NAME AND TITLE in the "hyperref" package
+% configuration below. THIS INFORMATION GETS EMBEDDED IN THE PDF FINAL PDF DOCUMENT.
+% You can view the information if you view Properties of the PDF document.
+
+% Many faculties/departments also require one or more printed
+% copies. This template attempts to satisfy both types of output. 
+% It is based on the standard "book" document class which provides all necessary 
+% sectioning structures and allows multi-part theses.
+
+% DISCLAIMER
+% To the best of our knowledge, this template satisfies the current uWaterloo requirements.
+% However, it is your responsibility to assure that you have met all 
+% requirements of the University and your particular department.
+% Many thanks to the feedback from many graduates that assisted the development of this template.
+
+% -----------------------------------------------------------------------
+
+% By default, output is produced that is geared toward generating a PDF 
+% version optimized for viewing on an electronic display, including 
+% hyperlinks within the PDF.
+ 
+% E.g. to process a thesis called "mythesis.tex" based on this template, run:
+
+% pdflatex mythesis	-- first pass of the pdflatex processor
+% bibtex mythesis	-- generates bibliography from .bib data file(s) 
+% pdflatex mythesis	-- fixes cross-references, bibliographic references, etc
+% pdflatex mythesis	-- fixes cross-references, bibliographic references, etc
+
+% If you use the recommended LaTeX editor, Texmaker, you would open the mythesis.tex
+% file, then click the pdflatex button. Then run BibTeX (under the Tools menu).
+% Then click the pdflatex button two more times. If you have an index as well,
+% you'll need to run MakeIndex from the Tools menu as well, before running pdflatex
+% the last two times.
+
+% N.B. The "pdftex" program allows graphics in the following formats to be
+% included with the "\includegraphics" command: PNG, PDF, JPEG, TIFF
+% Tip 1: Generate your figures and photos in the size you want them to appear
+% in your thesis, rather than scaling them with \includegraphics options.
+% Tip 2: Any drawings you do should be in scalable vector graphic formats:
+% SVG, PNG, WMF, EPS and then converted to PNG or PDF, so they are scalable in
+% the final PDF as well.
+% Tip 3: Photographs should be cropped and compressed so as not to be too large.
+
+% To create a PDF output that is optimized for double-sided printing: 
+%
+% 1) comment-out the \documentclass statement in the preamble below, and
+% un-comment the second \documentclass line.
+%
+% 2) change the value assigned below to the boolean variable
+% "PrintVersion" from "false" to "true".
+
+% --------------------- Start of Document Preamble -----------------------
+
+% Specify the document class, default style attributes, and page dimensions
+% For hyperlinked PDF, suitable for viewing on a computer, use this:
+\documentclass[letterpaper,12pt,titlepage,oneside,final]{book}
+ 
+% For PDF, suitable for double-sided printing, change the PrintVersion variable below
+% to "true" and use this \documentclass line instead of the one above:
+%\documentclass[letterpaper,12pt,titlepage,openright,twoside,final]{book}
+
+% Some LaTeX commands I define for my own nomenclature.
+% If you have to, it's better to change nomenclature once here than in a 
+% million places throughout your thesis!
+\newcommand{\package}[1]{\textbf{#1}} % package names in bold text
+\newcommand{\cmmd}[1]{\textbackslash\texttt{#1}} % command name in tt font 
+\newcommand{\href}[1]{#1} % does nothing, but defines the command so the
+    % print-optimized version will ignore \href tags (redefined by hyperref pkg).
+%\newcommand{\texorpdfstring}[2]{#1} % does nothing, but defines the command
+% Anything defined here may be redefined by packages added below...
+
+% This package allows if-then-else control structures.
+\usepackage{ifthen}
+\newboolean{PrintVersion}
+\setboolean{PrintVersion}{false} 
+% CHANGE THIS VALUE TO "true" as necessary, to improve printed results for hard copies
+% by overriding some options of the hyperref package below.
+
+%\usepackage{nomencl} % For a nomenclature (optional; available from ctan.org)
+\usepackage{amsmath,amssymb,amstext} % Lots of math symbols and environments
+\usepackage[pdftex]{graphicx} % For including graphics N.B. pdftex graphics driver 
+
+% Hyperlinks make it very easy to navigate an electronic document.
+% In addition, this is where you should specify the thesis title
+% and author as they appear in the properties of the PDF document.
+% Use the "hyperref" package 
+% N.B. HYPERREF MUST BE THE LAST PACKAGE LOADED; ADD ADDITIONAL PKGS ABOVE
+\usepackage[pdftex,letterpaper=true,pagebackref=false]{hyperref} % with basic options
+		% N.B. pagebackref=true provides links back from the References to the body text. This can cause trouble for printing.
+\hypersetup{
+    plainpages=false,       % needed if Roman numbers in frontpages
+    pdfpagelabels=true,     % adds page number as label in Acrobat's page count
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={FitH},    % fits the width of the page to the window
+    pdftitle={uWaterloo\ LaTeX\ Thesis\ Template},    % title: CHANGE THIS TEXT!
+%    pdfauthor={Author},    % author: CHANGE THIS TEXT! and uncomment this line
+%    pdfsubject={Subject},  % subject: CHANGE THIS TEXT! and uncomment this line
+%    pdfkeywords={keyword1} {key2} {key3}, % list of keywords, and uncomment this line if desired
+    pdfnewwindow=true,      % links in new window
+    colorlinks=true,        % false: boxed links; true: colored links
+    linkcolor=black,         % color of internal links
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+\ifthenelse{\boolean{PrintVersion}}{   % for improved print quality, change some hyperref options
+\hypersetup{	% override some previously defined hyperref options
+%    colorlinks,%
+    citecolor=black,%
+    filecolor=black,%
+    linkcolor=black,%
+    urlcolor=black}
+}{} % end of ifthenelse (no else)
+
+% Setting up the page margins...
+% uWaterloo thesis requirements specify a minimum of 1 inch (72pt) margin at the
+% top, bottom, and outside page edges and a 1.125 in. (81pt) gutter
+% margin (on binding side). While this is not an issue for electronic
+% viewing, a PDF may be printed, and so we have the same page layout for
+% both printed and electronic versions, we leave the gutter margin in.
+% Set margins to minimum permitted by uWaterloo thesis regulations:
+\setlength{\marginparwidth}{0pt} % width of margin notes
+% N.B. If margin notes are used, you must adjust \textwidth, \marginparwidth
+% and \marginparsep so that the space left between the margin notes and page
+% edge is less than 15 mm (0.6 in.)
+\setlength{\marginparsep}{0pt} % width of space between body text and margin notes
+\setlength{\evensidemargin}{0.125in} % Adds 1/8 in. to binding side of all 
+% even-numbered pages when the "twoside" printing option is selected
+\setlength{\oddsidemargin}{0.125in} % Adds 1/8 in. to the left of all pages
+% when "oneside" printing is selected, and to the left of all odd-numbered
+% pages when "twoside" printing is selected
+\setlength{\textwidth}{6.375in} % assuming US letter paper (8.5 in. x 11 in.) and 
+% side margins as above
+\raggedbottom
+
+% The following statement specifies the amount of space between
+% paragraphs. Other reasonable specifications are \bigskipamount and \smallskipamount.
+\setlength{\parskip}{\medskipamount}
+
+% The following statement controls the line spacing.  The default
+% spacing corresponds to good typographic conventions and only slight
+% changes (e.g., perhaps "1.2"), if any, should be made.
+\renewcommand{\baselinestretch}{1} % this is the default line space setting
+
+% By default, each chapter will start on a recto (right-hand side)
+% page.  We also force each section of the front pages to start on 
+% a recto page by inserting \cleardoublepage commands.
+% In many cases, this will require that the verso page be
+% blank and, while it should be counted, a page number should not be
+% printed.  The following statements ensure a page number is not
+% printed on an otherwise blank verso page.
+\let\origdoublepage\cleardoublepage
+\newcommand{\clearemptydoublepage}{%
+  \clearpage{\pagestyle{empty}\origdoublepage}}
+\let\cleardoublepage\clearemptydoublepage
+
+%======================================================================
+%   L O G I C A L    D O C U M E N T -- the content of your thesis
+%======================================================================
+\begin{document}
+
+% For a large document, it is a good idea to divide your thesis
+% into several files, each one containing one chapter.
+% To illustrate this idea, the "front pages" (i.e., title page,
+% declaration, borrowers' page, abstract, acknowledgements,
+% dedication, table of contents, list of tables, list of figures,
+% nomenclature) are contained within the file "uw-ethesis-frontpgs.tex" which is
+% included into the document by the following statement.
+%----------------------------------------------------------------------
+% FRONT MATERIAL
+%----------------------------------------------------------------------
+\input{tex/thesis-front} 
+
+%----------------------------------------------------------------------
+% MAIN BODY
+%----------------------------------------------------------------------
+% Because this is a short document, and to reduce the number of files
+% needed for this template, the chapters are not separate
+% documents as suggested above, but you get the idea. If they were
+% separate documents, they would each start with the \chapter command, i.e, 
+% do not contain \documentclass or \begin{document} and \end{document} commands.
+%======================================================================
+\chapter{Introduction}
+%======================================================================
+In the beginning there was $\pi$:
+
+\begin{equation}
+   e^{\pi i} + 1 = 0  \label{eqn_pi}
+\end{equation}
+
+%----------------------------------------------------------------------
+\section{State of the Art}
+%----------------------------------------------------------------------
+
+See equation \ref{eqn_pi} on page \pageref{eqn_pi}.\footnote{A famous equation.}
+
+\section{Some Meaningless Drivel}
+
+Velit dolor illum facilisis zzril ipsum, augue odio, accumsan ea augue molestie lobortis zzril laoreet ex ad, adipiscing nulla. Veniam dolore, vel te in dolor te, feugait dolore ex vel erat duis nostrud diam commodo ad eu in consequat esse in ut wisi. Consectetuer dolore feugiat wisi eum dignissim tincidunt vel, nostrud, at vulputate eum euismod, diam minim eros consequat lorem aliquam et ad. Feugait illum sit suscipit ut, tation in dolore euismod et iusto nulla amet wisi odio quis nisl feugiat adipiscing luptatum minim nisl, quis, erat, dolore. Elit quis sit dolor veniam blandit ullamcorper ex, vero nonummy, duis exerci delenit ullamcorper at feugiat ullamcorper, ullamcorper elit vulputate iusto esse luptatum duis autem. Nulla nulla qui, te praesent et at nisl ut in consequat blandit vel augue ut.
+
+Illum suscipit delenit commodo augue exerci magna veniam hendrerit dignissim duis ut feugait amet dolor dolor suscipit iriure veniam. Vel quis enim vulputate nulla facilisis volutpat vel in, suscipit facilisis dolore ut veniam, duis facilisi wisi nulla aliquip vero praesent nibh molestie consectetuer nulla. Wisi nibh exerci hendrerit consequat, nostrud lobortis ut praesent dignissim tincidunt enim eum accumsan. Lorem, nonummy duis iriure autem feugait praesent, duis, accumsan tation enim facilisi qui te dolore magna velit, iusto esse eu, zzril. Feugiat enim zzril, te vel illum, lobortis ut tation, elit luptatum ipsum, aliquam dolor sed. Ex consectetuer aliquip in, tation delenit dignissim accumsan consequat, vero, et ad eu velit ut duis ea ea odio.
+
+Vero qui, te praesent et at nisl ut in consequat blandit vel augue ut dolor illum facilisis zzril ipsum. Exerci odio, accumsan ea augue molestie lobortis zzril laoreet ex ad, adipiscing nulla, et dolore, vel te in dolor te, feugait dolore ex vel erat duis. Ut diam commodo ad eu in consequat esse in ut wisi aliquip dolore feugiat wisi eum dignissim tincidunt vel, nostrud. Ut vulputate eum euismod, diam minim eros consequat lorem aliquam et ad luptatum illum sit suscipit ut, tation in dolore euismod et iusto nulla. Iusto wisi odio quis nisl feugiat adipiscing luptatum minim. Illum, quis, erat, dolore qui quis sit dolor veniam blandit ullamcorper ex, vero nonummy, duis exerci delenit ullamcorper at feugiat. Et, ullamcorper elit vulputate iusto esse luptatum duis autem esse nulla qui.
+
+Praesent dolore et, delenit, laoreet dolore sed eros hendrerit consequat lobortis. Dolor nulla suscipit delenit commodo augue exerci magna veniam hendrerit dignissim duis ut feugait amet. Ad dolor suscipit iriure veniam blandit quis enim vulputate nulla facilisis volutpat vel in. Erat facilisis dolore ut veniam, duis facilisi wisi nulla aliquip vero praesent nibh molestie consectetuer nulla, iriure nibh exerci hendrerit. Vel, nostrud lobortis ut praesent dignissim tincidunt enim eum accumsan ea, nonummy duis. Ad autem feugait praesent, duis, accumsan tation enim facilisi qui te dolore magna velit, iusto esse eu, zzril vel enim zzril, te. Nisl illum, lobortis ut tation, elit luptatum ipsum, aliquam dolor sed minim consectetuer aliquip.
+
+Tation exerci delenit ullamcorper at feugiat ullamcorper, ullamcorper elit vulputate iusto esse luptatum duis autem esse nulla qui. Volutpat praesent et at nisl ut in consequat blandit vel augue ut dolor illum facilisis zzril ipsum, augue odio, accumsan ea augue molestie lobortis zzril laoreet. Ex duis, te velit illum odio, nisl qui consequat aliquip qui blandit hendrerit. Ea dolor nonummy ullamcorper nulla lorem tation laoreet in ea, ullamcorper vel consequat zzril delenit quis dignissim, vulputate tincidunt ut.
+
+%======================================================================
+\chapter{Observations}
+%======================================================================
+
+This would be a good place for some figures and tables.
+
+Some notes on figures and photographs\ldots
+
+\begin{itemize}
+\item A well-prepared PDF should be 
+  \begin{enumerate}
+    \item Of reasonable size, {\it i.e.} photos cropped and compressed.
+    \item Scalable, to allow enlargment of text and drawings. 
+  \end{enumerate} 
+\item Photos must be bit maps, and so are not scaleable by definition. TIFF and
+BMP are uncompressed formats, while JPEG is compressed. Most photos can be
+compressed without losing their illustrative value.
+\item Drawings that you make should be scalable vector graphics, \emph{not} 
+bit maps. Some scalable vector file formats are: EPS, SVG, PNG, WMF. These can
+all be converted into PNG or PDF, that pdflatex recognizes. Your drawing 
+package probably can export to one of these formats directly. Otherwise, a 
+common procedure is to print-to-file through a Postscript printer driver to 
+create a PS file, then convert that to EPS (encapsulated PS, which has a 
+bounding box to describe its exact size rather than a whole page). 
+Programs such as GSView (a Ghostscript GUI) can create both EPS and PDF from PS files.
+Appendix~\ref{AppendixA} shows how to generate properly sized Matlab plots and save them as PDF.
+\item It's important to crop your photos and draw your figures to the size that
+you want to appear in your thesis. Scaling photos with the 
+includegraphics command will cause loss of resolution. And scaling down 
+drawings may cause any text annotations to become too small.
+\end{itemize}
+ 
+For more information on \LaTeX\, see the uWaterloo Skills for the Academic Workplace 
+course notes at \href{http://saw.uwaterloo.ca/latex}{saw.uwaterloo.ca/latex}. 
+\footnote{
+Note that while it is possible to include hyperlinks to external documents,
+it is not wise to do so, since anything you can't control may change over time. 
+It \emph{would} be appropriate and necessary to provide external links to 
+additional resources for a multimedia ``enhanced'' thesis. 
+But also note that if the \package{hyperref} package is not included, 
+as for the print-optimized option in this thesis template, any \cmmd{href} 
+commands in your logical document are no longer defined.
+A work-around employed by this thesis template is to define a dummy \cmmd{href} 
+command (which does nothing) in the preamble of the document, 
+before the \package{hyperref} package is included. 
+The dummy definition is then redifined by the
+\package{hyperref} package when it is included.
+}
+
+The classic book by Leslie Lamport \cite{lamport.book}, author of \LaTeX , is worth a look too, and the many available add-on packages are described by 
+Goossens \textit{et al} \cite{goossens.book}. Some on-line documentation is linked
+to from \href{http://saw.uwaterloo.ca/latex}{saw.uwaterloo.ca/latex}.
+
+% The \appendix statement indicates the beginning of the appendices.
+\appendix
+
+% Add a title page before the appendices and a line in the Table of Contents
+\chapter*{APPENDICES}
+\addcontentsline{toc}{chapter}{APPENDICES}
+%======================================================================
+\chapter[PDF Plots From Matlab]{Matlab Code for Making a PDF Plot}
+\label{AppendixA}
+% Tip 4: Example of how to get a shorter chapter title for the Table of Contents 
+%======================================================================
+\section{Using the GUI}
+Properties of Matab plots can be adjusted from the plot window via a graphical interface. Under the Desktop menu in the Figure window, select the Property Editor. You may also want to check the Plot Browser and Figure Palette for more tools. To adjust properties of the axes, look under the Edit menu and select Axes Properties.
+
+To set the figure size and to save as PDF or other file formats, click the Export Setup button in the figure Property Editor.
+
+\section{From the Command Line} 
+All figure properties can also be manipulated from the command line. Here's an example: 
+\begin{verbatim}
+x=[0:0.1:pi];
+hold on % Plot multiple traces on one figure
+plot(x,sin(x))
+plot(x,cos(x),'--r')
+plot(x,tan(x),'.-g')
+title('Some Trig Functions Over 0 to \pi') % Note LaTeX markup!
+legend('{\it sin}(x)','{\it cos}(x)','{\it tan}(x)')
+hold off
+set(gca,'Ylim',[-3 3]) % Adjust Y limits of "current axes"
+set(gcf,'Units','inches') % Set figure size units of "current figure"
+set(gcf,'Position',[0,0,6,4]) % Set figure width (6 in.) and height (4 in.)
+cd n:\thesis\plots % Select where to save
+print -dpdf plot.pdf % Save as PDF
+\end{verbatim}
+
+%----------------------------------------------------------------------
+% END MATERIAL
+%----------------------------------------------------------------------
+
+% B I B L I O G R A P H Y
+% -----------------------
+
+% The following statement selects the style to use for references.  It controls the sort order of the entries in the bibliography and also the formatting for the in-text labels.
+\bibliographystyle{plain}
+% This specifies the location of the file containing the bibliographic information.  
+% It assumes you're using BibTeX (if not, why not?).
+\cleardoublepage % This is needed if the book class is used, to place the anchor in the correct page,
+                 % because the bibliography will start on its own page.
+                 % Use \clearpage instead if the document class uses the "oneside" argument
+\phantomsection  % With hyperref package, enables hyperlinking from the table of contents to bibliography             
+% The following statement causes the title "References" to be used for the bibliography section:
+\renewcommand*{\bibname}{References}
+
+% Add the References to the Table of Contents
+\addcontentsline{toc}{chapter}{\textbf{References}}
+\input{tex/thesis-bib}
+%\bibliography{masc-thesis}
+% Tip 5: You can create multiple .bib files to organize your references. 
+% Just list them all in the \bibliogaphy command, separated by commas (no spaces).
+
+% The following statement causes the specified references to be added to the bibliography% even if they were not 
+% cited in the text. The asterisk is a wildcard that causes all entries in the bibliographic database to be included (optional).
+\nocite{*}
+
+\end{document}
