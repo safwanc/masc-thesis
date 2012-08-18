@@ -48,3 +48,5 @@
 # Latexian.app
 TSWLatexianTemp*
 
+# Sublime Text
+*.sublime*

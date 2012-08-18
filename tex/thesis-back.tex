@@ -1,0 +1,25 @@
+%======================================================================
+%   B A C K  M A T T E R
+%======================================================================
+
+
+% B I B L I O G R A P H Y
+% -----------------------
+\bibliographystyle{plain}
+\cleardoublepage 
+\phantomsection
+
+\renewcommand*{\bibname}{References} % Use "References" instead of "Bibliography"
+\addcontentsline{toc}{chapter}{\textbf{References}} % Add the References to the Table of Contents
+
+\bibliography{bib/masc-thesis}
+\nocite{*}
+
+
+% A P P E N D I C E S
+% -------------------
+\appendix
+\chapter*{Appendices} % Add a title page before the appendices and a line in the Table of Contents
+\addcontentsline{toc}{chapter}{Appendices}
+
+\input{tex/appendix-a}
