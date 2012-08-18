@@ -1,64 +1,3 @@
-% uWaterloo Thesis Template for LaTeX 
-% Last Updated May 24, 2011 by Stephen Carr, IST Client Services
-% FOR ASSISTANCE, please send mail to rt-IST-CSmathsci@ist.uwaterloo.ca
-
-% Effective October 2006, the University of Waterloo 
-% requires electronic thesis submission. See the uWaterloo thesis regulations at
-% http://www.grad.uwaterloo.ca/Thesis_Regs/thesistofc.asp.
-
-% DON'T FORGET TO ADD YOUR OWN NAME AND TITLE in the "hyperref" package
-% configuration below. THIS INFORMATION GETS EMBEDDED IN THE PDF FINAL PDF DOCUMENT.
-% You can view the information if you view Properties of the PDF document.
-
-% Many faculties/departments also require one or more printed
-% copies. This template attempts to satisfy both types of output. 
-% It is based on the standard "book" document class which provides all necessary 
-% sectioning structures and allows multi-part theses.
-
-% DISCLAIMER
-% To the best of our knowledge, this template satisfies the current uWaterloo requirements.
-% However, it is your responsibility to assure that you have met all 
-% requirements of the University and your particular department.
-% Many thanks to the feedback from many graduates that assisted the development of this template.
-
-% -----------------------------------------------------------------------
-
-% By default, output is produced that is geared toward generating a PDF 
-% version optimized for viewing on an electronic display, including 
-% hyperlinks within the PDF.
- 
-% E.g. to process a thesis called "mythesis.tex" based on this template, run:
-
-% pdflatex mythesis	-- first pass of the pdflatex processor
-% bibtex mythesis	-- generates bibliography from .bib data file(s) 
-% pdflatex mythesis	-- fixes cross-references, bibliographic references, etc
-% pdflatex mythesis	-- fixes cross-references, bibliographic references, etc
-
-% If you use the recommended LaTeX editor, Texmaker, you would open the mythesis.tex
-% file, then click the pdflatex button. Then run BibTeX (under the Tools menu).
-% Then click the pdflatex button two more times. If you have an index as well,
-% you'll need to run MakeIndex from the Tools menu as well, before running pdflatex
-% the last two times.
-
-% N.B. The "pdftex" program allows graphics in the following formats to be
-% included with the "\includegraphics" command: PNG, PDF, JPEG, TIFF
-% Tip 1: Generate your figures and photos in the size you want them to appear
-% in your thesis, rather than scaling them with \includegraphics options.
-% Tip 2: Any drawings you do should be in scalable vector graphic formats:
-% SVG, PNG, WMF, EPS and then converted to PNG or PDF, so they are scalable in
-% the final PDF as well.
-% Tip 3: Photographs should be cropped and compressed so as not to be too large.
-
-% To create a PDF output that is optimized for double-sided printing: 
-%
-% 1) comment-out the \documentclass statement in the preamble below, and
-% un-comment the second \documentclass line.
-%
-% 2) change the value assigned below to the boolean variable
-% "PrintVersion" from "false" to "true".
-
-% --------------------- Start of Document Preamble -----------------------
-
 % Specify the document class, default style attributes, and page dimensions
 % For hyperlinked PDF, suitable for viewing on a computer, use this:
 \documentclass[letterpaper,12pt,titlepage,oneside,final]{book}
@@ -90,7 +29,7 @@
 
 % Custom *.STY files:
 \usepackage{sty/macros}
-% \usepackage{sty/cases}
+\usepackage{sty/cases}
 
 % Hyperlinks make it very easy to navigate an electronic document.
 % In addition, this is where you should specify the thesis title
