@@ -9,6 +9,9 @@
 \newcommand{\href}[1]{#1} % does nothing, but defines the command so the
 
 \usepackage{ifthen}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{booktabs}
 \newboolean{PrintVersion}
 \setboolean{PrintVersion}{false} 
 
@@ -42,6 +45,26 @@
     filecolor=magenta,      % color of file links
     urlcolor=cyan           % color of external links
 }
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{    language=Matlab, 
+            numbers=left,
+            aboveskip=3mm,
+            belowskip=3mm,
+            showstringspaces=false,
+            columns=flexible,
+            basicstyle={\small\ttfamily},
+            numberstyle=\tiny\color{gray},
+            keywordstyle=\color{blue},
+            commentstyle=\color{dkgreen},
+            stringstyle=\color{mauve},
+            breakatwhitespace=true
+            tabsize=3
+        }
+
 
 \ifthenelse{\boolean{PrintVersion}}{   % for improved print quality, change some hyperref options
 \hypersetup{	% override some previously defined hyperref options

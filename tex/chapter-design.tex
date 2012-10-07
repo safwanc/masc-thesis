@@ -7,15 +7,187 @@ consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
 cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
 proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-\section{Mechanical Chassis} % (fold)
+%======================================================================
+%   D Y N A M I C  M O D E L I N G
+%======================================================================
+
+\section{Dynamic Modeling} % (fold)
 \label{sec:chassis}
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+A dynamic model of the proposed system must be developed and analyzed under normal operating conditions to determine the effect of forces acting on the system and torques experienced at each of the joints. The forward or direct dynamic model is a mathematical system which provides a transformation from the joint torques to the resulting joint positions, velocities and accelerations. That is, it provides the relationship:
+
+\begin{equation}
+	\ddot{\vec{q}} = f(\vec{\tau})
+\end{equation}
+
+Given this model, a dynamic simulation environment can be designed to determine the torques experienced at different joints on the biped robot while undergoing a gait cycle. This estimate can form the basis of the initial drivetrain specifications from which motors and gearing can be selected for the electromechanical design. An important consideration in this model is the implementation of a contact force that is experienced during the stance phase of the gait cycle. The ground reaction forces exerted on the robots feet have a significant impact on the dynamics of each joint. Since the stance phase makes up approximately 60\% of the gait cycle, the effects of these ground reaction forces have to be incorporated for an accurate simulation. 
+% section overview (end)
+
+\subsection{Forward Dynamics} % (fold)
+\label{sec:forward_dynamics}
+
+The overall dynamics of any multibody robotic system can be expressed by the following equation of motion: 
+
+\begin{equation}
+	\label{eq:motion}
+	A(q)\ddot{\vec{q}} + C(\vec{q},\dot{\vec{q}})\dot{\vec{q}} + g(\vec{q}) = \Gamma
+\end{equation}
+
+Where $A(q)$ is the $n$ x $n$ inertia matrix, $C(q,\dot{q})$ is the centripetal and Coriolis terms and $g(q)$ is the gravity term. On the right hand side, $\Gamma$ is $n$ x 1 force vector which describes the torque at each of the joints in the system. The $\ddot{q}$ is also a $n$ x 1 vector representing the generalized coordinates of the multibody system. For most cases, the number of generalized coordinates $n$ is equivalent to the number of degrees of freedom. However, for the case of humanoid robots with floating bases there is an additional 6 degrees of freedom which represent the movements of the base \cite{Perrin:1997wn}. Therefore, for the 14 DOF lower body system there is a total of $n = 20$ generalized coordinates. In order to incorporate the effects of contact forces at both feet of the biped robot, the equation of motion presented in Equation \ref{eq:motion} is modified as follows: 
+
+
+\begin{equation}
+	\label{eq:motion2}
+	\begin{bmatrix} A_{11} & A_{12} \\ A_{21} & A_{22} \end{bmatrix} 
+	\begin{bmatrix} \ddot{\vec{q}}_{joints} \\ \ddot{\vec{q}}_{base} \end{bmatrix} + 
+	\begin{bmatrix} b_{1} \\ b_{2} \end{bmatrix} = 
+	\begin{bmatrix} \vec{\tau} \\ 0 \end{bmatrix} + 
+    J^{T}\vec{F}_{left} + J^{T}\vec{F}_{right}
+\end{equation}
+
+Where the generalized acceleration vector $\ddot{q}_{joints}$ represents the $n$ DOF joint motion and $\ddot{q}_{base}$ is for the 6 DOF base motion. The gravitational and Coriolis terms are combined into the $\vec{b}$ vector. Finally, $J$ is a 6 x $n$ Jacobian matrix which relates the joint space variables to the work space variables. The force vectors $\vec{F}_{left}$ and $\vec{F}_{right}$ represent the contact force felt at the left and right foot, respectively. With this modification of the equation of motion, the external forces felt during the stance phase can be incorporated into the dynamic model of the overall system. The method of calculating the magnitude of the force itself depends on the contact model used for the system. Therefore, Equation \ref{eq:motion2} represents the complete dynamics of the biped robot with $n = 20$ generalized coordinates.
+
+One method of computing a direct dynamic model for the biped robot is through the use of the Recursive Newton-Euler (RNE) algorithm. This algorithm computes the inverse dynamics model iteratively in order to arrive at a final solution for the direct dynamics \cite{Perrin:1997wn}. The RNE algorithm serially traverses through the kinematic chain to perform calculations using Newtonian mechanics. The first pass of the algorithm starts at the base link and traverses down the serial chains of the left and right legs calculating the kinematics. The second pass starts at the end of the serial chain(s) and works back up to the base link calculating the effect of dynamics. As a result, the RNE algorithm is capable of calculating the torques located at each joint and the 6 dimensional forces and moments felt by the base joint. Using this algorithm, the direct dynamics model can be computed by reformulating Equation \ref{eq:motion}. The pseudocode listed in Appendix \ref{sec:rne_direct_dynamics} describes the procedure for computing the direct dynamics model by utilizing the RNE formulation.
+
+% section forward_dynamics (end)
+
+\subsection{Contact Modelling} % (fold)
+\label{sec:contact_modelling}
+
+\begin{figure}[!ht]
+	\begin{center}
+    \includegraphics[width=100mm]{fig/ch4/springdamper.png}
+	\end{center}
+  \caption{System diagram of spring-damper contact model used in dynamic simulations.}
+\end{figure}
+
+One challenging aspect of dynamic simulations is to accurately model the effects of external forces on the system during the stance phase. To emulate the ground reaction forces during this period of the gait cycle, a contact model is used to generate an approximation of the contact force. For the purposes of this project, a simple spring-and-damper contact model is used. For the sake of simplicity, both feet of the biped are modelled as point contacts which experience a normal force proportional to the output given by Equation \ref{eq:contactf} when in contact with the ground. 
+
+\begin{equation}
+	\label{eq:contactf}
+	\vec{F}_{contact} = B\vec{\dot{x}} + K\vec{x}
+\end{equation}
+
+
+To incorporate the effects of the contact model into the existing dynamic model, the contact force as described in Equation \ref{eq:contactf} is injected into the RNE algorithm between the end of the first pass and the start of the second pass. In other words, at the beginning of the second pass the external force used as an initial condition is modified to equal the amount of force produced by the spring damper model. Due to the serial nature of RNE, this force traverses up the kinematic chains for each leg and is finally resolved at the base. Alternatively, the equivalent force can be substituted into the overall system dynamics represented in Equation \ref{eq:motion2} for $F_{left}$ and $F_{right}$. Both approaches will yield identical results as the force is resolved into different parts of the biped robot. 
+
+% section contact_modelling (end)
+
+\subsection{Kajita's Matlab Toolbox} % (fold)
+\label{sec:kajita_s_matlab_toolbox}
+A quick and easy tool for setting up the dynamic simulations was to use an existing robotics toolbox in Matlab. Professor Shuuji Kajita packages a simple Matlab toolbox along with his textbook on humanoid robotics which provided a platform to get started with setting up the dynamic models \cite{kajitatxt}. 
+
+\begin{figure}[!ht]
+	\begin{center}
+    \includegraphics[scale=0.6]{fig/ch4/ulinkdrawn.eps}
+	\end{center}
+  \caption{Screenshot of robot structure drawn from uLINK definition.}
+\end{figure}
+
+The Matlab toolbox provides a series of scripts and functions which perform standard operations on a robotic structure (i.e. forward or inverse kinematics). Each of the functions in the toolbox revolve around the use of an object definition of the robot structure known as \texttt{uLINK}. The kinematic description for each of the links in the robot are defined as part of this \texttt{uLINK} structure using a convention specified in the accompanying textbook. An external application was written in Microsoft's .NET environment which interfaced with the API for the 3D CAD package (SolidWorks) in order to automatically generate the corresponding \texttt{uLINK} representation in Matlab code. 
+
+Once the \texttt{uLINK} structure is established, any of the preprogrammed routines in the toolbox can be used to manipulate the kinematic structure. The most important functionality bundled with the toolbox is the direct dynamics routine. This is simply an implementation of the RNE algorithm described in Section \ref{sub:recursive_newton_euler}. However, in its original implementation the direct dynamics omits athe effects of any external forces which is necessary for the stance phase of the gait cycle. Therefore several modifications were required in order to emulate the effect of ground reaction forces through a contact model to properly size electromechanical components to withstand the impacts. 
+
+While the toolbox provides a stable starting platform for setting up the dynamic simulation, several modifications were required in order to incorporate the effects of a contact model. The key modification required was to implement the effect of contact forces experienced by the stance leg throughout the gait cycle. Since the direct dynamics calculations were performed was based on the RNE algorithm, the modification was fairly straight forward. The initialization phase of the backwards pass in the routine (from the end of the serial kinematic chains back up to the base link) was modified according to the following code: 
+
+\lstinputlisting{code/kajitamod.m}
+
+Where the variables \texttt{Kr} and \texttt{Br} represent the spring and damper coefficients in the spring-damper contact model. \texttt{RCONTACT} is simply a constant link number representing the point contact foot. The velocity due to the point foot coming in contact with the ground (\texttt{vr}) is recomputed by considering the original velocity (\texttt{vo}) and the cross product between the position of the foot (\texttt{uLINK.p}) and angular velocity (\texttt{uLINK.w}). The resulting normal force is computed and injected into the backwards pass if the foot position is below the ground level (condition shown in line 1). 
+
+Using this conditioning, the initialization sequence of the backwards chain simply checks for the position of each foot in world coordinates to determine whether ground contact is present. The ground throughout the simulation is assumed to be represented by the $z = 0$ plane. Therefore, for any value of $z > 0$ the foot is not in contact with the ground and subsequently $z \leq 0$ represents contact is present. In the situation where contact is present, a ground normal force proportional to the output of the spring-damper system is injected into the system. Due to the recursive nature of the RNE algorithm, this force back-propagates through each of the links in the serial chain until it is ultimately resolved at the terminating base link.
+% subsection modifications (end)
+
+% section kajita_s_matlab_toolbox (end)
+
+\subsection{Gait Estimation} % (fold)
+\label{sec:gait_estimation}
+	
+In order to emulate the operating conditions for the lower body biped robot once it is built, the dynamic simulation must incorporate the effects of executing a gait cycle. This allows for investigation into the external  forces experienced by the robot structure while walking. 
+	
+One method of emulating the normal operating conditions is to estimate the effects by using human gait. While it is highly ambitious that a walking robot will be able to achieve the performance of human-like walking, it provides a basis to from which the initial selection of electromechanical components can emerge. The goal is to extract the kinematic parameters experienced by the human limbs while walking and impose similar conditions in the dynamic simulation. Given these constraints, the inverse dynamics problem can be solved in order to obtain the joint torque estimates during various points in the gait cycle. Coupled with the modifications to emulate contact forces during the stance phase, this simple dynamic simulation provides a quick and easy way to estimate the torque loading at the joints to develop initial design specifications. 
+	
+In order to use kinematic parameters from human gait, data published from the 2008 Dynamic Walking conference was used \cite{dw2008}. The published data used several sensors to measure the joint angles and velocities of lower body human limbs under several gait cycle speeds (i.e. fast walk, slow walk, normal walk, etc). During the data collection, sensors were strategically placed such that key information such as the knee yaw and hip pitch was captured. This raw sensory data was imported into the Matlab environment using a 3D motion analysis toolbox known as BodyMech \cite{bodymech}. This information was incorporated into the dynamic simulation by enforcing the joint angles, velocities and accelerations from each captured frame of the reference dataset. By accomplishing this, the \texttt{uLINK} robot structure which modelled the dynamic parameters (mass, link inertias) with the captured 3D kinematics of human gait. 
+
+An experiment was devised in the Matlab environment which used a combination of the BodyMech toolbox and Kajita's toolbox. The BodyMech toolbox was used to extract the frame-by-frame 3D kinematic parameters as a human executed the gait cycle. These parameters were processed and stored in order to be played back on the robot model defined by the \texttt{uLINK} structure. The Matlab script provided in Appendix \ref{sec:gait_analysis_script} was used to load the 3D kinematic parameters from each frame and apply the transformed equivalent on the robot structure. To compensate for the differences in size between humans and the small biped, the joint velocities and accelerations were scaled by selecting a different reference gait speed from the published data set. 
+	
+Once the parameters were applied, the inverse dynamics routine was executed in order to determine the torques at each joint in the structure as result of the gait dynamics. Note that the inverse dynamics routine was also modified to emulate the contact force effects experienced during the stance phase of the gait cycle. This process was repeated for each frame in the captured data and the results of robots kinematics and dynamics ($q$, $\dot{q}$, $\ddot{q}$ and $\tau$) were tabulated in CSV files for post processing. 
+	
+\begin{figure}[!ht]
+	\begin{center}
+	\begin{tabular}{cc}
+	\includegraphics[scale=0.5]{fig/ch4/ulinkwalk1.eps} &
+    \includegraphics[scale=0.5]{fig/ch4/ulinkwalk.eps}
+	\end{tabular}
+	\end{center}
+  \caption{Screenshot of gait analysis of uLink structure executing human-walk.}
+\end{figure}
+	
+% section gait_estimation (end)
+
+
+\subsection{Initial Design Requirements} % (fold)
+\label{sec:initial_design_requirements}
+
+\begin{figure}[!ht]
+	\label{fig:gaitplot}
+	\begin{center}
+    \includegraphics[scale=0.6]{fig/ch4/gaitplot.eps}
+	\end{center}
+  \caption{Joint torque profile during the execution of human-gait kinematics from reference data set.}
+\end{figure}
+
+The results of the dynamic simulations under human-gait analysis form the basis for the initial electromechanical components selection process. As expected, it was observed that the largest demands in torque loading on each of the joints occurred during the stance phase immediately after the heel strike event (refer to Frame 36 in Figure \ref{fig:gaitplot}). The torque demands at that instant spike immediately to almost 3x the steady state torque loading on the joints. While it is expected that a walking robot will experience large spikes in the torque demands such as the ones observed in the dynamic simulation, it is unreasonable to use only the peak torque values as the required specifications for design. 
+
+\begin{table}[!ht]
+  \centering
+  \caption{Individual joint torque demands for each DOF in one leg.}
+    \begin{tabular}{lcc}
+    \addlinespace
+    \toprule
+    \textbf{Joint} & \textbf{Normal} & \textbf{Peak}\\
+    \midrule
+    Ankle Roll	&	13.824 Nm	&	14.021 Nm\\
+    Ankle Pitch	&	4.395 Nm	&	7.923 Nm\\
+	Ankle Yaw	&	3.858 Nm	&	3.858 Nm\\
+	Knee Pitch  &	5.229 Nm	&	16.539 Nm\\
+	Hip Roll	&	13.606 Nm	&	14.054 Nm\\
+	Hip Pitch	&	10.081 Nm	&	38.295 Nm\\
+	Hip Yaw		&	3.698 Nm	&	3.698 Nm\\
+    \bottomrule
+    \end{tabular}%
+  \label{jointtable}%
+\end{table}%
+
+
+Since one of the secondary objectives is to keep the overall mass of the biped as low as possible, it is desirable to select smaller motors where the peak torque loading on the joints are outside of the allowable range of continuous operation. This is a reasonable estimate since the peaks are impulsive forces which only last for a short period of time. The practical approach for deriving specifications from the dynamic simulations is to analyze the continuous torque loading while the system undergoes the gait cycle while keeping the peak loading requirements as a secondary objective. 
+
+While the torque demands vary from one joint to the next (see Table \ref{jointtable}), the results from the analysis are concatenated to obtain only a single set of design specifications. This also helps to limit the different types of motors selected from the manufacturer and greatly simplifies the electromechanical design process. The task of fine tuning the motor selection for each joint is left for future revisions. Therefore, the set of design specifications for the joint torques are summarized in Table \ref{tab:spectable}
+
+\begin{table}[!ht]
+  \centering
+  \caption{Initial design specifications for electromechanical components.}
+    \begin{tabular}{lcc}
+    \addlinespace
+    \toprule
+    \textbf{Condition} & \textbf{Torque} & \textbf{Velocity}\\
+    \midrule
+    Normal & 14 Nm & 2.48 rad/s\\
+    Peak  & 50 Nm & 6.82 rad/s \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:spectable}%
+\end{table}%
+
+For the initial design consideration, the normal torque specification shown in Table \ref{tab:spectable} is obtained by taking an average of joint torque values during the swing phase. Since the ground reaction forces experienced during the stance phase produce large torques in a short period of time, the peak torque specification in Table \ref{tab:spectable} is obtained by selecting the highest torque value from all frames.
+
+The contact model parameters (spring and damping coefficients) were observed to have a noticeable effect on the peak design specifications. Since the contact model only provides a crude approximation of the ground reaction forces that the real robot will experience, the final selected value was chosen to provide a peak torque which averages between the largest and smallest values. The final spring and damping coefficients used in deriving the design specifications were $K = 10000$ and $B = 100$, respectively.
 % section chassis (end)
+
+
+%======================================================================
+%   D R I V E T R A I N  S E L E C T I O N
+%======================================================================
+
 
 \section{Drivetrain Selection} % (fold)
 \label{sec:drivetrain}
