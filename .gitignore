@@ -2,8 +2,6 @@
 # OS X
 .DS_Store
 
-# Images
-*.png
 
 # Thumbnails
 ._*
