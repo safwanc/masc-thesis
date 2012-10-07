@@ -1,0 +1,380 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='1464' height='376' viewBox='0 0 1464 376' >
+<rect x='0' y='0' width='1464' height='376' fill='rgb(100%,100%,100%) ' />
+<g clip-path='url(#clip_rect_0)' >
+<g transform='translate(-24,-9)' >
+<g transform='scale(1,1)' >
+<rect x='1450' y='38' width='30' height='14' rx='6.77419' ry='6.77419' stroke='none' fill='rgb(100%,100%,100%)' />
+<rect x='1450' y='38' width='30' height='14' rx='6.77419' ry='6.77419' stroke='rgb(0%,0%,0%)' stroke-width='1' fill='none' />
+<text stroke='none' x='1462.5' y='64' font-size='10' fill='rgb(0%,0%,0%)' font-family='Helvetica'>x</text>
+<text stroke='none' x='1462' y='49.5' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_1)' font-family='Helvetica'>1</text>
+<rect x='334' y='197' width='70' height='89' stroke='none' fill='rgb(0%,0%,0%)' />
+<rect x='330' y='193' width='70' height='89' stroke='none' fill='rgb(94.1176%,94.1176%,94.1176%)' />
+<text stroke='none' x='345' y='218' xml:space='preserve' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_2)' font-weight='bold' font-family='Helvetica'> </text>
+<text stroke='none' x='348' y='218' xml:space='preserve' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_2)' font-style='italic' font-weight='bold' font-family='Helvetica'> MODE</text>
+<text stroke='none' x='382' y='223' font-size='8' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_2)' font-style='italic' font-weight='bold' font-family='Helvetica'>INIT</text>
+<text stroke='none' x='331' y='263' xml:space='preserve' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_2)' font-weight='bold' font-family='Helvetica'> </text>
+<text stroke='none' x='334' y='263' xml:space='preserve' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_2)' font-style='italic' font-weight='bold' font-family='Helvetica'> MODE</text>
+<text stroke='none' x='368' y='268' font-size='8' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_2)' font-style='italic' font-weight='bold' font-family='Helvetica'>ACTIVE</text>
+<rect x='330' y='193' width='70' height='89' stroke='rgb(0%,0%,0%)' stroke-width='1' fill='none' />
+<rect x='454' y='267' width='60' height='24' stroke='none' fill='rgb(0%,0%,0%)' />
+<rect x='450' y='263' width='60' height='24' stroke='none' fill='rgb(69.0196%,100%,69.0196%)' />
+<text stroke='none' x='462' y='280' xml:space='preserve' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_3)' font-weight='bold' font-family='Helvetica'> </text>
+<text stroke='none' x='465' y='280' xml:space='preserve' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_3)' font-style='italic' font-weight='bold' font-family='Helvetica'> WALK</text>
+<rect x='450' y='263' width='60' height='24' stroke='rgb(0%,0%,0%)' stroke-width='1' fill='none' />
+<rect x='334' y='97' width='180' height='54' stroke='none' fill='rgb(0%,0%,0%)' />
+<rect x='330' y='93' width='180' height='54' stroke='none' fill='rgb(92.1569%,99.6078%,95.6863%)' />
+<text stroke='none' x='394' y='120' xml:space='preserve' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_4)' font-weight='bold' font-family='Helvetica'> Trajectory</text>
+<text stroke='none' x='395' y='131' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_4)' font-weight='bold' font-family='Helvetica'>Generator</text>
+<text stroke='none' x='333' y='125' xml:space='preserve' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_4)' font-style='italic' font-family='Helvetica'> STATE</text>
+<text stroke='none' x='486' y='123' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_4)' font-family='Helvetica'>x</text>
+<text stroke='none' x='491' y='128' font-size='8' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_4)' font-family='Helvetica'>REF</text>
+<rect x='330' y='93' width='180' height='54' stroke='rgb(0%,0%,0%)' stroke-width='1' fill='none' />
+<rect x='1360' y='218' width='15' height='14' stroke='none' fill='rgb(100%,100%,100%)' />
+<line x1='1364' y1='228' x2='1372' y2='228' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_5)' />
+<line x1='1372' y1='228' x2='1372' y2='221' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_5)' />
+<line x1='1372' y1='221' x2='1364' y2='221' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_5)' />
+<line x1='1361' y1='225' x2='1372' y2='225' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_5)' />
+<rect x='1360' y='218' width='15' height='14' stroke='rgb(0%,0%,0%)' stroke-width='1' fill='none' />
+<rect x='649' y='109' width='180' height='55' stroke='none' fill='rgb(0%,0%,0%)' />
+<rect x='645' y='105' width='180' height='55' stroke='none' fill='rgb(98.4314%,97.6471%,89.0196%)' />
+<text stroke='none' x='722' y='132' xml:space='preserve' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_6)' font-weight='bold' font-family='Helvetica'> Task</text>
+<text stroke='none' x='711' y='143' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_6)' font-weight='bold' font-family='Helvetica'>Controller</text>
+<text stroke='none' x='648' y='150' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_6)' font-style='italic' font-family='Helvetica'>BIPED</text>
+<text stroke='none' x='648' y='125' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_6)' ><tspan font-family='Arial Unicode MS,Caslon,Times New Roman'>&#x394;</tspan></text>
+<text stroke='none' x='654' y='125' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_6)' font-family='Helvetica'>x</text>
+<text stroke='none' x='816' y='125' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_6)' font-family='Helvetica'>q</text>
+<text stroke='none' x='814' y='150' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_6)' font-family='Helvetica'>q</text>
+<text stroke='none' x='820' y='150' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_6)' ><tspan font-family='Arial Unicode MS,Caslon,Times New Roman'>&#x2032;</tspan></text>
+<rect x='645' y='105' width='180' height='55' stroke='rgb(0%,0%,0%)' stroke-width='1' fill='none' />
+<ellipse cx='920' cy='145' rx='10' ry='10' stroke='none' fill='rgb(100%,100%,100%)' />
+<ellipse cx='920' cy='145' rx='10' ry='10' stroke='rgb(0%,0%,0%)' stroke-width='1' fill='none' />
+<line x1='913' y1='145' x2='917' y2='145' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_7)' />
+<line x1='915' y1='143' x2='915' y2='147' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_7)' />
+<line x1='918' y1='150' x2='922' y2='150' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_7)' />
+<ellipse cx='880' cy='120' rx='10' ry='10' stroke='none' fill='rgb(100%,100%,100%)' />
+<ellipse cx='880' cy='120' rx='10' ry='10' stroke='rgb(0%,0%,0%)' stroke-width='1' fill='none' />
+<line x1='873' y1='120' x2='877' y2='120' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_8)' />
+<line x1='875' y1='118' x2='875' y2='122' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_8)' />
+<line x1='878' y1='125' x2='882' y2='125' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_8)' />
+<ellipse cx='575' cy='120' rx='20' ry='20' stroke='none' fill='rgb(100%,100%,100%)' />
+<ellipse cx='575' cy='120' rx='20' ry='20' stroke='rgb(0%,0%,0%)' stroke-width='1' fill='none' />
+<line x1='558' y1='120' x2='562' y2='120' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_9)' />
+<line x1='560' y1='118' x2='560' y2='122' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_9)' />
+<line x1='573' y1='135' x2='577' y2='135' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_9)' />
+<rect x='89' y='45' width='180' height='153' stroke='none' fill='rgb(0%,0%,0%)' />
+<rect x='85' y='41' width='180' height='153' stroke='none' fill='rgb(100%,100%,100%)' />
+<text stroke='none' x='173' y='126' xml:space='preserve' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_10)' font-family='Helvetica'> </text>
+<text stroke='none' x='138' y='138' xml:space='preserve' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_10)' font-weight='bold' font-family='Helvetica'> State Machine</text>
+<line x1='158' y1='84' x2='158' y2='93' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='158' y1='93' x2='158' y2='95' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='158' y1='95' x2='160' y2='95' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='160' y1='95' x2='172' y2='95' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='172' y1='95' x2='174' y2='95' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='174' y1='95' x2='175' y2='93' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='175' y1='93' x2='175' y2='84' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='175' y1='84' x2='174' y2='81' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='174' y1='81' x2='172' y2='81' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='172' y1='81' x2='160' y2='81' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='160' y1='81' x2='158' y2='82' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='158' y1='82' x2='158' y2='84' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='175' y1='113' x2='175' y2='122' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='175' y1='122' x2='176' y2='124' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='176' y1='124' x2='178' y2='125' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='178' y1='125' x2='190' y2='125' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='190' y1='125' x2='192' y2='124' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='192' y1='124' x2='192' y2='122' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='192' y1='122' x2='192' y2='114' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='192' y1='114' x2='192' y2='111' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='192' y1='111' x2='189' y2='110' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='189' y1='110' x2='178' y2='110' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='178' y1='110' x2='176' y2='111' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='176' y1='111' x2='175' y2='113' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='165' y1='99' x2='162' y2='99' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='162' y1='99' x2='165' y2='95' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='165' y1='95' x2='167' y2='99' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='167' y1='99' x2='165' y2='99' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='165' y1='99' x2='165' y2='103' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='165' y1='103' x2='165' y2='108' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='165' y1='108' x2='167' y2='114' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='167' y1='114' x2='170' y2='117' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='170' y1='117' x2='173' y2='118' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='173' y1='118' x2='175' y2='118' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='184' y1='106' x2='181' y2='106' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='181' y1='106' x2='184' y2='110' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='184' y1='110' x2='186' y2='106' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='186' y1='106' x2='184' y2='106' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='184' y1='106' x2='184' y2='101' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='184' y1='101' x2='184' y2='95' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='184' y1='95' x2='183' y2='91' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='183' y1='91' x2='180' y2='89' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='180' y1='89' x2='177' y2='88' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<line x1='177' y1='88' x2='175' y2='88' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_10)' />
+<text stroke='none' x='88' y='160' xml:space='preserve' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_10)' font-style='italic' font-family='Helvetica'> MODE</text>
+<text stroke='none' x='88' y='85' xml:space='preserve' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_10)' font-style='italic' font-family='Helvetica'> FPE</text>
+<text stroke='none' x='226' y='125' xml:space='preserve' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_10)' font-style='italic' font-family='Helvetica'> STATE</text>
+<rect x='85' y='41' width='180' height='153' stroke='rgb(0%,0%,0%)' stroke-width='1' fill='none' />
+<rect x='410' y='231' width='25' height='58' stroke='none' fill='rgb(100%,100%,100%)' />
+<line x1='429' y1='245' x2='435' y2='245' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='429' y1='275' x2='435' y2='275' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='410' y1='260' x2='416' y2='260' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='429' y1='245' x2='428' y2='244' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='428' y1='244' x2='428' y2='243' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='428' y1='243' x2='427' y2='243' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='427' y1='243' x2='426' y2='243' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='426' y1='243' x2='425' y2='243' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='425' y1='243' x2='425' y2='244' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='425' y1='244' x2='425' y2='245' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='425' y1='245' x2='425' y2='246' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='425' y1='246' x2='426' y2='246' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='426' y1='246' x2='427' y2='247' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='427' y1='247' x2='427' y2='246' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='427' y1='246' x2='428' y2='246' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='428' y1='246' x2='428' y2='245' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='428' y1='245' x2='429' y2='245' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='429' y1='275' x2='428' y2='274' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='428' y1='274' x2='428' y2='273' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='428' y1='273' x2='427' y2='273' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='427' y1='273' x2='426' y2='273' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='426' y1='273' x2='425' y2='273' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='425' y1='273' x2='425' y2='274' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='425' y1='274' x2='425' y2='275' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='425' y1='275' x2='425' y2='276' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='425' y1='276' x2='426' y2='276' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='426' y1='276' x2='427' y2='277' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='427' y1='277' x2='427' y2='276' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='427' y1='276' x2='428' y2='276' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='428' y1='276' x2='428' y2='275' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='428' y1='275' x2='429' y2='275' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='420' y1='260' x2='419' y2='259' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='419' y1='259' x2='419' y2='258' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='419' y1='258' x2='418' y2='258' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='418' y1='258' x2='417' y2='258' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='417' y1='258' x2='416' y2='258' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='416' y1='258' x2='416' y2='259' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='416' y1='259' x2='416' y2='260' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='416' y1='260' x2='416' y2='261' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='416' y1='261' x2='417' y2='261' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='417' y1='261' x2='418' y2='262' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='418' y1='262' x2='418' y2='261' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='418' y1='261' x2='419' y2='261' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='419' y1='261' x2='419' y2='260' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='419' y1='260' x2='420' y2='260' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<line x1='420' y1='260' x2='430' y2='276' stroke='rgb(0%,0%,0%)' stroke-width='1' clip-path='url(#clip_rect_11)' />
+<rect x='454' y='237' width='60' height='24' stroke='none' fill='rgb(0%,0%,0%)' />
+<rect x='450' y='233' width='60' height='24' stroke='none' fill='rgb(100%,64.7059%,47.451%)' />
+<text stroke='none' x='460' y='250' xml:space='preserve' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_12)' font-weight='bold' font-family='Helvetica'> </text>
+<text stroke='none' x='463' y='250' xml:space='preserve' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_12)' font-style='italic' font-weight='bold' font-family='Helvetica'> STAND</text>
+<rect x='450' y='233' width='60' height='24' stroke='rgb(0%,0%,0%)' stroke-width='1' fill='none' />
+<rect x='1199' y='19' width='145' height='240' stroke='none' fill='rgb(0%,0%,0%)' />
+<rect x='1195' y='15' width='145' height='240' stroke='none' fill='rgb(100%,100%,100%)' />
+<image xlink:href='./myfile_0.png' x='1195' y='15' width='145' height='240' preserveAspectRatio='none' clip-path='url(#clip_rect_13)' />
+<text stroke='none' x='1198' y='140' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_13)' ><tspan font-family='Arial Unicode MS,Caslon,Times New Roman'>&#x3C4;</tspan></text>
+<text stroke='none' x='1332' y='50' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_13)' font-family='Helvetica'>x</text>
+<text stroke='none' x='1331' y='110' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_13)' font-family='Helvetica'>q</text>
+<text stroke='none' x='1329' y='170' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_13)' font-family='Helvetica'>q</text>
+<text stroke='none' x='1335' y='170' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_13)' ><tspan font-family='Arial Unicode MS,Caslon,Times New Roman'>&#x2032;</tspan></text>
+<text stroke='none' x='1327' y='230' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_13)' font-family='Helvetica'>q</text>
+<text stroke='none' x='1333' y='230' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_13)' ><tspan font-family='Arial Unicode MS,Caslon,Times New Roman'>&#x2032;</tspan></text>
+<text stroke='none' x='1335' y='230' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_13)' ><tspan font-family='Arial Unicode MS,Caslon,Times New Roman'>&#x2032;</tspan></text>
+<rect x='1195' y='15' width='145' height='240' stroke='rgb(0%,0%,0%)' stroke-width='1' fill='none' />
+<rect x='969' y='109' width='175' height='55' stroke='none' fill='rgb(0%,0%,0%)' />
+<rect x='965' y='105' width='175' height='55' stroke='none' fill='rgb(88.6275%,91.7647%,99.6078%)' />
+<text stroke='none' x='1038' y='132' xml:space='preserve' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_14)' font-weight='bold' font-family='Helvetica'> Joint</text>
+<text stroke='none' x='1028' y='143' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_14)' font-weight='bold' font-family='Helvetica'>Controller</text>
+<text stroke='none' x='968' y='123' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_14)' font-family='Helvetica'>q</text>
+<text stroke='none' x='974' y='128' font-size='8' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_14)' font-family='Helvetica'>error</text>
+<text stroke='none' x='968' y='148' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_14)' font-family='Helvetica'>q</text>
+<text stroke='none' x='974' y='148' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_14)' ><tspan font-family='Arial Unicode MS,Caslon,Times New Roman'>&#x2032;</tspan></text>
+<text stroke='none' x='976' y='153' font-size='8' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_14)' font-family='Helvetica'>error</text>
+<text stroke='none' x='1109' y='138' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_14)' ><tspan font-family='Arial Unicode MS,Caslon,Times New Roman'>&#x3C4;</tspan></text>
+<text stroke='none' x='1114' y='143' font-size='8' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_14)' font-family='Helvetica'>control</text>
+<rect x='965' y='105' width='175' height='55' stroke='rgb(0%,0%,0%)' stroke-width='1' fill='none' />
+<rect x='454' y='207' width='60' height='24' stroke='none' fill='rgb(0%,0%,0%)' />
+<rect x='450' y='203' width='60' height='24' stroke='none' fill='rgb(100%,50.1961%,50.1961%)' />
+<text stroke='none' x='467' y='220' xml:space='preserve' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_15)' font-weight='bold' font-family='Helvetica'> </text>
+<text stroke='none' x='470' y='220' xml:space='preserve' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_15)' font-style='italic' font-weight='bold' font-family='Helvetica'> INIT</text>
+<rect x='450' y='203' width='60' height='24' stroke='rgb(0%,0%,0%)' stroke-width='1' fill='none' />
+<rect x='644' y='309' width='180' height='55' stroke='none' fill='rgb(0%,0%,0%)' />
+<rect x='640' y='305' width='180' height='55' stroke='none' fill='rgb(98.4314%,97.6471%,89.0196%)' />
+<text stroke='none' x='709' y='332' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_16)' font-weight='bold' font-family='Helvetica'>Forward</text>
+<text stroke='none' x='702' y='343' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_16)' font-weight='bold' font-family='Helvetica'>Kinematics</text>
+<text stroke='none' x='789' y='338' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_16)' font-family='Helvetica'>x</text>
+<text stroke='none' x='794' y='343' font-size='8' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_16)' font-family='Helvetica'>BIPED</text>
+<text stroke='none' x='643' y='325' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_16)' font-style='italic' font-family='Helvetica'>BIPED</text>
+<text stroke='none' x='643' y='348' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_16)' font-family='Helvetica'>x</text>
+<text stroke='none' x='648' y='353' font-size='8' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_16)' font-family='Helvetica'>ACT</text>
+<rect x='640' y='305' width='180' height='55' stroke='rgb(0%,0%,0%)' stroke-width='1' fill='none' />
+<rect x='101' y='282' width='179' height='24' stroke='none' fill='rgb(0%,0%,0%)' />
+<rect x='97' y='278' width='179' height='24' stroke='none' fill='rgb(93.7255%,91.7647%,95.6863%)' />
+<text stroke='none' x='152' y='295' xml:space='preserve' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_17)' font-weight='bold' font-family='Helvetica'> FPE Analysis</text>
+<rect x='97' y='278' width='179' height='24' stroke='rgb(0%,0%,0%)' stroke-width='1' fill='none' />
+<rect x='739' y='241' width='85' height='26' stroke='none' fill='rgb(0%,0%,0%)' />
+<rect x='739' y='241' width='85' height='26' stroke='rgb(0%,0%,0%)' stroke-width='1' fill='none' />
+<rect x='735' y='237' width='85' height='26' stroke='none' fill='rgb(100%,100%,100%)' />
+<rect x='740' y='242' width='72' height='12' stroke='none' fill='rgb(100%,100%,100%)' clip-path='url(#clip_rect_18)' />
+<rect x='740' y='242' width='72' height='12' stroke='rgb(0%,0%,0%)' stroke-width='1' fill='none' clip-path='url(#clip_rect_18)' />
+<rect x='735' y='237' width='85' height='26' stroke='rgb(0%,0%,0%)' stroke-width='1' fill='none' />
+<rect x='739' y='206' width='85' height='26' stroke='none' fill='rgb(0%,0%,0%)' />
+<rect x='739' y='206' width='85' height='26' stroke='rgb(0%,0%,0%)' stroke-width='1' fill='none' />
+<rect x='735' y='202' width='85' height='26' stroke='none' fill='rgb(100%,100%,100%)' />
+<rect x='740' y='207' width='72' height='12' stroke='none' fill='rgb(100%,100%,100%)' clip-path='url(#clip_rect_19)' />
+<rect x='740' y='207' width='72' height='12' stroke='rgb(0%,0%,0%)' stroke-width='1' fill='none' clip-path='url(#clip_rect_19)' />
+<rect x='735' y='202' width='85' height='26' stroke='rgb(0%,0%,0%)' stroke-width='1' fill='none' />
+<polygon points='693,266 649,266 649,241 693,241 708,254 693,266 693,266 ' stroke='none' fill='rgb(0%,0%,0%)' />
+<polygon points='689,262 645,262 645,237 689,237 704,250 689,262 689,262 ' stroke='none' fill='rgb(95.6863%,95.6863%,95.6863%)' />
+<polyline points='689,262 645,262 645,237 689,237 704,250 689,262 689,262 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<text stroke='none' x='650.5' y='253.5' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_20)' font-family='Helvetica'>STATE</text>
+<polygon points='693,231 649,231 649,206 693,206 708,219 693,231 693,231 ' stroke='none' fill='rgb(0%,0%,0%)' />
+<polygon points='689,227 645,227 645,202 689,202 704,215 689,227 689,227 ' stroke='none' fill='rgb(95.6863%,95.6863%,95.6863%)' />
+<polyline points='689,227 645,227 645,202 689,202 704,215 689,227 689,227 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<text stroke='none' x='651.5' y='218.5' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_21)' font-family='Helvetica'>MODE</text>
+<rect x='99' y='321' width='180' height='56' stroke='none' fill='rgb(0%,0%,0%)' />
+<rect x='95' y='317' width='180' height='56' stroke='none' fill='rgb(100%,100%,100%)' />
+<text stroke='none' x='145' y='345' xml:space='preserve' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_22)' font-weight='bold' font-family='Helvetica'> Foot Placement</text>
+<text stroke='none' x='161' y='356' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_22)' font-weight='bold' font-family='Helvetica'>Estimator</text>
+<text stroke='none' x='267' y='350' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_22)' font-family='Helvetica'>x</text>
+<text stroke='none' x='98' y='350' xml:space='preserve' font-size='10' fill='rgb(0%,0%,0%)' clip-path='url(#clip_rect_22)' font-style='italic' font-family='Helvetica'> FPE</text>
+<rect x='95' y='317' width='180' height='56' stroke='rgb(0%,0%,0%)' stroke-width='1' fill='none' />
+<line x1='1340' y1='105' x2='1345' y2='105' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<line x1='880' y1='135' x2='880' y2='145' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<polygon points='875,140 885,140 880,130 875,140 ' stroke='none' fill='rgb(0%,0%,0%)' />
+<polyline points='1343,105 1345,105 1410,105 1410,305 880,305 880,145 880,143 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<text stroke='none' x='1348' y='115' font-size='9' fill='rgb(0%,0%,0%)' font-family='Helvetica'>q</text>
+<line x1='1340' y1='165' x2='1345' y2='165' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<line x1='920' y1='160' x2='920' y2='170' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<polygon points='915,165 925,165 920,155 915,165 ' stroke='none' fill='rgb(0%,0%,0%)' />
+<polyline points='1343,165 1345,165 1390,165 1390,275 920,275 920,170 920,168 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<text stroke='none' x='1348' y='175' font-size='9' fill='rgb(0%,0%,0%)' font-family='Helvetica'>dq</text>
+<line x1='510' y1='120' x2='515' y2='120' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<line x1='550' y1='120' x2='540' y2='120' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<polygon points='545,115 545,125 555,120 545,115 ' stroke='none' fill='rgb(0%,0%,0%)' />
+<polyline points='513,120 515,120 540,120 542,120 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<line x1='890' y1='120' x2='895' y2='120' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<line x1='960' y1='120' x2='950' y2='120' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<polygon points='955,115 955,125 965,120 955,115 ' stroke='none' fill='rgb(0%,0%,0%)' />
+<polyline points='893,120 895,120 950,120 952,120 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<line x1='930' y1='145' x2='935' y2='145' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<line x1='960' y1='145' x2='950' y2='145' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<polygon points='955,140 955,150 965,145 955,140 ' stroke='none' fill='rgb(0%,0%,0%)' />
+<polyline points='933,145 935,145 950,145 952,145 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<line x1='825' y1='145' x2='830' y2='145' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<line x1='905' y1='145' x2='895' y2='145' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<polygon points='900,140 900,150 910,145 900,140 ' stroke='none' fill='rgb(0%,0%,0%)' />
+<polyline points='828,145 830,145 895,145 897,145 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<text stroke='none' x='833' y='155' font-size='9' fill='rgb(0%,0%,0%)' font-family='Helvetica'>dqref</text>
+<line x1='1340' y1='225' x2='1345' y2='225' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<line x1='1355' y1='225' x2='1345' y2='225' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<polygon points='1350,220 1350,230 1360,225 1350,220 ' stroke='none' fill='rgb(0%,0%,0%)' />
+<polyline points='1343,225 1345,225 1345,225 1347,225 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<line x1='825' y1='120' x2='830' y2='120' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<line x1='865' y1='120' x2='855' y2='120' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<polygon points='860,115 860,125 870,120 860,115 ' stroke='none' fill='rgb(0%,0%,0%)' />
+<polyline points='828,120 830,120 855,120 857,120 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<text stroke='none' x='833' y='130' font-size='9' fill='rgb(0%,0%,0%)' font-family='Helvetica'>qref</text>
+<line x1='1140' y1='135' x2='1145' y2='135' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<line x1='1190' y1='135' x2='1180' y2='135' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<polygon points='1185,130 1185,140 1195,135 1185,130 ' stroke='none' fill='rgb(0%,0%,0%)' />
+<polyline points='1143,135 1145,135 1180,135 1182,135 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<line x1='595' y1='120' x2='600' y2='120' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<line x1='640' y1='120' x2='630' y2='120' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<polygon points='635,115 635,125 645,120 635,115 ' stroke='none' fill='rgb(0%,0%,0%)' />
+<polyline points='598,120 600,120 630,120 632,120 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<line x1='280' y1='345' x2='290' y2='345' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<polygon points='285,350 285,340 275,345 285,350 ' stroke='none' fill='rgb(0%,0%,0%)' />
+<polyline points='575,345 290,345 288,345 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<line x1='575' y1='145' x2='575' y2='155' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<polygon points='570,150 580,150 575,140 570,150 ' stroke='none' fill='rgb(0%,0%,0%)' />
+<polyline points='575,345 575,155 575,153 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<line x1='640' y1='345' x2='635' y2='345' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<polyline points='637,345 635,345 575,345 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<rect x='574' y='344' width='2' height='2' stroke='none' fill='rgb(0%,0%,0%)' />
+<rect x='574' y='344' width='2' height='2' stroke='rgb(0%,0%,0%)' stroke-width='1' fill='none' />
+<line x1='640' y1='320' x2='635' y2='320' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<line x1='640' y1='145' x2='630' y2='145' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<polygon points='635,140 635,150 645,145 635,140 ' stroke='none' fill='rgb(0%,0%,0%)' />
+<polyline points='637,320 635,320 605,320 605,145 630,145 632,145 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<line x1='450' y1='245' x2='445' y2='245' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<line x1='440' y1='245' x2='450' y2='245' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<polygon points='445,250 445,240 435,245 445,250 ' stroke='none' fill='rgb(0%,0%,0%)' />
+<polyline points='447,245 445,245 450,245 448,245 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<line x1='450' y1='275' x2='445' y2='275' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<line x1='440' y1='275' x2='450' y2='275' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<polygon points='445,280 445,270 435,275 445,280 ' stroke='none' fill='rgb(0%,0%,0%)' />
+<polyline points='447,275 445,275 450,275 448,275 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<line x1='450' y1='215' x2='445' y2='215' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<line x1='405' y1='215' x2='415' y2='215' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<polygon points='410,220 410,210 400,215 410,220 ' stroke='none' fill='rgb(0%,0%,0%)' />
+<polyline points='447,215 445,215 415,215 413,215 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<line x1='410' y1='260' x2='405' y2='260' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<line x1='405' y1='260' x2='415' y2='260' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<polygon points='410,265 410,255 400,260 410,265 ' stroke='none' fill='rgb(0%,0%,0%)' />
+<polyline points='407,260 405,260 415,260 413,260 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<line x1='265' y1='120' x2='270' y2='120' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<line x1='272' y1='120' x2='272' y2='112' stroke='rgb(0%,0%,80%)' stroke-width='1' />
+<ellipse cx='272' cy='110' rx='2' ry='2' stroke='none' fill='rgb(0%,0%,80%)' />
+<path d='M 274.121 106.172 A 3 4 0 0 0 269.879 106.172' fill = 'none' stroke='rgb(0%,0%,80%)' stroke-width='1' />
+<path d='M 275.536 103.464 A 5 5 0 0 0 268.464 103.464' fill = 'none' stroke='rgb(0%,0%,80%)' stroke-width='1' />
+<line x1='325' y1='120' x2='315' y2='120' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<polygon points='320,115 320,125 330,120 320,115 ' stroke='none' fill='rgb(0%,0%,0%)' />
+<polyline points='268,120 270,120 315,120 317,120 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<text stroke='none' x='273' y='130' font-size='9' fill='rgb(0%,0%,0%)' font-family='Helvetica'>STATE</text>
+<line x1='705' y1='215' x2='710' y2='215' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<line x1='730' y1='215' x2='720' y2='215' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<polygon points='725,210 725,220 735,215 725,210 ' stroke='none' fill='rgb(0%,0%,0%)' />
+<polyline points='708,215 710,215 720,215 722,215 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<line x1='705' y1='250' x2='710' y2='250' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<line x1='730' y1='250' x2='720' y2='250' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<polygon points='725,245 725,255 735,250 725,245 ' stroke='none' fill='rgb(0%,0%,0%)' />
+<polyline points='708,250 710,250 720,250 722,250 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<line x1='330' y1='240' x2='325' y2='240' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<line x1='80' y1='155' x2='70' y2='155' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<polygon points='75,150 75,160 85,155 75,150 ' stroke='none' fill='rgb(0%,0%,0%)' />
+<polyline points='327,240 325,240 65,240 65,155 70,155 72,155 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<line x1='95' y1='345' x2='90' y2='345' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<line x1='80' y1='80' x2='70' y2='80' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<polygon points='75,75 75,85 85,80 75,75 ' stroke='none' fill='rgb(0%,0%,0%)' />
+<polyline points='92,345 90,345 30,345 30,80 70,80 72,80 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<line x1='825' y1='335' x2='835' y2='335' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<polygon points='830,340 830,330 820,335 830,340 ' stroke='none' fill='rgb(0%,0%,0%)' />
+<polyline points='1430,45 1430,45 1430,335 835,335 833,335 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<line x1='1445' y1='45' x2='1435' y2='45' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<polygon points='1440,40 1440,50 1450,45 1440,40 ' stroke='none' fill='rgb(0%,0%,0%)' />
+<polyline points='1430,45 1435,45 1437,45 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<line x1='1340' y1='45' x2='1345' y2='45' stroke='rgb(0%,0%,0%)' stroke-width='1' />
+<polyline points='1343,45 1345,45 1430,45 ' stroke='rgb(0%,0%,0%)' stroke-width='1' fill = 'none'/>
+<rect x='1429' y='44' width='2' height='2' stroke='none' fill='rgb(0%,0%,0%)' />
+<rect x='1429' y='44' width='2' height='2' stroke='rgb(0%,0%,0%)' stroke-width='1' fill='none' />
+</g>
+</g>
+</g>
+<g transform='translate(0,0)' >
+<g transform='scale(1,1)' >
+</g>
+</g>
+<defs>
+  <clipPath id='clip_rect_0'><rect x='4' y='4' width='1454' height='366' /></clipPath>
+  <clipPath id='clip_rect_1'><rect x='1450' y='38' width='30' height='14' /></clipPath>
+  <clipPath id='clip_rect_2'><rect x='330' y='193' width='70' height='89' /></clipPath>
+  <clipPath id='clip_rect_3'><rect x='450' y='263' width='60' height='24' /></clipPath>
+  <clipPath id='clip_rect_4'><rect x='330' y='93' width='180' height='54' /></clipPath>
+  <clipPath id='clip_rect_5'><rect x='1360' y='218' width='15' height='14' /></clipPath>
+  <clipPath id='clip_rect_6'><rect x='645' y='105' width='180' height='55' /></clipPath>
+  <clipPath id='clip_rect_7'><rect x='910' y='135' width='20' height='20' /></clipPath>
+  <clipPath id='clip_rect_8'><rect x='870' y='110' width='20' height='20' /></clipPath>
+  <clipPath id='clip_rect_9'><rect x='555' y='100' width='40' height='40' /></clipPath>
+  <clipPath id='clip_rect_10'><rect x='85' y='41' width='180' height='153' /></clipPath>
+  <clipPath id='clip_rect_11'><rect x='410' y='231' width='25' height='58' /></clipPath>
+  <clipPath id='clip_rect_12'><rect x='450' y='233' width='60' height='24' /></clipPath>
+  <clipPath id='clip_rect_13'><rect x='1195' y='15' width='145' height='240' /></clipPath>
+  <clipPath id='clip_rect_14'><rect x='965' y='105' width='175' height='55' /></clipPath>
+  <clipPath id='clip_rect_15'><rect x='450' y='203' width='60' height='24' /></clipPath>
+  <clipPath id='clip_rect_16'><rect x='640' y='305' width='180' height='55' /></clipPath>
+  <clipPath id='clip_rect_17'><rect x='97' y='278' width='179' height='24' /></clipPath>
+  <clipPath id='clip_rect_18'><rect x='735' y='237' width='85' height='26' /></clipPath>
+  <clipPath id='clip_rect_19'><rect x='735' y='202' width='85' height='26' /></clipPath>
+  <clipPath id='clip_rect_20'><rect x='645' y='237' width='60' height='26' /></clipPath>
+  <clipPath id='clip_rect_21'><rect x='645' y='202' width='60' height='26' /></clipPath>
+  <clipPath id='clip_rect_22'><rect x='95' y='317' width='180' height='56' /></clipPath>
+</defs>
+</svg>
