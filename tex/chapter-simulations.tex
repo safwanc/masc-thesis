@@ -2,18 +2,18 @@
 \label{cha:simulations}
 In thesis, the 2D FPE theory is extended for 3D bipedal robots by selecting a sagittal plane in 3D space and constraining the swing foot motion within this plane. Once the biped is unstable, we solve FPE equation along the selected plane to determine the swing foot placement to ultimately regain stability. Similar to the approach used in \cite{Wight:2008ii,Wight:2008vt}, we extend this concept to form complete gait cycles with a state machine, high gain PD controllers and no precomputed trajectories.
 
-
 \section{Foot Placement Estimator in 2D} % (fold)
 \label{sec:foot_placement_estimator_in_2d}
+In this section, the FPE approach for 2D systems initially developed by Dwight et al. \cite{Wight:2008ii} is briefly reviewed. The derivation of the underlying theory begins with the simple biped model as shown in Figure~\ref{fig:unified}. The physical parameters are the mass $m$, inertia about the center of mass $I_{COM}$, fixed leg lengths $L$ and leg separation angle $\beta$. By imposing the geometric constraints that $\beta$ is fixed and there is no slipping at the contact points, a single state variable $\theta$ is used to completely define the motion of the compass biped:
 
-\begin{figure}[t]
+\begin{figure}[!h]
 	\centering
     \includegraphics[scale=0.7]{fig/ch4/compass.pdf}
   	\caption{Unified variable $\theta$ used to simplify the analysis. It is easily observed that $\theta_A = \theta  + \beta /2$ and $\theta_B = \theta  - \beta /2$}.
 	\label{fig:unified}
 \end{figure}
 
-In this section, the FPE approach for 2D systems initially developed by Dwight et al. \cite{Wight:2008ii} is briefly reviewed. The derivation of the underlying theory begins with the simple biped model as shown in Figure~\ref{fig:unified}. The physical parameters are the mass $m$, inertia about the center of mass $I_{COM}$, fixed leg lengths $L$ and leg separation angle $\beta$. By imposing the geometric constraints that $\beta$ is fixed and there is no slipping at the contact points, a single state variable $\theta$ is used to completely define the motion of the compass biped:
+The impact of the contact points with the ground is modelled using the conservation of angular momentum to determine the regions in the state space where the biped remains stable after ground contact, by analyzing the total system energy post impact. The stability analysis is then used to determine where a biped must step to remain within the stability region. This forms the basis of the FPE, which is a point on the ground where, if the robot were to step onto that point, the kinetic energy of the biped system would equal the peak potential energy. Placing the swing foot beyond the FPE point results in the biped not having enough kinetic energy post impact to overcome the peak potential energy. In this case, the biped remains stable. Conversely, placing the swing foot before the FPE point causes the kinetic energy post impact to exceed the peak potential energy. In this situation the biped begins to fall over.
 
 \begin{subnumcases}{\ddot{\theta}=\label{eom}}
 	\frac{{mgL\sin (\theta  + \beta /2)}}{{{I_{COM}} + m{L^2}}} & $\theta < 0$ \\
@@ -23,12 +23,18 @@ In this section, the FPE approach for 2D systems initially developed by Dwight e
 	\quad \quad \quad \quad 0 & $\theta = 0$, $\dot{\theta} = 0$
 \end{subnumcases}
 
-The impact of the contact points with the ground is modelled using the conservation of angular momentum to determine the regions in the state space where the biped remains stable after ground contact, by analyzing the total system energy post impact. The stability analysis is then used to determine where a biped must step to remain within the stability region. This forms the basis of the FPE, which is a point on the ground where, if the robot were to step onto that point, the kinetic energy of the biped system would equal the peak potential energy. Placing the swing foot beyond the FPE point results in the biped not having enough kinetic energy post impact to overcome the peak potential energy. In this case, the biped remains stable. Conversely, placing the swing foot before the FPE point causes the kinetic energy post impact to exceed the peak potential energy. In this situation the biped begins to fall over.
-
 \subsection{Computing the FPE Angle} % (fold)
 \label{sub:computing_the_fpe_angle}
+The FPE point is obtained by solving the non-linear FPE equation in (\ref{eq:fpe}) for the angle $\phi$. A projection from the COM to the ground surface at the angle ($\phi$) provides the location of where the foot needs to be placed in order to restore stability to the unbalanced system (as shown in Figure~\ref{fig:fpeangle}).
 
-\begin{figure*}[!t]
+\begin{figure}[!h]
+	\centering
+    \includegraphics[scale=0.6]{fig/ch4/fpeangle.eps}
+  	\caption{Graphical representation of the solution to the FPE equation for arbitrary robot configurations.}
+	\label{fig:fpeangle}
+\end{figure}
+
+\begin{figure*}[!b]
 	\begin{equation} \label{eq:fpe}
 	\begin{aligned}
 		\frac{{{{\left[ {mh({v_x}\cos \phi  + {v_y}\sin \phi )\cos \phi  + {I_{COM}}{{\dot \theta }_1}{{\cos }^2}\phi } \right]}^2}}}{{m{h^2} + {I_{COM}}{{\cos }^2}\phi }} + 2mgh\cos \phi (\cos \phi  - 1) = 0
@@ -38,24 +44,14 @@ The impact of the contact points with the ground is modelled using the conservat
 	\hrulefill
 \end{figure*}
 
-The FPE point is obtained by solving the non-linear FPE equation in (\ref{eq:fpe}) for the angle $\phi$. A projection from the COM to the ground surface at the angle ($\phi$) provides the location of where the foot needs to be placed in order to restore stability to the unbalanced system (as shown in Figure~\ref{fig:fpeangle}).
-
 While the stability analysis presented in \cite{Wight:2008ii} considered a simple compass biped, the results of the FPE equation can be extended to any arbitrary planar biped (i.e. with bent knees) by controlling the joint angles of the leg to achieve an equivalent distance $L$ between the COM and the foot contact. If a biped is unstable and begins to pivot forward on a fixed contact point, tracking the angle $\phi$ with the swing foot as the robot falls forward converges to the FPE location when the swing foot hits the ground. Upon impact, the distance between the contact point and the COM would have the the same fixed length $L$ between the contact points and the angle $\phi$ converges to $\beta/2$. The results from the compass biped also extend to the arbitrary biped configuration (i.e. stepping directly on the FPE point results in the kinetic energy being equivalent to the peak potential energy).
-
-\begin{figure}[b]
-	\centering
-    \includegraphics[scale=0.6]{fig/ch4/fpeangle.eps}
-  	\caption{Graphical representation of the solution to the FPE equation for arbitrary robot configurations.}
-	\label{fig:fpeangle}
-\end{figure}
-
 % subsection computing_the_fpe_angle (end)
 
 \subsection{Forming Complete Gait Cycles} % (fold)
 \label{sub:gait_cycles}
 Wight et al. \cite{Wight:2008ii} use the FPE concept to develop full gait cycles using simple linear control techniques and a state machine. Gait is initiated by destabilizing the robot in the desired direction of movement (forward or backward). Once destabilized, the FPE equation is solved numerically to obtain the FPE angle $\phi$, which is used to provide the desired trajectory for the swing foot.  If continued forward progress is desired, the foot is commanded to precede the FPE. If no further forward progress is needed, the foot is commanded to the FPE. The desired trajectory is resolved to joint angles using inverse kinematics and implemented via joint level PD controllers. The complete state machine is shown in Figure~\ref{fig:statemachine}.
 
-\begin{figure}[b]
+\begin{figure}[!h]
 	\centering
     \includegraphics[scale=0.22]{fig/ch4/fpestatemachine.png}
   	\caption{A simple state machine used in conjunction with the FPE algorithm to form complete gait cycles}.
@@ -73,16 +69,16 @@ Due to symmetry, the states in Figure~\ref{fig:statemachine} can be reduced to \
 
 In order to extend the FPE approach to the 3D case, we revisit the concept of generating complete gait cycles described in Section~\ref{sub:gait_cycles}. The primary goal of the first three states in each step cycle (\textbf{PUSH}, \textbf{LIFT} and \textbf{SWING}) is to force the biped into an unstable configuration so that the FPE algorithm can be used to regain stability in the terminal state (\textbf{DROP}).
 
-To extend the 2D algorithm to the general 3D case, we begin by selecting a suitable plane in 3D space as the sagittal plane. The off-sagittal plane is perpendicular to the sagittal plane and the ground.  In the proposed approach, the goal of each step cycle is to control the motion of a 3D bipedal robot to generate a forward moving momentum \emph{along} the selected sagittal plane. Upon entering the terminal state, we solve (\ref{eq:fpe}) on the selected plane to determine the swing foot placement and ultimately regain stability. Unlike the 2D case, we consider a 3D bipedal robot with finite foot length and width rather than a biped with point feet as demonstrated in \cite{Wight:2008ii}. The larger size of the region of support increases robustness to these approximation errors. \\
+To extend the 2D algorithm to the general 3D case, we begin by selecting a suitable plane in 3D space as the sagittal plane. The off-sagittal plane is perpendicular to the sagittal plane and the ground.  In the proposed approach, the goal of each step cycle is to control the motion of a 3D bipedal robot to generate a forward moving momentum \emph{along} the selected sagittal plane. Upon entering the terminal state, we solve (\ref{eq:fpe}) on the selected plane to determine the swing foot placement and ultimately regain stability. Unlike the 2D case, we consider a 3D bipedal robot with finite foot length and width rather than a biped with point feet as demonstrated in \cite{Wight:2008ii}. The larger size of the region of support increases robustness to these approximation errors.
 
-The remainder of this paper assumes a 3D bipedal robot with $n$ actuated degrees of freedom (DOF) and $n+6$ generalized coordinates defined by the following equation of motion:
+The remainder of this thesis assumes a 3D bipedal robot with $n$ actuated degrees of freedom (DOF) and $n+6$ generalized coordinates defined by the following equation of motion:
 
 \begin{eqnarray}
 	\label{eq:eom}
 	A(\vec{q})\ddot{\vec{q}} + C(\vec{q},\dot{\vec{q}})\dot{\vec{q}} + g(\vec{q}) = \vec{\tau}
 \end{eqnarray}
 
-where $A(\vec{q})$ is the $(n+6) \times (n+6)$ inertia matrix, $C(\vec{q},\dot{\vec{q}})$ are the centripetal/Coriolis terms and $g(\vec{q})$ is the gravity vector. The $(n+6) \times 1$ generalized force vector $\vec{\tau}$ is segmented as follows:
+Where $A(\vec{q})$ is the $(n+6) \times (n+6)$ inertia matrix, $C(\vec{q},\dot{\vec{q}})$ are the centripetal/Coriolis terms and $g(\vec{q})$ is the gravity vector. The $(n+6) \times 1$ generalized force vector $\vec{\tau}$ is segmented as follows:
 
 \begin{eqnarray}
 	\label{eq:gentau}
