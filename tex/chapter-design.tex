@@ -1,11 +1,8 @@
 \chapter{Electromechanical Design} % (fold)
 \label{cha:design}
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+The electromechanical design of the lower body biped involves several key considerations which will greatly impact the performance of the finished product once it has been assembled. Most of the key considerations discussed previously will be addressed in the following section. In general, the design process for the biped robot consists of both selecting the appropriate drivetrain components (which will consist of electric machines) and designing the mechanical structure to produce a complete prototype. The primary objective of the design is to select the proper components to provide adequate mechanical power to the system while the secondary objectives are to meet design constraints such as minimizing weight. 
+
+The selection of electromechanical components which compose the drivetrain system will be used to address the primary objective. These drivetrain components include electric machines (DC motors) and adequate gearing which will provide the reduction ratio required to meet the design specifications. Once the primary objective is addressed and the drivetrain components have been selected, the secondary objectives will be satisfied by way of manipulating the mechanical structure and manipulating components. This approach provides the means to meet design constraints such as reducing the overall mass of the system or shifting the COM position higher in the structure. 
 
 %======================================================================
 %   D Y N A M I C  M O D E L I N G
@@ -51,7 +48,7 @@ One method of computing a direct dynamic model for the biped robot is through th
 
 % section forward_dynamics (end)
 
-\subsection{Contact Modelling} % (fold)
+\subsection{Contact Modeling} % (fold)
 \label{sec:contact_modelling}
 
 \begin{figure}[!ht]
@@ -191,12 +188,144 @@ The contact model parameters (spring and damping coefficients) were observed to 
 
 \section{Drivetrain Selection} % (fold)
 \label{sec:drivetrain}
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+The drivetrain selection process includes selecting the appropriate components which will transmit the torque required by the initial design specifications to the joints. The actual drivetrain components which are selected for this project are supplied by the Micromo Solutions part of the Faulhaber Group. The product catalog provided online was used as a reference tool for the drivetrain selection process. The electric machines used to generate mechanical power for the purposes of this project are coreless DC motors. As mentioned previously, the majority of the mass distribution in the robot system is attributed to the weight of the motors. Therefore, one of the design objectives for this project was to select a combination of motor and appropriately sized gearhead (also supplied by Micromo Solutions) to meet the design specification torque requirements while keeping the overall mass low. Therefore, the drivetrain selection process refers to the selection of appropriate coreless DC motor and matching gearhead which will meet the design requirements. 
+
+
+\subsection{Mechanical Power Requirements} % (fold)
+\label{sub:mechanical_power_requirements}
+Similar to most large manufacturers of electric machines, Micromo Solutions provide a large catalog of DC motors which are aimed towards a large variety of applications. In order to narrow down the selection process into a subset of the motors which are applicable for the level of torque specified by the initial specifications, preliminary mechanical power calculations are performed. Recall that the mechanical power required by the drivetrain is specified by the required torque ($\tau$) and speed ($\omega$) of the motor: 
+
+\begin{equation}
+	P = \tau \times \omega
+\end{equation}
+
+The initial specifications for the drivetrain components listed in Table \ref{tab:spectable} list two values for the torque. As mentioned previously, designing the system to meet the peak torque requirements would yield significantly larger motors and increase the overall mass. Instead, it is desirable to design the system to meet the average (continuous) torque requirements and ensure that the system is capable of withstanding the large impulsive forces experienced at the impact points of the gait cycle. Therefore, the initial mechanical power requirement calculation is based on the normal or average torque loading on the joints (14Nm). While no speed requirements were specified in the initial design specifications, the tabulated kinematic and dynamic data collected from the dynamic simulation was used to compute the average speed experienced by the joints and the largest value was selected for the purposes of calculation. This provides a large buffer in the mechanical power considerations since not all joints are likely to experience such high speeds. The average speed calculated from the dynamic simulation was found to be 65RPM. Substituting these values along with the conversion factor for units: 
+
+\begin{equation}
+	P = \tau \times \omega = 14Nm \times 65RPM \times 0.1047 = 95.28W
+\end{equation}
+
+Using this value of mechanical power as a starting guide, the motor catalog is consulted to eliminate the majority of the solutions provided. Note that due to the assumptions placed in calculating this value, 95.28W represents an upper bound on the amount of power the design should be capable of providing. Therefore the potential solution candidates should be rated for the nominal power around the region of this value. 
+
+% subsection mechanical_power_requirements (end)
+
+\subsection{Torque-Speed Analysis} % (fold)
+\label{sub:torque_speed_analysis}
+The primary chart for analyzing and comparing different alternative solutions is through the use of a torque-speed plot. Given the structure of the motor specifications provided by Micromo Solutions, a spreadsheet was constructed in Microsoft Excel 2010 to automatically generate the torque-speed characteristic chart from the motor constants. These constants were pre-populated and the charts were generated on the fly. 
+
+\begin{equation}
+	\omega = \omega_{no-load} - k\tau
+\end{equation}
+
+The equations used to generate the torque speed relationships were fairly simple equations using the motor constants provided by the manufacturer on the specification sheets. The relationship between the torque of the motor and the speed of the revolving shaft is approximately linear so it is typically specified by a slope constant for the curve. While the constant $k$ is usually provided as a positive value, the slope of the torque-speed curve is negative (i.e. as the torque increases the speed decreases). 
+
+\begin{figure}[!ht]
+	\begin{center}
+    \includegraphics[scale=0.6]{fig/ch4/motor1.pdf}
+	\end{center}
+  \caption{Micromo 3257CR Coreless DC Motor: Speed and Current vs Torque}
+\end{figure}
+
+% subsection torque_speed_analysis (end)
+
+\subsection{Power and Efficiency Analysis} % (fold)
+\label{sub:power_and_efficiency_analysis}
+Another key factor in comparing drivetrain components is the relationship between the power produced and the overall efficiency of the motor as a function of its torque. The efficiency curve compares the ratio of electrical power input to mechanical power output. While it is typically desirable to operate the motor at its peak efficiency, throughout the gait cycle the loading on the motors undergo a variety of changes so it is difficult to base the motor selection process based on this premise. However, it is desirable to ensure that the motor is reasonably efficient in the general region of operation. 
+
+
+\begin{figure}[!ht]
+	\begin{center}
+    \includegraphics[scale=0.6]{fig/ch4/motor2.pdf}
+	\end{center}
+  \caption{Micromo 3257CR Coreless DC Motor: Power and Efficiency vs Torque}
+\end{figure}
+
+% subsection power_and_efficiency_analysis (end)
+
+\subsection{Thermal Analysis} % (fold)
+\label{sub:thermal_analysis}
+As mentioned previously, out of the initial design specifications the motor selection process is based on the continuous or average torque loading on the joints. However, during each gait cycle the torque peaks as soon as impulsive forces are experienced from the environment (i.e. heel-strike). While these peaks may be outside of the motors continuous operating range for a very short period of time, the heat generated inside the motor core can build up and cause significant damage. Another consideration is the effect of thermal build up of the motor under continuous use at the specification of 14Nm. Therefore it is necessary to generate thermal plots alongside the torque-speed analysis to verify that the selected motors can withstand the temperature rise due to its operation. Given an assumed value for the ambient temperature, the total temperature of the motor can be calculated as: 
+
+\begin{equation}
+	T_{total} = T_{ambient} + T_{inc}
+\end{equation}
+
+Where the temperature increase inside the motor core is provided by the following relationship: 
+
+\begin{equation}
+	T_{inc} = I^{2}R \times (R_{th1} + R_{th2})
+\end{equation}
+
+Note that $I$ and $R$ is the current through and the resistance of the motor windings, respectively. Constants $R_{th1}$ and $R_{th2}$ are specified by the motor manufacturer. 
+
+
+\begin{figure}[!ht]
+	\begin{center}
+    \includegraphics[scale=0.6]{fig/ch4/motor3.pdf}
+	\end{center}
+  \caption{Micromo 3257CR Coreless DC Motor: Speed and Temperature vs Torque}
+\end{figure}
+% subsection thermal_analysis (end)
+
+\subsection{Design Considerations} % (fold)
+\label{sub:design_considerations}
+Aside from the torque-speed, power, efficiency and thermal analysis, there are several other factors which come into the design procedure for selecting the drivetrain components. These considerations pertain to the secondary objective to minimize the overall weight of the drivetrain components while having as much mass as possible shifted upwards in the structure. Out of the two components used for the drivetrain, the majority of the weight comes from the actual coreless DC motor so it is desirable to select smaller motors and meet the specified torque requirements by means of increasing the reduction ratio on the matching gearhead. Another consideration is the physical size of the motor itself, as the diameter and length of each motor vary significantly between different offerings. Since gearheads are coupled directly onto the motor shaft, the complete drivetrain assembly is usually quite long. While these factors are not critical design considerations, there were used as a means for comparison if two drivetrain selections were comparable in terms the primary considerations.% subsection design_considerations (end)
+
+
+\subsection{Final Configurations} % (fold)
+\label{sub:final_configurations}
+
+Given the considerations and the points of analysis stated in the previous sections, a coreless DC motor from the Micromo Solutions catalog was selected. This motor achieved all of the primary design considerations in terms of meeting the average torque requirements and maintaining operation within a stable thermal region. The following charts illustrate the characteristics at the output of the motor shaft. 
+
+Coupled with the motor is a matching precision gearhead which provides the torques mentioned in the specifications with some added buffer. The reduction ratio of the gearheads was selected such that larger reduction ratios within the same model could be selected if it was determined that the revised design had an increase in torque loading at the joints which the initial selection was unable to meet. The charts shown above illustrate the characteristics at the output of the gearhead shaft.
+
+\begin{figure}[!ht]
+	\begin{center}
+    \includegraphics[scale=0.6]{fig/ch4/gearhead1.pdf}
+	\end{center}
+  \caption{Micromo 38A Precision Gearhead: Speed and Current vs Torque}
+\end{figure}
+
+It was mentioned previously that the torque demands vary from joint to joint. However, to limit the number of motor selections and to simplify the overall mechanical design the number of motors used throughout the complete biped is limited to two configurations. The larger configuration is to be used at joints which require higher joint torques and/or velocities, whereas the lower configuration is used in joints with lower demands. Ultimately, the following two configurations are selected on the basis of meeting torque and velocity requirements. 
+
+
+\begin{table}[!h]
+  \centering
+  \caption{Higher configuration of motor and gearhead combination from Micromo.}
+    \begin{tabular}{lcccc}
+    \addlinespace
+    \toprule
+    \textbf{Model} & \textbf{Mass} & \textbf{Length} & \textbf{Stall Torque} & \textbf{Max Power}\\
+    \midrule
+    3257CR 12V Motor	&	242g	&	57mm	&	0.547Nm		&	84.50W	\\
+    38A 240:1 Gearhead	&	410g	&	80mm	&	20.0Nm		&	-	\\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:higherconfig}%
+\end{table}%
+
+
+
+\begin{table}[!h]
+  \centering
+  \caption{Lower configuration of motor and gearhead combination from Micromo.}
+    \begin{tabular}{lcccc}
+    \addlinespace
+    \toprule
+    \textbf{Model} & \textbf{Mass} & \textbf{Length} & \textbf{Stall Torque} & \textbf{Max Power}\\
+    \midrule
+    3242CR 12V Motor	&	172g	&	42mm	&	0.193Nm		&	27.30W	\\
+    32A 68:1 Gearhead	&	240g	&	57mm	&	6.0Nm		&	-	\\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:lowerconfig}%
+\end{table}%
+
+
+From the human gait analysis section, it was determined that the only joint which uses the lower configuration (Table \ref{tab:lowerconfig}) is the ankle roll DOF. The remaining 6 DOF in each leg use the higher configuration (Table \ref{tab:higherconfig}) due to torque and/or velocity demands.
+% subsection final_configurations (end)
+
+
 % section drivetrain (end)
 
 % chapter design (end)
