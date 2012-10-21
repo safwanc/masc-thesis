@@ -24,7 +24,7 @@ An add-in was developed for CAD software package SolidWorks to export a multibod
 
 \begin{figure}[!h]
 	\centering
-    \includegraphics[scale=1.0]{fig/ch3/exporter.png}
+    \includegraphics[scale=1.0]{fig/toolchain/exporter.png}
   	\caption{The exporter add-in for SolidWorks (named Quanser Exporter in the SolidWorks tab) to capture relevant physical and visualization data.}
 	\label{fig:swexporter}
 \end{figure}
@@ -34,7 +34,7 @@ The add-in for SolidWorks uses this master assembly file as a starting point to 
 
 \begin{figure}[!h]
 	\centering
-    \includegraphics[scale=1.0]{fig/ch3/modelorg.png}
+    \includegraphics[scale=1.0]{fig/toolchain/modelorg.png}
   	\caption{The \emph{Model Organizer} window used to define the kinematic structure of the system during initial export.}
 	\label{fig:modelorg}
 \end{figure}
@@ -47,7 +47,7 @@ The add-in captures these key parameters and generates a structured XML file. A 
 
 \begin{figure}[!h]
 	\centering
-    \includegraphics[scale=0.6]{fig/ch3/exportfile.png}
+    \includegraphics[scale=0.6]{fig/toolchain/exportfile.png}
   	\caption{Example of kinematic and dynamic parameter extraction straight from CAD model stored in the exported XML file.}
 	\label{fig:exportfile}
 \end{figure}
@@ -62,7 +62,7 @@ The toolchain provides automatic batch generation of full 3D meshes in the X3D f
 
 \begin{figure}[!h]
 	\centering
-    \includegraphics[scale=0.5]{fig/ch3/cad2x3d.png}
+    \includegraphics[scale=0.5]{fig/toolchain/cad2x3d.png}
   	\caption{Equivalent X3D mesh file generated directly from CAD layout for a single link subassembly.}
 	\label{fig:visualcom}
 \end{figure}
@@ -99,7 +99,7 @@ The physical model generation process parses the XML output files in the export 
 
 \begin{figure}[!h]
 	\centering
-    \includegraphics[scale=0.75]{fig/ch3/simmech.pdf}
+    \includegraphics[scale=0.75]{fig/toolchain/simmech.pdf}
   	\caption{The standard link subsystems for physical model generation with prepopulated kinematic and dynamic parameters from CAD.}
 	\label{fig:quarcmech}
 \end{figure}
@@ -108,7 +108,7 @@ The input to each link subsystem (\textbf{CS1}) is a connection from $link_{i-1}
 
 \begin{figure}[!h]
 	\centering
-    \includegraphics[scale=0.6]{fig/ch3/undermask.pdf}
+    \includegraphics[scale=0.6]{fig/toolchain/undermask.pdf}
   	\caption{SimMechanics blocks used to compose each CAD-equivalent link subassembly in Simulink}
 	\label{fig:undermask}
 \end{figure}
@@ -124,7 +124,7 @@ The visualization model generation process generates a single subsystem containi
 
 \begin{figure}[!h]
 	\centering
-    \includegraphics[scale=0.50]{fig/ch3/masterscene.pdf}
+    \includegraphics[scale=0.50]{fig/toolchain/masterscene.pdf}
   	\caption{CAD master assembly shown on the left is used to automatically generate the meshes and scene file to recreate the visualization shown on the right.}
 	\label{fig:masterscene}
 \end{figure}
@@ -155,8 +155,8 @@ A common motion for humanoid robots is the bending of the knee and hip joints wh
 
 \begin{figure}[!h]
 	\begin{center}
-	\subfigure{\includegraphics[scale=0.45]{fig/ch3/casestudy-hip.eps}}
-	\subfigure{\includegraphics[scale=0.45]{fig/ch3/casestudy-knee.eps}}
+	\subfigure{\includegraphics[scale=0.45]{fig/toolchain/casestudy-hip.eps}}
+	\subfigure{\includegraphics[scale=0.45]{fig/toolchain/casestudy-knee.eps}}
 	\end{center}
   	\caption{Hip and knee joint torque requirements while a leg is raised for different sets of motors at the joints.}
 	\label{fig:casestudy}
@@ -172,7 +172,7 @@ Additional meshes can also be added to the scene to serve as visual aids. For ex
 
 \begin{figure}[!h]
 	\centering
-    \includegraphics[scale=0.40]{fig/ch3/visualizecom.png}
+    \includegraphics[scale=0.40]{fig/toolchain/visualizecom.png}
   	\caption{Realtime visualization during simulations allows the user to get immediate visual feedback on important information like COM position.}
 	\label{fig:visualcom}
 \end{figure}

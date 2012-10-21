@@ -8,7 +8,7 @@ In this chapter, the 2D FPE theory is briefly reviewed and a method for extendin
 
 \begin{figure}[!h]
 	\centering
-    \includegraphics[scale=0.7]{fig/ch4/compass.pdf}
+    \includegraphics[scale=0.7]{fig/simulations/compass.pdf}
   	\caption{Unified variable $\theta$ used to simplify the analysis. It is easily observed that $\theta_A = \theta  + \beta /2$ and $\theta_B = \theta  - \beta /2$}.
 	\label{fig:unified}
 \end{figure}
@@ -31,7 +31,7 @@ The FPE point is obtained by solving the non-linear FPE equation in (\ref{eq:fpe
 
 \begin{figure}[!h]
 	\centering
-    \includegraphics[scale=0.6]{fig/ch4/fpeangle.eps}
+    \includegraphics[scale=0.6]{fig/simulations/fpeangle.eps}
   	\caption{Graphical representation of the solution to the FPE equation for arbitrary robot configurations.}
 	\label{fig:fpeangle}
 \end{figure}
@@ -56,8 +56,8 @@ The compass biped model with the single state variable is simulated to illustrat
 
 \begin{figure}[!h]
 	\begin{center}
-	\subfigure{\includegraphics[scale=0.3]{fig/ch4/understeppingtime.eps}}
-	\subfigure{\includegraphics[scale=0.3]{fig/ch4/understeppingphase.eps}}
+	\subfigure{\includegraphics[scale=0.3]{fig/simulations/understeppingtime.eps}}
+	\subfigure{\includegraphics[scale=0.3]{fig/simulations/understeppingphase.eps}}
 	\end{center}
   	\caption{Time evolution and state trajectories for under stepping (i.e. foot lands behind FPE point)}
 	\label{sim:under}
@@ -65,8 +65,8 @@ The compass biped model with the single state variable is simulated to illustrat
 
 \begin{figure}[!h]
 	\begin{center}
-	\subfigure{\includegraphics[scale=0.3]{fig/ch4/oversteppingtime.eps}}
-	\subfigure{\includegraphics[scale=0.3]{fig/ch4/oversteppingphase.eps}}
+	\subfigure{\includegraphics[scale=0.3]{fig/simulations/oversteppingtime.eps}}
+	\subfigure{\includegraphics[scale=0.3]{fig/simulations/oversteppingphase.eps}}
 	\end{center}
   	\caption{Time evolution and state trajectories for over stepping (i.e. foot lands in front of FPE point)}
 	\label{sim:over}
@@ -79,7 +79,7 @@ Wight et al. \cite{Wight:2008ii} used the FPE concept to develop full gait cycle
 
 \begin{figure}[!h]
 	\centering
-    \includegraphics[scale=0.3]{fig/ch4/fpestatemachine.png}
+    \includegraphics[scale=0.3]{fig/simulations/fpestatemachine.png}
   	\caption{A simple state machine used in conjunction with the FPE algorithm to form complete gait cycles}.
 	\label{fig:statemachine}
 \end{figure}
@@ -334,7 +334,7 @@ The proposed control strategy to extend the FPE theory to 3D was implemented in 
 
 \begin{figure*}[!b]
 	\centering
-    \includegraphics[scale=0.10]{fig/ch4/sequence.png}
+    \includegraphics[scale=0.10]{fig/simulations/sequence.png}
   	\caption{Frame captures from the realtime 3D visualization while side-to-side stepping.}
 	\label{fig:sequence}
 \end{figure*}
@@ -345,7 +345,7 @@ The resulting $x_{COM}$ trajectories from simulating the side-to-side stepping m
 
 \begin{figure}[!h]
 	\centering
-    \includegraphics[scale=0.8]{fig/ch4/comtraj.eps}
+    \includegraphics[scale=0.8]{fig/simulations/comtraj.eps}
   	\caption{COM trajectory being tracked during the complete gait sequence of side stepping.}
 	\label{fig:comtraj}
 \end{figure}
@@ -355,7 +355,7 @@ In the terminal DROP state, the swing foot trajectory tracks the FPE point on th
 
 \begin{figure}[!h]
 	\centering
-    \includegraphics[scale=0.8]{fig/ch4/fpetrack.eps}
+    \includegraphics[scale=0.8]{fig/simulations/fpetrack.eps}
   	\caption{Swing foot tracks the a point on the ground given by $FPE + FPE_{offset}$ to ensure overstepping.}
 	\label{fig:fpetrack}
 \end{figure}
