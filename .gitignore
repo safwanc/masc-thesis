@@ -44,10 +44,13 @@
 *.xdy
 
 # LaTeX Outputs
-*.pdf
+*converted-to.pdf
 
 # Latexian.app
 TSWLatexianTemp*
 
 # Sublime Text
 *.sublime*
+
+# Main Output
+masc-thesis.pdf
