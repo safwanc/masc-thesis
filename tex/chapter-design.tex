@@ -311,7 +311,95 @@ While it is desirable to limit the number of different motor and gearhead combin
 
 \section{Mechanical Design} % (fold)
 \label{sec:chassis}
-Incomplete. 
+
+The mechanical design of the 14 DOF bipedal robot starts from the initial motor selection presented in the previous section. The 3D CAD models for each motor and gearhead combination is obtained directly from the manufacturer. The design goals for the mechanical chassis are to produce a solid light weight structure which is capable of withstanding external forces from the environment during gait and the applied torques from each joint. The secondary design objective of minimizing the overall weight while shifting the COM higher must also be addressed intrinsically through the mechanical design. 
+
+\subsection{Anthropometric Dimensioning} % (fold)
+\label{sub:anthropometric_dimensioning}
+The ultimate end goal for the 14 DOF bipedal robot is to achieve walking with human-like gait. To this end, anthropometric dimensioning is used as a starting point for the mechanical chassis design. Starting from a soft height requirement of the full lower body, the relative lengths are obtained for the main linkages (i.e. thigh, shank) from the anthropometric resource shown in Figure~\ref{fig:anthropo}. 
+
+\begin{figure}[!h]
+	\begin{center}
+    \includegraphics[width=100mm]{fig/design/anthropo.png}
+	\end{center}
+  \caption{Resource for anthropometric dimensioning of lower body segments \cite{wintergait}.}
+\label{fig:anthropo}
+\end{figure}
+	
+Given the ratios between major body segment lengths, a rough estimate for each of the chassis segment lengths is derived and summarized in Table \ref{tab:anthropo}. Note that these dimensions were only used as a starting point. The overall length of the drivetrain components (i.e. motor and gearhead combination) is an additional constraint which can limit how close the final chassis design is to the estimated segment lengths.  
+
+\begin{table}[!h]
+  \centering
+  \caption{Estimated segment lengths based on anthropometric dimensioning}
+  \label{tab:anthropo}%
+    \begin{tabular}{lcc}
+    \addlinespace
+    \toprule
+    \textbf{Segment} & \textbf{Height [mm]} & \textbf{Height [In]} \\
+    \midrule
+    Hip   & 11.32 & 0.45 \\
+    Thigh & 277.34 & 10.92 \\
+    Shank & 278.47 & 10.96 \\
+    Foot  & 44.15 & 1.74 \\
+    \bottomrule
+    \end{tabular}%
+\end{table}
+
+% subsection anthropometric_dimensioning (end)
+
+\subsection{Chassis Structural Design} % (fold)
+\label{sub:structural_design}
+Aluminum was selected as the light weight rigid material to compose the mechanical chassis for several reasons. The key factors include the widespread availability of various forms of aluminum stock (i.e. channels, beams, etc) and its (relatively) light weight compared to other metal alloys. More specifically, Aluminum 5052 was selected due to its high fatigue strength. While no quantitative stress calculations were performed, this particular attribute is appealing due to the high impact forces the structure will have to absorb with each step. Aluminum 5052 is also easy to work with for manual machining or computer numerical control (CNC) machine tools. 
+
+The chassis is designed as a light weight but rigid frame to house the drivetrain components (actuators, gears, etc). The amount of stock material used in the frame itself also impacts the overall weight and structural rigidity. For example, a link segment designed from a C-Channel beam is structurally sound (since it is a single solid piece of metal). However, it may significantly heavier than a link segment composed of multiple pieces. The trade off between minimizing the overall weight and structural rigidity can sometimes be mitigated by using mechanical design techniques. For example, using a cross brace between adjacent parallel pieces of a frame can significantly improve its structural rigidity while keeping the mass low.  
+
+The lightness of aluminum also helps address the secondary design objective of reducing the overall weight. However, the primary weight contribution to the overall system comes from the drivetrain components. This limits the flexibility for weight manipulation from a purely chassis design standpoint. However, mechanical design techniques can be used manipulate the COM location by strategically positioning the mounting points for motors and gearheads. 
+% subsubsection structural_design (end)
+
+\subsection{Mechanical Power Transmission} % (fold)
+\label{sub:mechanical_power_transmission}
+The biped consists entirely of rotating mechanical joints between link segments. Machine components such as shafts and bearings are used to transmit the rotational mechanical poewr between links. However, this type of mechanical coupling is also used to address the secondary objective of shifting the COM position higher. By using components such as miter gears, the mechanical power transmission is be shifted with a perpendicular offset (90$^\circ$). This technique is used to strategically decouple the mounting position of a drivetrain assembly (i.e. motor with fixed gearhead) from the actual axis of rotation. Consequently, this decoupling is used to relocate motors in a way such that the weight distribution is manipulated in favour of having a higher COM position (illustrated in Figure \ref{fig:miter}).
+	
+\begin{figure}[!h]
+	\begin{center}
+    \includegraphics[scale=0.5]{fig/design/perpendicular.pdf}
+	\end{center}
+  \caption{Perpendicular mechanical coupling to shift weight distribution.}
+\label{fig:miter}
+\end{figure}
+
+Mechanical coupling and power transmission is also used to design  intersecting axes of rotation. By using spur gears with a 1:1 reduction ratio, the output shaft of a drivetrain assembly can be positioned in a parallel offset (illustrated in Figure \ref{fig:spur}).
+
+\begin{figure}[!h]	
+	\begin{center}
+    \includegraphics[scale=0.5]{fig/design/parallel.pdf}
+	\end{center}
+  \caption{Parallel mechanical coupling to allow intersection axis of rotation.}
+\label{fig:spur}
+\end{figure}
+
+Shafts are frequently used to enable rotation between two link segments in the mechanical design. Ball bearings are common machine components which support the rotational movement of these shafts within a solid frame chassis. Traditional shielded ball bearings were selected for joints to support radial loads while permitting the rotation of a shaft on the inner ring (as illustrated in Figure \ref{fig:ballb}). The double shielded construction provides protection against debris from entering the bearing assembly without producing significant internal friction forces that are present in the case of sealed bearings. 
+
+\begin{figure}[!h]
+	\begin{center}
+    \includegraphics[scale=0.5]{fig/design/ballbearings.pdf}
+	\end{center}
+  \caption{Enabling rotational motion of shafts using double shielded ball bearings.}
+\label{fig:ballb}
+\end{figure}
+
+For yaw joints which actuate along the vertical axis, the impact forces experienced during the gait cycle exert an axial load which is typically not supported by traditional ball bearings (would cause the inner ring to ``pop out''). Furthermore, these joints experience axial loads in one direction while the robot is standing on the ground but the load reverses direction if the robot is picked up by the torso. Therefore, bidirectional support for axial loads is required for the hip and ankle yaw joints. For these sections of the lower body, a combination of thrust and ball baerings are used to support radial and axial loads (as shown in Figure~\ref{fig:yawbearing}. 
+
+\begin{figure}[!ht]
+	\begin{center}
+    \includegraphics[trim = 5mm 34mm 5mm 25mm,clip,width=15cm]{fig/design/yawbearing.pdf}
+	\end{center}
+  \caption{A combination of thrust and ball bearings used for yaw joints to support radial and axial loading.}
+\label{fig:yawbearing}
+\end{figure}
+
+% subsubsection mechanical_power_transmission (end)
+
 % section mechanical_design (end)
 
 \section{Discussion} % (fold)
