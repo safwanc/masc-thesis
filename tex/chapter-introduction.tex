@@ -15,9 +15,21 @@ These two opposing strategies illustrate the usefulness and versatility of the F
 \section{Contributions} % (fold)
 \label{sec:contributions}
 
-The 2D FPE algorithm is extended to form complete gait cycles for a 3D bipedal robot in simulation and ultimately, on physical hardware. Extending the 2D theory presents its own unique set of challenges which are addressed in part by using a motion control framework and selecting a 2D plane to solve the FPE algorithm. Ultimately, the efficacy of the proposed walking control strategy is demonstrated through side stepping and forward walking in dynamic simulations. 
+\begin{enumerate}
+	\item \textbf{Electromechanical Design of 14 DOF Bipedal Robot} \\ 
+	The development of a 14 DOF bipedal robot for the purposes of research in bipedal locomotion is presented. Drivetrain component selection is performed using gait estimation and accounting for actuator dynamics. The mechanical chassis is designed with anthropometric dimensioning and the weight distribution is manipulated to make the physical system easier to control.  \\
 
-The development of a 14 DOF bipedal robot for the purposes of research in bipedal locomotion is also presented. A rapid prototyping toolchain is developed to streamline the iterative electromechanical design process. Drivetrain component selection is performed using gait estimation and accounting for actuator dynamics. The physical 14 DOF bipedal robot is constructed and the validity of the motion control framework and actuator dynamics models are demonstrated on the physical hardware. 
+	\item \textbf{Rapid Prototyping Toolchain Development} \\ 
+	A toolchain is developed to streamline the iterative design process by automatically generating dynamic simulations with 3D visualization directly from Computer-Aided-Design (CAD) software. It enables fast incremental changes to revise the mechanical design and immediately analyze the resulting behaviour in simulation. The toolchain is used to improve the initial design and generate forward dynamics for the 14 DOF bipedal robot. \\
+
+	\item \textbf{Extension of FPE Algorithm to 3D} \\ 
+	The 2D FPE algorithm is extended to form complete gait cycles for a 3D bipedal robot. The proposed algorithm selects a 2D plane in the chosen direction of motion and generates trajectories to produce a forward moving momentum along the plane. A whole body motion control framework coupled with a finite state machine is used to track the generated trajectories and form dynamically stable gait cycles. Ultimately, the efficacy of the proposed walking control strategy is demonstrated through side stepping and forward walking in dynamic simulations. \\
+
+	\item \textbf{Experimental Validation on Physical Hardware} \\ 
+	Dynamic simulation models are designed with a shared codebase, allowing the same controller to target either a simulated plant or the constructed 14 DOF biped using hardware-in-the-loop (HIL). The validity of the motion control framework and actuator dynamics models are demonstrated on the physical hardware using HIL. \\
+
+\end{enumerate}
+
 % section contributions (end)
 
 \section{Outline} % (fold)
@@ -30,7 +42,7 @@ One of the key challenges in developing physical hardware for bipedal locomotion
 
 The extension of the 2D FPE theory to the 3D case is presented in Chapter \ref{cha:simulations}. A motion control framework is presented in order to simultaneously use the FPE algorithm to achieve walking and maintain stability throughout the gait cycle. The 2D FPE theory and the proposed extension to 3D are verified through dynamic simulations. 
 
-Experimental validation of the actuator dynamics and motion control framework are validated on the physical hardware in Chapter \ref{cha:experiments}. The actuator dynamics models are verified to match the physical DC motors through hardware-in-the-loop (HIL) simulations. The motion control framework used for extending the FPE theory to 3D is also verified on physical hardware using HIL.  
+Experimental validation of the actuator dynamics and motion control framework are validated on the physical hardware in Chapter \ref{cha:experiments}. The actuator dynamics models are verified to match the physical DC motors through HIL simulations. The motion control framework used for extending the FPE theory to 3D is also verified on physical hardware using HIL.  
 
 Lastly, conclusions and future work regarding the proposed walking control strategy and developed physical hardware are presented in Chapter \ref{cha:conclusion}. 
 % section outline (end)
