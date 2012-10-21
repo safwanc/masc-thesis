@@ -1,10 +1,10 @@
 \chapter{3D Foot Placement Estimator and Gait Generation} % (fold)
 \label{cha:simulations}
 
-In this chapter, the 2D FPE theory is briefly reviewed and a method for extending the theory to 3D bipedal robots is presented. The effects of overstepping and understepping the FPE point are demonstrated through simulations for the 2D case. The proposed extension to 3D is validated through dynamic simulations for side-to-side stepping and forward walking. 
+This chapter extends the Foot Placement Estimator (FPE) algorithm for 3D bipedal robots. The existing 2D FPE theory is reviewed in Section~\ref{sec:fpe_algorithm} and the effects of overstepping or understepping is analyzed in simulation. Section~\ref{sec:extension_to_3d} presents the method of extending the existing 2D theory for 3D space. The proposed algorithm selects a 2D plane in the chosen direction of motion and generates trajectories to produce a forward moving momentum along the plane. A whole body motion control framework coupled with a finite state machine is used to track the generated trajectories and form complete gait cycles. The toolchain described in the preivous chapter is used to generate dynamic simulations for the 14 DOF bipedal robot and the proposed extension to 3D is validated (Section~\ref{sec:simulations_and_results}).
 
 \section{FPE Algorithm in 2D} % (fold)
-\label{sec:foot_placement_estimator_in_2d}
+\label{sec:fpe_algorithm}
 
 \begin{figure}[!h]
 	\centering
@@ -86,7 +86,7 @@ Wight et al. \cite{Wight:2008ii} used the FPE concept to develop full gait cycle
 % subsection forming_complete_gait_cycles (end)
 
 
-% section foot_placement_estimator_in_2d (end)
+% section fpe_2D (end)
 
 \section{Extension to 3D} % (fold)
 \label{sec:extension_to_3d}
@@ -367,5 +367,10 @@ Incomplete.
 % subsection forward_walking_gait (end)
 
 % section simulations_and_results (end)
+
+\section{Discussion} % (fold)
+\label{sec:discussion}
+Incomplete. 
+% section discussion (end)
 
 % chapter simulations (end)
