@@ -64,7 +64,7 @@ To formulate a state space representation of the biped, the equations of motion 
 	\end{aligned}
 \end{equation}
 
-\begin{equation} \label{eq:eom1}
+\begin{equation} \label{eq:compasseom1}
 	\begin{aligned}
 		{{\ddot \theta }_A} = \frac{{mgL\sin ({\theta _A})}}{{{I_{COM}} + m{L^2}}}
 	\end{aligned}
@@ -78,9 +78,9 @@ This equation is only valid while the inverted pendulum swings about point $A$ (
 	\end{aligned}
 \end{equation}
 
-While pivoting about point $B$, if the biped does not have enough momentum to swing all the way through then it simply rocks back until swing leg $A$ comes into contact with the ground. At this point, the equation of motion describing the system reverts back to \eqref{eq:eom1}. Given the geometric properties of the biped, it can be shown that the equation of motion about point $B$ is given by: 
+While pivoting about point $B$, if the biped does not have enough momentum to swing all the way through then it simply rocks back until swing leg $A$ comes into contact with the ground. At this point, the equation of motion describing the system reverts back to \eqref{eq:compasseom1}. Given the geometric properties of the biped, it can be shown that the equation of motion about point $B$ is given by: 
 
-\begin{equation} \label{eq:eom2}
+\begin{equation} \label{eq:compasseom2}
 	\begin{aligned}
 		{\ddot \theta _B} = \frac{{mgL\sin ({\theta _B})}}{{{I_{COM}} + m{L^2}}} 
 	\end{aligned}
@@ -100,7 +100,7 @@ Assumption 5 imposes a geometric constraint which can be used to combine the var
 
 Where the angles $\theta _A$, $\theta _B$, $\theta$ and $\beta$ are shown on Figure \ref{fig:unified}. The single (unified) variable $\theta$ can be formed by rearranging the equations of motion described in terms of $\theta _A$ and $\theta _B$: 
 
-\begin{subnumcases}{\ddot{\theta}=\label{eom}}
+\begin{subnumcases}{\ddot{\theta}=\label{eq:unifiedeom}}
 	\frac{{mgL\sin (\theta  + \beta /2)}}{{{I_{COM}} + m{L^2}}} & $\theta < 0$ \\
 	\frac{{mgL\sin (\theta  - \beta /2)}}{{{I_{COM}} + m{L^2}}} & $\theta > 0$ \\
 	\frac{{mgL\sin (\theta  + \beta /2)}}{{{I_{COM}} + m{L^2}}} & $\theta = 0$, $\dot{\theta} > 0$ \\
@@ -108,7 +108,7 @@ Where the angles $\theta _A$, $\theta _B$, $\theta$ and $\beta$ are shown on Fig
 	\quad \quad \quad \quad 0 & $\theta = 0$, $\dot{\theta} = 0$
 \end{subnumcases}
 
-The system defined by \eqref{eom} is used to investigate stability and subsequently derive the FPE equation. For future reference, define the following function to represent conditional equation of motion corresponding to a region of the state space (defined by $\theta$ and $\dot{\theta}$): 
+The system defined by \eqref{eq:unifiedeom} is used to investigate stability and subsequently derive the FPE equation. For future reference, define the following function to represent conditional equation of motion corresponding to a region of the state space (defined by $\theta$ and $\dot{\theta}$): 
 
 \begin{equation}  
 	\begin{aligned}
@@ -167,7 +167,7 @@ The notion of stability (or lack there of) is explicitly defined by \cite{Wight:
 
 The only physical configuration that can be achieved by definition \ref{def:balanced} is if the biped is double support phase. This implies that being balanced is mathematically equivalent to the system $\dot{\Theta}$ remaining at its stable equilibrium at the origin. The second part of definition \ref{def:stable} implies that stability in the physical sense is equivalent to the origin of system $\dot{\Theta}$ being asymptotically stable (since the biped should return to the same balanced position after small enough perturbations.
 
-Thus, it is possible to determine the conditions for which the biped is stable if it it can be shown that the origin of \eqref{ss} is asymptotically stable. To this end, a Lyapunov function candidate based on the energy of the system ($U = T + V$) with an offset in potential energy is chosen to show asymptotic stability. For example, for the first equation of motion represented by \eqref{eom} for $\theta < 0$: 
+Thus, it is possible to determine the conditions for which the biped is stable if it it can be shown that the origin of \eqref{ss} is asymptotically stable. To this end, a Lyapunov function candidate based on the energy of the system ($U = T + V$) with an offset in potential energy is chosen to show asymptotic stability. For example, for the first equation of motion represented by \eqref{eq:unifiedeom} for $\theta < 0$: 
 
 \begin{equation}
 	\begin{aligned}
@@ -183,7 +183,7 @@ Where $h =\cos (\theta+\beta/2) $ and $h_{datum} = \cos (\beta/2)$. The Lyapunov
 	\end{aligned}
 \end{equation}
 
-Analyzing the behaviour of $\dot{V}(\Theta)$ involves looking at each region of the state space specified by \eqref{eom} and investigating the behaviour within the local region. In summary, $\dot{V}(\Theta) = 0$ for the cases where $\theta \not= 0$  (i.e. \ref{eom}a and \ref{eom}b) and is negative definite when $\theta = 0$, $\dot{\theta} \not= 0$ (i.e. \ref{eom}c and \ref{eom}d). Furthermore, the equilibrium point is the largest invariant set in: 
+Analyzing the behaviour of $\dot{V}(\Theta)$ involves looking at each region of the state space specified by \eqref{eq:unifiedeom} and investigating the behaviour within the local region. In summary, $\dot{V}(\Theta) = 0$ for the cases where $\theta \not= 0$  (i.e. \ref{eq:unifiedeom}a and \ref{eq:unifiedeom}b) and is negative definite when $\theta = 0$, $\dot{\theta} \not= 0$ (i.e. \ref{eq:unifiedeom}c and \ref{eq:unifiedeom}d). Furthermore, the equilibrium point is the largest invariant set in: 
 \[E = \left\{ {\Theta |\dot V(\Theta ) = 0} \right\}\]
 Thus, by the Barbashin-Krasovskii-LaSalle principle it is shown that origin of $\dot{\Theta}$ is locally asymptotically stable in the sense of Lyapunov. In order to determine which initial conditions will exhibit a decaying orbit towards the origin, the exact boundaries of the local stability is obtained by analyzing the behaviour of the total system energy with different initial conditions. 
 
@@ -266,21 +266,9 @@ If continued forward progress is desired, the foot is commanded to precede the F
 
 In order to extend the FPE approach to the 3D case, the concept of generating complete gait cycles described in Section~\ref{sub:gait_cycles} is revisted. The primary goal of the first three states in each step cycle (\textbf{PUSH}, \textbf{LIFT} and \textbf{SWING}) is to force the biped into an unstable configuration so that the FPE algorithm can be used to regain stability in the terminal state (\textbf{DROP}).
 
-To extend the 2D algorithm to the general 3D case, we begin by selecting a suitable plane in 3D space as the sagittal plane. The off-sagittal plane is perpendicular to the sagittal plane and the ground.  In the proposed approach, the goal of each step cycle is to control the motion of a 3D bipedal robot to generate a forward moving momentum \emph{along} the selected sagittal plane. Upon entering the terminal state, the FPE equation (\ref{eq:fpe}) is solved on the selected plane to determine the swing foot placement and ultimately regain stability. Unlike the 2D case, consider a 3D bipedal robot with finite foot length and width rather than a biped with point feet as demonstrated in \cite{Wight:2008vt}. The larger size of the region of support increases robustness to these approximation errors. The remainder of this thesis assumes a 3D bipedal robot with $n$ actuated degrees of freedom (DOF) and $n+6$ generalized coordinates defined by the following equation of motion: 
+To extend the 2D algorithm to the general 3D case, we begin by selecting a suitable plane in 3D space as the sagittal plane. The off-sagittal plane is perpendicular to the sagittal plane and the ground.  In the proposed approach, the goal of each step cycle is to control the motion of a 3D bipedal robot to generate a forward moving momentum \emph{along} the selected sagittal plane. Upon entering the terminal state, the FPE equation (\ref{eq:fpe}) is solved on the selected plane to determine the swing foot placement and ultimately regain stability. Unlike the 2D case, consider a 3D bipedal robot with finite foot length and width rather than a biped with point feet as demonstrated in \cite{Wight:2008vt}. The larger size of the region of support increases robustness to these approximation errors. 
 
-\begin{eqnarray}
-	\label{eq:eom}
-	A(\vec{q})\ddot{\vec{q}} + C(\vec{q},\dot{\vec{q}})\dot{\vec{q}} + g(\vec{q}) = \vec{\tau}
-\end{eqnarray}
-
-Where $A(\vec{q})$ is the $(n+6) \times (n+6)$ inertia matrix, $C(\vec{q},\dot{\vec{q}})$ are the centripetal/Coriolis terms and $g(\vec{q})$ is the gravity vector. The $(n+6) \times 1$ generalized force vector $\vec{\tau}$ is segmented as follows:
-
-\begin{eqnarray}
-	\label{eq:gentau}
-	\vec{\tau} = {\begin{bmatrix} \tau_{act} & \tau_{base} \\ \end{bmatrix}}^T
-\end{eqnarray}
-
-Where $\tau_{act}$ represents the $n$ actuated DOF and $\tau_{base} = \bf{0}_{6 \times 1} $ are the remaining non-actuated DOF at the floating base.
+The remainder of this thesis assumes a 3D bipedal robot with $n$ actuated degrees of freedom (DOF) and $n+6$ generalized coordinates defined by (\ref{eq:eom1}). 
 
 \subsection{Sagittal Plane} % (fold)
 \label{sub:sagittal_plane}

@@ -23,28 +23,35 @@ Given this model, a dynamic simulation environment can be designed to determine 
 \subsection{Forward Dynamics} % (fold)
 \label{sec:forward_dynamics}
 
-The overall dynamics of any multibody robotic system can be expressed by the following equation of motion: 
+The overall dynamics of any multibody robotic system can be expressed by the following equation of motion:
+
+\begin{eqnarray}
+	\label{eq:eom1}
+	A(\vec{q})\ddot{\vec{q}} + C(\vec{q},\dot{\vec{q}})\dot{\vec{q}} + g(\vec{q}) = \vec{\tau}
+\end{eqnarray}
+
+Where $A(\vec{q})$ is the $(n+6) \times (n+6)$ inertia matrix, $C(\vec{q},\dot{\vec{q}})$ are the centripetal/Coriolis terms and $g(\vec{q})$ is the gravity vector. The $(n+6) \times 1$ generalized force vector $\vec{\tau}$ is segmented as follows:
+
+\begin{eqnarray}
+	\label{eq:gentau}
+	\vec{\tau} = {\begin{bmatrix} \vec{\tau_{act}} & \vec{\tau_{base}} \\ \end{bmatrix}}^T
+\end{eqnarray}
+
+Where $\tau_{act}$ represents the $n$ actuated DOF and $\tau_{base} = \bf{0}_{6 \times 1} $ are the remaining non-actuated DOF at the floating base. In order to incorporate the effects of contact forces at both feet of the biped robot, the equation of motion presented in Equation \ref{eq:eom1} is modified as follows: 
+
 
 \begin{equation}
-	\label{eq:motion}
-	A(q)\ddot{\vec{q}} + C(\vec{q},\dot{\vec{q}})\dot{\vec{q}} + g(\vec{q}) = \Gamma
-\end{equation}
-
-Where $A(q)$ is the $n$ x $n$ inertia matrix, $C(q,\dot{q})$ is the centripetal and Coriolis terms and $g(q)$ is the gravity term. On the right hand side, $\Gamma$ is $n$ x 1 force vector which describes the torque at each of the joints in the system. The $\ddot{q}$ is also a $n$ x 1 vector representing the generalized coordinates of the multibody system. For most cases, the number of generalized coordinates $n$ is equivalent to the number of degrees of freedom. However, for the case of humanoid robots with floating bases there is an additional 6 degrees of freedom which represent the movements of the base \cite{Perrin:1997wn}. Therefore, for the 14 DOF lower body system there is a total of $n = 20$ generalized coordinates. In order to incorporate the effects of contact forces at both feet of the biped robot, the equation of motion presented in Equation \ref{eq:motion} is modified as follows: 
-
-
-\begin{equation}
-	\label{eq:motion2}
+	\label{eq:eom2}
 	\begin{bmatrix} A_{11} & A_{12} \\ A_{21} & A_{22} \end{bmatrix} 
-	\begin{bmatrix} \ddot{\vec{q}}_{joints} \\ \ddot{\vec{q}}_{base} \end{bmatrix} + 
+	\begin{bmatrix} \ddot{\vec{q}}_{act} \\ \ddot{\vec{q}}_{base} \end{bmatrix} + 
 	\begin{bmatrix} b_{1} \\ b_{2} \end{bmatrix} = 
-	\begin{bmatrix} \vec{\tau} \\ 0 \end{bmatrix} + 
+	\begin{bmatrix} \vec{\tau_{act}} \\ 0 \end{bmatrix} + 
     J^{T}\vec{F}_{left} + J^{T}\vec{F}_{right}
 \end{equation}
 
-Where the generalized acceleration vector $\ddot{q}_{joints}$ represents the $n$ DOF joint motion and $\ddot{q}_{base}$ is for the 6 DOF base motion. The gravitational and Coriolis terms are combined into the $\vec{b}$ vector. Finally, $J$ is a 6 x $n$ Jacobian matrix which relates the joint space variables to the work space variables. The force vectors $\vec{F}_{left}$ and $\vec{F}_{right}$ represent the contact force felt at the left and right foot, respectively. With this modification of the equation of motion, the external forces felt during the stance phase can be incorporated into the dynamic model of the overall system. The method of calculating the magnitude of the force itself depends on the contact model used for the system. Therefore, Equation \ref{eq:motion2} represents the complete dynamics of the biped robot with $n = 20$ generalized coordinates.
+Where the generalized acceleration vector $\ddot{q}_{act}$ represents the $n$ DOF joint motion and $\ddot{q}_{base}$ is for the 6 DOF base motion. The gravitational and Coriolis terms are combined into the $\vec{b}$ vector. Finally, $J$ is a 6 x $n$ Jacobian matrix which relates the joint space variables to the work space variables. The force vectors $\vec{F}_{left}$ and $\vec{F}_{right}$ represent the contact force felt at the left and right foot, respectively. With this modification of the equation of motion, the external forces felt during the stance phase can be incorporated into the dynamic model of the overall system. The method of calculating the magnitude of the force itself depends on the contact model used for the system. Therefore, Equation \ref{eq:eom2} represents the complete dynamics of the biped robot with $n = 20$ generalized coordinates.
 
-One method of computing a direct dynamic model for the biped robot is through the use of the Recursive Newton-Euler (RNE) algorithm. This algorithm computes the inverse dynamics model iteratively in order to arrive at a final solution for the direct dynamics \cite{Perrin:1997wn}. The RNE algorithm serially traverses through the kinematic chain to perform calculations using Newtonian mechanics. The first pass of the algorithm starts at the base link and traverses down the serial chains of the left and right legs calculating the kinematics. The second pass starts at the end of the serial chain(s) and works back up to the base link calculating the effect of dynamics. As a result, the RNE algorithm is capable of calculating the torques located at each joint and the 6 dimensional forces and moments felt by the base joint. Using this algorithm, the direct dynamics model can be computed by reformulating Equation \ref{eq:motion}. The pseudocode listed in Appendix \ref{sec:rne_direct_dynamics} describes the procedure for computing the direct dynamics model by utilizing the RNE formulation.
+One method of computing a direct dynamic model for the biped robot is through the use of the Recursive Newton-Euler (RNE) algorithm. This algorithm computes the inverse dynamics model iteratively in order to arrive at a final solution for the direct dynamics \cite{Perrin:1997wn}. The RNE algorithm serially traverses through the kinematic chain to perform calculations using Newtonian mechanics. The first pass of the algorithm starts at the base link and traverses down the serial chains of the left and right legs calculating the kinematics. The second pass starts at the end of the serial chain(s) and works back up to the base link calculating the effect of dynamics. As a result, the RNE algorithm is capable of calculating the torques located at each joint and the 6 dimensional forces and moments felt by the base joint. Using this algorithm, the direct dynamics model can be computed by reformulating Equation \ref{eq:eom1}. The pseudocode listed in Appendix \ref{sec:rne_direct_dynamics} describes the procedure for computing the direct dynamics model by utilizing the RNE formulation.
 
 % section forward_dynamics (end)
 
@@ -66,7 +73,7 @@ One challenging aspect of dynamic simulations is to accurately model the effects
 \end{equation}
 
 
-To incorporate the effects of ground contact into the existing dynamic model, the resulting force produced by Equation \ref{eq:contactf} is injected into the RNE algorithm between the end of the first pass and the start of the second pass. At the start of the second pass, the external contact force is used to initialize the backwards recursion. Due to the serial nature of RNE, this force traverses up the kinematic chains for each leg and is finally resolved at the base. Alternatively, the equivalent force can be substituted into the overall system dynamics represented in Equation \ref{eq:motion2} for $F_{left}$ and $F_{right}$. Both approaches will yield identical results as the contact force is resolved into each joint of the biped robot. 
+To incorporate the effects of ground contact into the existing dynamic model, the resulting force produced by Equation \ref{eq:contactf} is injected into the RNE algorithm between the end of the first pass and the start of the second pass. At the start of the second pass, the external contact force is used to initialize the backwards recursion. Due to the serial nature of RNE, this force traverses up the kinematic chains for each leg and is finally resolved at the base. Alternatively, the equivalent force can be substituted into the overall system dynamics represented in Equation \ref{eq:eom2} for $F_{left}$ and $F_{right}$. Both approaches will yield identical results as the contact force is resolved into each joint of the biped robot. 
 
 % section contact_modelling (end)
 
