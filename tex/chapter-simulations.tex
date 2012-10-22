@@ -261,7 +261,7 @@ If continued forward progress is desired, the foot is commanded to precede the F
 
 % section fpe_2D (end)
 
-\section{Extension to 3D} % (fold)
+\section{FPE Extension to 3D} % (fold)
 \label{sec:extension_to_3d}
 
 In order to extend the FPE approach to the 3D case, the concept of generating complete gait cycles described in Section~\ref{sub:gait_cycles} is revisted. The primary goal of the first three states in each step cycle (\textbf{PUSH}, \textbf{LIFT} and \textbf{SWING}) is to force the biped into an unstable configuration so that the FPE algorithm can be used to regain stability in the terminal state (\textbf{DROP}).
@@ -292,13 +292,20 @@ In the 2D case, the main goal of the initial states \textbf{PUSH}, \textbf{LIFT}
 
 \textbf{SWING}: $x_{COM}$ is held in place until the swing foot is aligned with the stance foot in the off-sagittal plane. At this point the $x_{COM}$ is deliberately pushed outside the region of support in the sagittal plane direction. \\
 
-A similar approach is used to generate trajectories for $x_{SWING}$ to achieve the desired behaviour of generating enough momentum to destabilize the biped in the sagittal plane while maintaining stability in the off-sagittal plane. Trajectories for $x_{SWING}$ are always computed to align with the sagittal plane formed by the stance foot at the start of the step cycle. This ensures that the solution to the 2D FPE equation remains valid as the \textbf{DROP} state is entered. \\
+A similar approach is used to generate trajectories for $x_{SWING}$ to achieve the desired behaviour of generating enough momentum to destabilize the biped in the sagittal plane while maintaining stability in the off-sagittal plane. Trajectories for $x_{SWING}$ (illustrated in Figure~\ref{fig:swingfoottraj}) are always computed to align with the sagittal plane formed by the stance foot at the start of the step cycle. This ensures that the solution to the 2D FPE equation remains valid as the \textbf{DROP} state is entered. \\
 
 \textbf{PUSH}: $x_{SWING}$ is held in place as the $x_{COM}$ trajectory is tracked.
 
 \textbf{LIFT}: $x_{SWING}$ follows a ramped trajectory to simultaneously raise the foot off the ground and move it forward in the sagittal plane.
 
-\textbf{SWING}: $x_{SWING}$ follows a straight line trajectory at a specific ground clearance until it reaches the FPE angle $\phi$. \\
+\textbf{SWING}: $x_{SWING}$ follows a straight line trajectory at a specific ground clearance (shown as $h_{LIFT}$ on Figure~\ref{fig:swingfoottraj}) until it reaches the FPE angle $\phi$. \\
+
+\begin{figure}[!h]
+	\centering
+    \includegraphics[scale=0.6]{fig/fpe/swingfoottraj.eps} 
+  	\caption{Trajectory for $x_{SWING}$ along the selected (sagittal) $xz$-plane for 3D FPE.}
+	\label{fig:swingfoottraj}
+\end{figure}
 
 The ramp trajectory used to raise the swing foot during \textbf{LIFT} should be parameterized in terms of the velocity of the FPE point so that this state transitions faster in the event of larger disturbances (since the biped would have a shorter amount of time to swing the foot over and catch itself).
 
@@ -478,21 +485,37 @@ In this terminal state, the Jacobian is used to track the fixed stance foot posi
 	\end{bmatrix} \nonumber \\
 \end{IEEEeqnarray}
 
-By the assumption of an arbitrary 3D biped with finite sized feet, it is possible for the biped to land on the edge of the foot instead of landing perfectly above the FPE point on teh ground. To handle this behaviour, a stabilization substate is used where the joint level control is computed directly. At this point, trajectories are generated for the ankles to align the surface of the foot with the ground and switch to high gain PD control for tracking. This ensures that both feet are in full contact with the ground prior to executing the opposite legs gait sequence.
+\subsubsection{\textbf{CONTACT STABILIZATION}} 
 
+By the assumption of an arbitrary 3D biped with finite sized feet, it is possible for the biped to land on the edge of the foot instead of landing perfectly above the FPE point on the ground. To handle this behaviour, a stabilization substate is used where the joint level control is computed directly. At this point, trajectories are generated for the ankles to align the surface of the foot with the ground and switch to high gain PD control for tracking. This ensures that both feet are in full contact with the ground prior to executing the opposite legs gait sequence.
 % subsubsection drop (end)
 
 % subsection joint_level_control (end)
+
+\subsection{Computing FPE Parameters} % (fold)
+\label{sub:computing_fpe_parameters}
+\Incomplete
+% subsection computing_fpe_parameters (end)
+
 % section extension_to_3d (end)
 
 \section{Simulations and Results} % (fold)
 \label{sec:simulations_and_results}
 
-The proposed control strategy to extend the FPE theory to 3D was implemented in simulation on a 14 DOF lower body bipedal robot. Each state of the control strategy was implemented in the Matlab/Simulink environment with the dynamics simulated in SimMechanics. Accurate kinematic and dynamic properties of the physical robot were taken directly from the CAD model (as discussed in Chapter \ref{cha:toolchain}).
+The proposed control strategy to extend the FPE theory to 3D was implemented in simulation on a 14 DOF lower body bipedal robot. Each state of the control strategy was implemented in the Matlab/Simulink environment with the multibody dynamics simulation by SimMechanics. Accurate kinematic and dynamic properties of the physical robot were taken directly from the CAD model through the toolchain model generation process (as discussed in Section~\ref{sec:model_generation}). 
+
+The finite state machine logic (transitions and states) were implemented in Stateflow as shown in Figure~\ref{fig:stateflow}.
+
+\begin{figure}[!h]
+	\centering
+    \includegraphics[scale=0.6]{fig/simulations/stateflow.png} 
+  	\caption{Finite state machine implemented in Stateflow for 3D FPE-based walking control strategy.}
+	\label{fig:stateflow}
+\end{figure}
 
 \subsection{Contact Modeling} % (fold)
 \label{sub:full_contact_modeling}
-The initial spring-damper contact model discussed in Section~\ref{sub:initial_contact_modeling} was modified for the full dynamic simulations. Equation (\ref{eq:contactf}) was modified as follows: 
+The initial spring-damper contact model discussed in Section~\ref{sub:initial_contact_modeling} was modified for the full dynamic simulations. Equation (\ref{eq:contactf}) was modified as follows: \Incomplete
 % subsection contact_modeling (end)
 
 \subsection{Side-to-Side Stepping} % (fold)
@@ -529,16 +552,14 @@ In the terminal DROP state, the swing foot trajectory tracks the FPE point on th
 
 \subsection{Forward Walking Gait} % (fold)
 \label{sub:forward_walking_gait}
-Incomplete. 
+\Incomplete 
 % subsection forward_walking_gait (end)
 
 % section simulations_and_results (end)
 
-\section{Discussion} % (fold)
-\label{sec:discussion}
-Incomplete. 
-
-% The impact of the contact points with the ground is modeled using the conservation of angular momentum to determine the regions in the state space where the biped remains stable after ground contact, by analyzing the total system energy post impact. The stability analysis is then used to determine where a biped must step to remain within the stability region. This forms the basis of the FPE, which is a point on the ground where, if the robot were to step onto that point, the kinetic energy of the biped system would equal the peak potential energy. Placing the swing foot beyond the FPE point results in the biped not having enough kinetic energy post impact to overcome the peak potential energy (overstepping). In this case, the biped remains stable. Conversely, placing the swing foot before the FPE point causes the kinetic energy post impact to exceed the peak potential energy (understepping). In this situation the biped begins to fall over.
+\section{Summary} % (fold)
+\label{sec:simulations_summary}
+The impact of the contact points with the ground is modeled using the conservation of angular momentum to determine the regions in the state space where the biped remains stable after ground contact, by analyzing the total system energy post impact. The stability analysis is then used to determine where a biped must step to remain within the stability region. This forms the basis of the FPE, which is a point on the ground where, if the robot were to step onto that point, the kinetic energy of the biped system would equal the peak potential energy. Placing the swing foot beyond the FPE point results in the biped not having enough kinetic energy post impact to overcome the peak potential energy (overstepping). In this case, the biped remains stable. Conversely, placing the swing foot before the FPE point causes the kinetic energy post impact to exceed the peak potential energy (understepping). In this situation the biped begins to fall over.
 
 % section discussion (end)
 
