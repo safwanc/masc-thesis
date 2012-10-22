@@ -284,13 +284,21 @@ Upon impact, the angle $\phi$ converges to $\beta/2$ and a new sagittal plane ca
 \label{sub:trajectory_generation}
 Once the sagittal plane has been identified at the beginning of each step cycle, appropriate task space trajectories must be generated for the COM ($x_{COM}$) and the swing foot ($x_{SWING}$).
 
-In the 2D case, the main goal of the initial states \textbf{PUSH}, \textbf{LIFT} and \textbf{SWING} was to achieve enough forward motion to destabilize the biped. In the 3D case, the robot must also remain stable in the off-sagittal plane while achieving the desired sagittal plane motion. If the ZMP leaves the region of support formed by the stance foot as the swing foot is lifted, the biped begins to fall in the off-sagittal plane and the solution to the 2D FPE equation is insufficient to maintain stable gait. To ensure both forward progress and off-sagittal plane stability, the trajectories for the $x_{COM}$ are generated as follows: \\
+In the 2D case, the main goal of the initial states \textbf{PUSH}, \textbf{LIFT} and \textbf{SWING} was to achieve enough forward motion to destabilize the biped. In the 3D case, the robot must also remain stable in the off-sagittal plane while achieving the desired sagittal plane motion. If the ZMP leaves the region of support formed by the stance foot as the swing foot is lifted, the biped begins to fall in the off-sagittal plane and the solution to the 2D FPE equation is insufficient to maintain stable gait. To ensure both forward progress and off-sagittal plane stability, the generated trajectories for $x_{COM}$ are shown in Figure~\ref{fig:comtraj3d}. \\
 
 \textbf{PUSH}: $x_{COM}$ is moved above the leading stance foot to maintain stability in the off-sagittal and sagittal planes.
 
 \textbf{LIFT}: $x_{COM}$ is held at its current location (above stance foot) while the swing foot is lifted from the ground to achieve sufficient clearance.
 
 \textbf{SWING}: $x_{COM}$ is held in place until the swing foot is aligned with the stance foot in the off-sagittal plane. At this point the $x_{COM}$ is deliberately pushed outside the region of support in the sagittal plane direction. \\
+
+\begin{figure}[!h]
+	\centering
+    \includegraphics[scale=0.7]{fig/fpe/comtraj3d.eps} 
+  	\caption{Trajectory for $x_{COM}$ to ensure forward progress and off-sagittal stability for 3D FPE. \Incomplete}
+	\label{fig:comtraj3d}
+\end{figure}
+
 
 A similar approach is used to generate trajectories for $x_{SWING}$ to achieve the desired behaviour of generating enough momentum to destabilize the biped in the sagittal plane while maintaining stability in the off-sagittal plane. Trajectories for $x_{SWING}$ (illustrated in Figure~\ref{fig:swingfoottraj}) are always computed to align with the sagittal plane formed by the stance foot at the start of the step cycle. This ensures that the solution to the 2D FPE equation remains valid as the \textbf{DROP} state is entered. \\
 
@@ -303,7 +311,7 @@ A similar approach is used to generate trajectories for $x_{SWING}$ to achieve t
 \begin{figure}[!h]
 	\centering
     \includegraphics[scale=0.6]{fig/fpe/swingfoottraj.eps} 
-  	\caption{Trajectory for $x_{SWING}$ along the selected (sagittal) $xz$-plane for 3D FPE.}
+  	\caption{Trajectory for $x_{SWING}$ along the selected (sagittal) $xz$-plane for 3D FPE. \Incomplete}
 	\label{fig:swingfoottraj}
 \end{figure}
 
