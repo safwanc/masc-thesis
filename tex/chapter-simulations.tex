@@ -487,14 +487,66 @@ In this terminal state, the Jacobian is used to track the fixed stance foot posi
 
 \subsubsection{\textbf{CONTACT STABILIZATION}} 
 
-By the assumption of an arbitrary 3D biped with finite sized feet, it is possible for the biped to land on the edge of the foot instead of landing perfectly above the FPE point on the ground. To handle this behaviour, a stabilization substate is used where the joint level control is computed directly. At this point, trajectories are generated for the ankles to align the surface of the foot with the ground and switch to high gain PD control for tracking. This ensures that both feet are in full contact with the ground prior to executing the opposite legs gait sequence.
+By the assumption of an arbitrary 3D biped with finite sized feet, it is possible for the biped to land on the edge of the foot instead of landing perfectly above the FPE point on the ground. Once ground contact is made, the solution to the FPE equation is no longer valid (since a real biped will not have instantaneous transfer of balance). To handle this behaviour, a stabilization substate is used where the joint level control is computed directly. At this point, trajectories are generated for the ankles to align the surface of the foot with the ground and switch to high gain PD control for tracking. This ensures that both feet are in full contact with the ground prior to executing the opposite legs gait sequence. The biped-ground contact interface is shown before and after the stabilization substate in Figure~\ref{fig:contact_stabilization}. 
+
+\begin{figure}[!h]
+	\begin{center}
+	\subfigure{\includegraphics[scale=0.29]{fig/fpe/prestabilization.png}} 
+	\subfigure{\includegraphics[scale=0.29]{fig/fpe/poststabilization.png}}
+	\end{center}
+  	\caption{Ground-foot contact shown for before (left) and after (right) contact stabilization.}
+	\label{fig:contact_stabilization}
+\end{figure}
+
+
 % subsubsection drop (end)
 
 % subsection joint_level_control (end)
 
 \subsection{Computing FPE Parameters} % (fold)
 \label{sub:computing_fpe_parameters}
-\Incomplete
+The 2D FPE equation (\ref{eq:fpe}) requires the total inertia about the COM ($I_{COM}$) and average angular velocity about the pivoted fixed foot ($\dot{\theta}_{avg}$). In the 2D case, the moment of inertia for link $k$ is a scalar value since there is only one plane of rotation. The total inertia about the COM is computed by summing the moment of inertia for each link in the system. However, the moment of inertia for each link is a $3\times3$ tensor: 
+
+\begin{equation}
+	\begin{aligned}
+		{I_k} = \left[ {\begin{array}{*{20}{c}}
+{{I_{xx}}}&{{I_{xy}}}&{{I_{xz}}}\\
+{{I_{yx}}}&{{I_{yy}}}&{{I_{yz}}}\\
+{{I_{zx}}}&{{I_{zy}}}&{{I_{zz}}}
+\end{array}} \right]
+	\end{aligned}
+\end{equation}
+
+The inertia tensor of each link is taken at the COM aligned with the local coordinate system. If the $xz$-plane is selected as the sagittal plane in 3D space and the moment of inertia of link $k$ is the $I_{yy}$ term. However, in the 3D case the motion of the biped is no longer fixed to a single plane of rotation. By attaching a fixed coordinate frame to the selected sagittal plane at the start of each step, the orientation of the sagittal plane can be expressed as a $3\times3$ rotation matrix $R$. The local inertia tensor can be rotated into the selected sagittal plane's coordinate frame by: 
+
+\begin{equation}
+	\begin{aligned}
+		{I_{k,sagittal}} = R \cdot {I_k} \cdot {R^T}
+	\end{aligned}
+	\label{eq:isagittal}
+\end{equation}
+
+Then the effective moment of inertia of each link \emph{projected on to the selected sagittal plane} can be obtained by transforming the inertia tensor with (\ref{eq:isagittal}) and pulling out the $I_{yy}$ term, $I_{k,yy}$. The total inertia about the COM can easily be computed by summing the effective inertia of each link on the sagittal plane: 
+
+\begin{equation}
+	\begin{aligned}
+		{I_{COM}} = \sum\limits_{k = 1}^n {{I_{k,yy}}}
+	\end{aligned}
+	\label{eq:icom_3d}
+\end{equation}
+
+The average angular velocity is computed as a weighted sum of the inertia of each link \cite{Wight:2008ii}. In the 3D case, the same equation is used with the \emph{effective} moment of inertia of each link on the sagittal plane: 
+
+\begin{equation}
+	\begin{aligned}
+		{\dot \theta _{avg}} = \frac{{\sum\limits_{k = 1}^n {{I_{k,yy}}} {{\dot \theta }_k}}}{{\sum\limits_{k = 1}^n {{I_{k,yy}}} }}
+	\end{aligned}
+	\label{eq:wavg_3d}
+\end{equation}
+
+The angular velocity of each link ${\dot{\theta}_k}$ is obtained by rotating the joint velocity (expressed as a $3\times1$ vector with $\dot{q}_k$ in the row represented by its local axis of rotation) to the fixed frame of the sagittal plane. 
+
+The parameters computed with (\ref{eq:icom_3d}) and (\ref{eq:wavg_3d}) are plugged in to the 2D FPE equation (\ref{eq:fpe}) and the solution ($\phi$) is obtained with a non-linear equation solver. 
 % subsection computing_fpe_parameters (end)
 
 % section extension_to_3d (end)
@@ -516,10 +568,10 @@ The proposed control strategy to extend the FPE theory to 3D was implemented in 
 	Finite state machine logic was implemented in Stateflow as shown in Figure~\ref{fig:stateflow}. The state names follow the same convention as the 2D FPE case (shown in Figure~\ref{fig:statemachine}) while the transition logic is updated for the 3D case described in Section~\ref{sub:joint_level_control}.  \\
 
 	\item \textbf{Trajectory Generator} \\ 
-	Generates the task space COM ($x_{COM}$) and the swing foot ($x_{SWING}$) trajectories detailed in Section~\ref{sub:trajectory_generation} based on the current state of the controller. Also uses the higher level supervisory control mode (i.e. WALK or STAND) to adjust the trajectory generation for understepping/overstepping the FPE point. \\
+	Generates the task space COM ($x_{COM}$) and the swing foot ($x_{SWING}$) trajectories detailed in Section~\ref{sub:trajectory_generation} based on the current state of the controller. Also uses the higher level supervisory control mode (i.e. \textbf{WALK} or \textbf{STAND}) to adjust the trajectory generation for understepping/overstepping the FPE point. \\
 
 	\item \textbf{Foot Placement Estimator} \\ 
-	Computes the FPE parameters about the COM ($I_{COM}$, $\dot{\theta}_{COM}$) for the 3D case (detailed in Section~\ref{sub:computing_fpe_parameters}) and solves the FPE equation (\ref{eq:fpe}) using a numerical methods-based nonlinear solver from \cite{Wight:2008vt}. \\
+	Computes the FPE parameters about the COM ($I_{COM}$, $\dot{\theta}_{avg}$) for the 3D case (detailed in Section~\ref{sub:computing_fpe_parameters}) and solves the FPE equation (\ref{eq:fpe}) using a numerical methods-based nonlinear solver from \cite{Wight:2008vt}. \\
 
 	\item \textbf{Task Controller} \\ 
 	Provides the state dependent control logic for the whole body motion control framework in Section~\ref{sub:control_strategy}. The resulting joint space velocities are integrated to obtain the joint position reference command. The contact stabilization substate used in the second half of \textbf{DROP} is also implemented here to generate joint level trajectories directly. \\
@@ -540,13 +592,50 @@ The simulations are executed with a fixed step Runge-Kutta solver at 1KHz. The f
 
 \subsection{Contact Modeling} % (fold)
 \label{sub:full_contact_modeling}
-The initial spring-damper contact model discussed in Section~\ref{sub:initial_contact_modeling} was modified for the full dynamic simulations. Equation (\ref{eq:contactf}) was modified as follows: \Incomplete
+The initial spring-damper contact model discussed in Section~\ref{sub:initial_contact_modeling} was replaced with a more complex version to accurately model the ground/foot dynamics. The Hunt and Crossley contact model \cite{hunt1975coefficient,gilardi2002literature} generates a normal force using a non-linear spring-damper system defined by: 
+
+\begin{equation}
+	\label{eq:contacthc}
+	{F_{normal}} = b{z^p}{\dot z^q} + k{z^n}
+\end{equation}
+
+Where $z$, $\dot{z}$ are the penetration depth position and velocity, respectively. The constants $k$, $b$ are the spring-damper coefficients and $n$, $p$, $q$ are tunable constants. Equation (\ref{eq:contacthc}) provides the ground reaction force in the normal direction only. The tangential (frictional) contact forces were modeled by: 
+
+
+\begin{equation}
+	\label{eq:contactfr}
+	{F_{tangential}} = f{\dot x}
+\end{equation}
+
+Where $\dot x$ is the tangential velocity of the contact point (in the $x$ and $y$ directions) and $f$ is a tunable constant. The forces generated by (\ref{eq:contacthc}) and (\ref{eq:contactfr}) ensure that there are no discontinuities when ground contact is made. A seperate dynamic simulation model was generated to tune the contact model constants to emulate a stiff ground. The final (tuned) parameters used for dynamic simulations are provided in Table~\ref{tab:contactk}.
+
+\begin{table}[!h]
+  \centering
+  \caption{Tuned contact model constants.}
+    \begin{tabular}{cc}
+    \addlinespace
+    \toprule
+    \textbf{Parameter} & \textbf{Value}\\
+    \midrule
+	$f$	&	10 \\
+    $k$	&	2000 \\
+    $b$	&	10 \\
+    $p$	&	1.10 \\
+    $q$  &	1.00 \\
+    $n$	&	2.31 \\
+    \bottomrule
+    \end{tabular}
+  \label{tab:contactk}
+\end{table}
+
+It was found that stiffening the ground contact by raising the model constants would produce singularities with fixed time step simulations at 1 KHz. Reducing the time step helped avoid singularities but the simulation runtime drastically increased. The use of variable step solvers was explored as an option to reduce simulation runtime while providing a stiffer ground with much higher contact model constants. 
+
 % subsection contact_modeling (end)
 
 \subsection{Side-to-Side Stepping} % (fold)
 \label{sub:3d_simulations}
 
-To demonstrate the dynamic stability of a 3D biped under this approach, the frontal plane was selected as the sagittal plane. Forward motion along this sagittal plane results in a side-to-side stepping sequence for the biped (as shown in Figure \ref{fig:sequence}). The gray plane in the frame captures represent the 2D FPE plane which moves along the Y-direction (biped's frontal plane). The intersection of the gray 2D FPE plane and the ground plane indicates the FPE point tracked during \textbf{DROP}. 
+To demonstrate the dynamic stability of a 3D biped under this approach, the frontal plane was selected as the sagittal plane. Forward motion along this sagittal plane results in a side-to-side stepping sequence for the biped (as shown in Figure \ref{fig:sequence}). The gray plane in the frame captures moves along the Y-direction (biped's frontal plane). The intersection of the gray plane and the ground indicates the FPE point tracked during \textbf{DROP}. 
 
 \begin{figure}[!h]
 	\centering
@@ -565,7 +654,7 @@ The resulting $x_{COM}$ trajectories from simulating the side-to-side stepping m
 \end{figure}
 
 
-In the terminal DROP state, the swing foot trajectory tracks the FPE point on the ground (shown in Figure \ref{fig:fpetrack}) with an added offset to ensure that the biped oversteps to guarantee stability (as per the 2D FPE theory). Once ground contact is made (around 11.6s), the stabilization substate is entered and the swing foot trajectory is controlled directly to align the foot with the ground. This causes the biped to rock back and forth (similar to the 2D case) until stability is reached.
+In the terminal \textbf{DROP} state, the swing foot trajectory tracks the FPE point on the ground (shown in Figure \ref{fig:fpetrack}) with an added offset to ensure that the biped oversteps to guarantee stability (as per the 2D FPE theory). Once ground contact is made (around 11.6s), the stabilization substate is entered and the swing foot trajectory is controlled directly to align the foot with the ground. This causes the biped to rock back and forth (similar to the 2D case) until stability is reached.
 
 \begin{figure}[!h]
 	\centering
