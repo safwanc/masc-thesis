@@ -71,9 +71,9 @@ Professor Shuuji Kajita packages a simple MATLAB \cite{sw:matlab} toolbox with h
 With the \texttt{uLINK} structure is generated, any of the preprogrammed routines in the toolbox can be used. The toolbox provides a function \texttt{ForwardDynamics} to compute the direct dynamics model using the RNE algorithm. However, the calculations omit the effects of any external forces acting on the system. Since it is important to incorporate the contribution of the ground reaction forces, the toolbox was modified to model the complete dynamics of the system. 
 
 \subsection{Contact Modeling} % (fold)
-\label{sec:contact_modelling}
+\label{sub:initial_contact_modeling}
 
-One challenging aspect of dynamic simulations is to accurately model the effects of external forces on the system during the stance phase. To emulate the ground reaction forces during this period of the gait cycle, a contact model is used to generate an approximate contact force. For the initial design specifications, a spring-damper contact model is used (shown in Figure~\ref{fig:springdamper}). Both feet are modelled as point contacts which experience a normal force proportional to the output of the spring-damper system when in contact with the ground. A more complex version of (\ref{eq:contactf}) is used for full dynamic simulations in later chapters (Section~\ref{sec:simulations_and_results}).
+One challenging aspect of dynamic simulations is to accurately model the effects of external forces on the system during the stance phase. To emulate the ground reaction forces during this period of the gait cycle, a contact model is used to generate an approximate contact force. For the initial design specifications, a spring-damper contact model is used (shown in Figure~\ref{fig:springdamper}). Both feet are modelled as point contacts which experience a normal force proportional to the output of the spring-damper system when in contact with the ground. A more complex version of (\ref{eq:contactf}) is used for full dynamic simulations in later chapters (specifically in Section~\ref{sub:full_contact_modeling}).
 
 \begin{figure}[!h]
 	\begin{center}
@@ -139,19 +139,19 @@ Since one of the secondary objectives is to keep the overall mass of the biped a
 
 \begin{table}[!h]
   \centering
-  \caption{Individual joint torque demands for each DOF in one leg.}
+  \caption{Individual joint torque demands for each DOF in one leg using gait estimation.}
     \begin{tabular}{lcc}
     \addlinespace
     \toprule
     \textbf{Joint} & \textbf{Normal} & \textbf{Peak}\\
     \midrule
-    Ankle Roll	&	13.824 Nm	&	14.021 Nm\\
+    Hip Yaw		&	3.698 Nm	&	3.698 Nm\\
+    Hip Roll	&	13.606 Nm	&	14.054 Nm\\
+    Hip Pitch	&	10.081 Nm	&	38.295 Nm\\
+    Knee Pitch  &	5.229 Nm	&	16.539 Nm\\
+    Ankle Yaw	&	3.858 Nm	&	3.858 Nm\\
     Ankle Pitch	&	4.395 Nm	&	7.923 Nm\\
-	Ankle Yaw	&	3.858 Nm	&	3.858 Nm\\
-	Knee Pitch  &	5.229 Nm	&	16.539 Nm\\
-	Hip Roll	&	13.606 Nm	&	14.054 Nm\\
-	Hip Pitch	&	10.081 Nm	&	38.295 Nm\\
-	Hip Yaw		&	3.698 Nm	&	3.698 Nm\\
+    Ankle Roll	&	2.824 Nm	&	5.021 Nm\\
     \bottomrule
     \end{tabular}%
   \label{jointtable}%
@@ -402,9 +402,17 @@ For yaw joints which actuate along the vertical axis, the impact forces experien
 
 % section mechanical_design (end)
 
-\section{Discussion} % (fold)
-\label{sec:design_discussion}
-Incomplete.
+\section{Summary} % (fold)
+\label{sec:design_summary}
+The electromechanical design of the 14 DOF bipedal robot had two primary design objectives. The first was to produce enough mechanical power for the biped to achieve walking. The secondary design objective to keep the overall weight low and raise the COM improves the controllability of the final design. The initial design process started from the basics of dynamic modeling of multibody systems. The forward and inverse dynamic models computed with the RNE algorithm provided a mathematical framework for estimating the torque requirements at each joint. 
+
+Since the end goal is to develop a biped capable of human-like walking, a published dataset of motion captured human gait was used for the initial dynamic simulation. Using MATLAB toolboxes, the kinematic constraints on each joint ($\vec{q}$, $\vec{\dot{q}}$, $\vec{\ddot{q}}$) were imposed on the dynamic model of the biped. A spring-damper contact model was used to generate an approximate ground reaction force experienced by the biped while walking. Finally, the initial joint torque and velocity demands under the estimated gait cycle were obtained through the dynamic simulations. 
+
+These initial design specifications formed the basis for drivetrain selection. The primary design goal of producing enough mechanical power for bipedal locomotion was addressed by appropriately sizing electric machines to the specifications. A combination of DC motors and precision gearheads were evaluated by analyzing the torque-speed, power, efficiency and thermal characteristics. The selection process revealed that a set of high and low power configuration of drivetrain components would meet the specifications while minimizing the overall weight of the system. 
+
+After the drivetrain configurations were established, the secondary design goal of minimizing the overall weight and raising the COM were addressed intrinsically through the mechanical design in CAD. A rough guideline for dimensioning the lower body segments (i.e. thigh, shank) was obtained through anthropometric dimensioning and the desired height of the lower body. Aluminum 5052 was selected as the material to construct the chassis frame due to its light weight, fatigue strength and machineability. The power transmission system (composed of shafts, bearings and gears) connecting the actuators to the linkages were strategically designed to raise the COM and support the loading during gait. 
+
+This concluded the initial prototype design of the 14 DOF bipedal robot in CAD. Further improvements to the mechanical design (i.e. adjusting link lengths or motor positioning) and analysis of the electromechanical system under control action required dynamic simulations. The following chapter presents a rapid prototyping toolchain for accomplishing these objectives with minimal user input. 
 % section discussion (end)
 
 % chapter design (end)
