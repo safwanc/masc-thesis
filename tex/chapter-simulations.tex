@@ -502,16 +502,41 @@ By the assumption of an arbitrary 3D biped with finite sized feet, it is possibl
 \section{Simulations and Results} % (fold)
 \label{sec:simulations_and_results}
 
-The proposed control strategy to extend the FPE theory to 3D was implemented in simulation on a 14 DOF lower body bipedal robot. Each state of the control strategy was implemented in the Matlab/Simulink environment with the multibody dynamics simulation by SimMechanics. Accurate kinematic and dynamic properties of the physical robot were taken directly from the CAD model through the toolchain model generation process (as discussed in Section~\ref{sec:model_generation}). 
+The proposed control strategy to extend the FPE theory to 3D was implemented in simulation on a 14 DOF lower body bipedal robot. Each state of the control strategy was implemented in the Matlab/Simulink environment with the multibody dynamics simulation by SimMechanics. Accurate kinematic and dynamic properties of the physical robot were taken directly from the CAD model through the toolchain model generation process (as discussed in Section~\ref{sec:model_generation}). The controller diagram shown in Figure~\ref{fig:fpecontroller} implements the control strategy presented in this section. The subsystems from the outer most loop working inwards are described as follows: 
 
-The finite state machine logic (transitions and states) were implemented in Stateflow as shown in Figure~\ref{fig:stateflow}.
+\begin{figure*}[!b]
+	%\centering
+    \centerline{\includegraphics[trim = 12mm 75mm 12mm 75mm,clip,width=18cm]{fig/simulations/fpecontroller.pdf}}
+  	\caption{Controller diagram of 3D FPE based walking control strategy implemented in Simulink.}
+	\label{fig:fpecontroller}
+\end{figure*}
+
+\begin{enumerate}
+	\item \textbf{State Machine} \\ 
+	Finite state machine logic was implemented in Stateflow as shown in Figure~\ref{fig:stateflow}. The state names follow the same convention as the 2D FPE case (shown in Figure~\ref{fig:statemachine}) while the transition logic is updated for the 3D case described in Section~\ref{sub:joint_level_control}.  \\
+
+	\item \textbf{Trajectory Generator} \\ 
+	Generates the task space COM ($x_{COM}$) and the swing foot ($x_{SWING}$) trajectories detailed in Section~\ref{sub:trajectory_generation} based on the current state of the controller. Also uses the higher level supervisory control mode (i.e. WALK or STAND) to adjust the trajectory generation for understepping/overstepping the FPE point. \\
+
+	\item \textbf{Foot Placement Estimator} \\ 
+	Computes the FPE parameters about the COM ($I_{COM}$, $\dot{\theta}_{COM}$) for the 3D case (detailed in Section~\ref{sub:computing_fpe_parameters}) and solves the FPE equation (\ref{eq:fpe}) using a numerical methods-based nonlinear solver from \cite{Wight:2008vt}. \\
+
+	\item \textbf{Task Controller} \\ 
+	Provides the state dependent control logic for the whole body motion control framework in Section~\ref{sub:control_strategy}. The resulting joint space velocities are integrated to obtain the joint position reference command. The contact stabilization substate used in the second half of \textbf{DROP} is also implemented here to generate joint level trajectories directly. \\
+
+	\item \textbf{Joint Controller} \\ 
+	High gain joint level PD controllers with gain scheduling based on the current state of the control strategy. The output of this block ($\tau$) is used to drive the forward dynamics simulation generated with the toolchain. \\
+
+\end{enumerate}
 
 \begin{figure}[!h]
 	\centering
     \includegraphics[scale=0.6]{fig/simulations/stateflow.png} 
-  	\caption{Finite state machine implemented in Stateflow for 3D FPE-based walking control strategy.}
+  	\caption{Finite state machine implemented in Stateflow for 3D FPE-based walking control strategy. \Incomplete}
 	\label{fig:stateflow}
 \end{figure}
+
+The simulations are executed with a fixed step Runge-Kutta solver at 1KHz. The forward dynamics generated with the toolchain drive the simultaneous 3D visualizations in an external viewer application.  
 
 \subsection{Contact Modeling} % (fold)
 \label{sub:full_contact_modeling}
@@ -521,14 +546,14 @@ The initial spring-damper contact model discussed in Section~\ref{sub:initial_co
 \subsection{Side-to-Side Stepping} % (fold)
 \label{sub:3d_simulations}
 
-\begin{figure*}[!b]
+To demonstrate the dynamic stability of a 3D biped under this approach, the frontal plane was selected as the sagittal plane. Forward motion along this sagittal plane results in a side-to-side stepping sequence for the biped (as shown in Figure \ref{fig:sequence}). The gray plane in the frame captures represent the 2D FPE plane which moves along the Y-direction (biped's frontal plane). The intersection of the gray 2D FPE plane and the ground plane indicates the FPE point tracked during \textbf{DROP}. 
+
+\begin{figure}[!h]
 	\centering
-    \includegraphics[scale=0.10]{fig/simulations/sequence.png}
+    \includegraphics[scale=0.095]{fig/simulations/sequence.png}
   	\caption{Frame captures from the realtime 3D visualization while side-to-side stepping.}
 	\label{fig:sequence}
-\end{figure*}
-
-To demonstrate the dynamic stability of a 3D biped under this approach, the frontal plane was selected as the sagittal plane. Forward motion along this sagittal plane results in a side-to-side stepping sequence for the biped (as shown in Figure \ref{fig:sequence}). The gray plane in the frame captures represent the 2D FPE plane which moves along the Y-direction (biped's frontal plane). The intersection of the gray 2D FPE plane and the ground plane indicates the FPE point tracked during \textbf{DROP}. 
+\end{figure}
 
 The resulting $x_{COM}$ trajectories from simulating the side-to-side stepping motion (shown in Figure \ref{fig:comtraj}) demonstrate the stability of the biped through a complete gait sequence. The prioritized motion control framework handles the dynamic switching of constraints (from double support to single support) while generating the appropriate joint level commands for swinging the COM over. The colour coded dotted lines on Figure \ref{fig:comtraj} indicate the boundaries of each foot on the ground. Note that during the \textbf{SWING} state, the COM is pushed outside the region of support (around 11s). This in turn initiates the \textbf{DROP} state where the FPE point is tracked to regain stability.
 
