@@ -1,5 +1,7 @@
 \chapter{Related Work} % (fold)
 \label{cha:background}
+\ifthenelse{\boolean{VoidIncomplete}}{\Incomplete}{
+
 Maintaining balance is one of the key challenges inherent to the bipedal form. Despite these challenges, this form is the most practical for robots to navigate in an environment designed for humans. There exists a wide range of control strategies to achieve bipedal locomotion in robotics literature to date. Some of the most popular strategies are briefly reviewed in this chapter.  
 
 \section{Zero-Moment Point} % (fold)
@@ -27,5 +29,5 @@ The capture point concept, developed by Pratt et al. \cite{Pratt:2006vy}, is con
 
 Recently, a more comprehensive approach using the capture point for foot placement as a means to develop full walking control strategies has been proposed. De Boer \cite{DeBoer:2012wp} focused on the ground/foot interaction to develop a robust and energetically efficient walking control strategy for a force-controlled compliant lower-body biped. While this approach is philosophically similar to the idea behind FPE, there are several key differences. The approach presented in this thesis uses simple local controllers to form complete gait cycles and can be used on position-controlled joints without any complex actuation systems. The capturability framework demonstrated in \cite{Pratt01092012} used separate controllers for the swing and stance legs whereas this approach uses a single global differential kinematic resolution for whole body motion control.
 % section related_work (end)
-
+}
 % chapter background (end)
