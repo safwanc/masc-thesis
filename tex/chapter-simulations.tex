@@ -272,7 +272,16 @@ The remainder of this thesis assumes a 3D bipedal robot with $n$ actuated degree
 
 \subsection{Sagittal Plane} % (fold)
 \label{sub:sagittal_plane}
-To select an appropriate sagittal plane for a 3D bipedal robot, a vertical plane which lies between the current position of the stance foot and the desired direction of motion is chosen. For a 3D biped walking in a forward motion, this plane is chosen as the the vertical plane passing through the midpoint between the hips and parallel to the direction of forward progress. For side-stepping motion, the coronal plane through the stance foot in the direction of the side step is chosen as the sagittal plane.
+To select an appropriate sagittal plane for a 3D bipedal robot, a vertical plane which lies between the current position of the stance foot and the desired direction of motion is chosen. For a 3D biped walking in a forward motion, this plane is chosen as the the vertical plane passing through the midpoint between the hips and parallel to the direction of forward progress. For side-stepping motion, the coronal plane through the stance foot in the direction of the side step is chosen as the sagittal plane. The selection of the sagittal plane for 3D bipedal robots is illustrated in Figure~\ref{fig:sagittal_plane} for these two situations. 
+
+\begin{figure}[!h]
+	\begin{center}
+	\subfigure{\includegraphics[scale=0.52]{fig/fpe/fpeplanesidestep.png}} 
+	\subfigure{\includegraphics[scale=0.52]{fig/fpe/fpeplaneforwardwalk.png}}
+	\end{center}
+  	\caption{Sagittal plane selection shown as translucent gray for side-stepping (left) and forward walking (right).}
+	\label{fig:sagittal_plane}
+\end{figure}
 
 The motion of the biped is controlled based on the selected plane for the duration of the step cycle. During gait initiation, the lines from the COM to the contact points are of length $L$, and the leg separation angle is $\beta$ (similar to the planar case). If the motion of the biped is constrained along this plane, the FPE angle $\phi$ can be used to determine foot placement to regain stability. The parameters required to compute the 2D FPE along the plane are computed accordingly. That is, the inertia tensor of each link is rotated to obtain the appropriate $I_{COM}$ along the selected sagittal plane.
 
@@ -282,23 +291,20 @@ Upon impact, the angle $\phi$ converges to $\beta/2$ and a new sagittal plane ca
 
 \subsection{Trajectory Generation} % (fold)
 \label{sub:trajectory_generation}
-Once the sagittal plane has been identified at the beginning of each step cycle, appropriate task space trajectories must be generated for the COM ($x_{COM}$) and the swing foot ($x_{SWING}$).
+Once the sagittal plane has been identified at the beginning of each step cycle, appropriate task space trajectories must be generated for the COM ($x_{COM}$) and the swing foot ($x_{SWING}$). In the 2D case, the main goal of the initial states \textbf{PUSH}, \textbf{LIFT} and \textbf{SWING} was to achieve enough forward motion to destabilize the biped. In the 3D case, the robot must also remain stable in the off-sagittal plane while achieving the desired sagittal plane motion. If the ZMP leaves the region of support formed by the stance foot as the swing foot is lifted, the biped begins to fall in the off-sagittal plane and the solution to the 2D FPE equation is insufficient to maintain stable gait. To ensure both forward progress and off-sagittal plane stability, the generated trajectories for $x_{COM}$ are shown in Figure~\ref{fig:comtraj3d}. \\
 
-In the 2D case, the main goal of the initial states \textbf{PUSH}, \textbf{LIFT} and \textbf{SWING} was to achieve enough forward motion to destabilize the biped. In the 3D case, the robot must also remain stable in the off-sagittal plane while achieving the desired sagittal plane motion. If the ZMP leaves the region of support formed by the stance foot as the swing foot is lifted, the biped begins to fall in the off-sagittal plane and the solution to the 2D FPE equation is insufficient to maintain stable gait. To ensure both forward progress and off-sagittal plane stability, the generated trajectories for $x_{COM}$ are shown in Figure~\ref{fig:comtraj3d}. \\
+\begin{figure}[!h]
+	\centering
+    \includegraphics[scale=0.6]{fig/fpe/comtraj3d.eps} 
+  	\caption{Trajectory for $x_{COM}$ to ensure forward progress and off-sagittal stability for 3D FPE. \Incomplete}
+	\label{fig:comtraj3d}
+\end{figure}
 
 \textbf{PUSH}: $x_{COM}$ is moved above the leading stance foot to maintain stability in the off-sagittal and sagittal planes.
 
 \textbf{LIFT}: $x_{COM}$ is held at its current location (above stance foot) while the swing foot is lifted from the ground to achieve sufficient clearance.
 
 \textbf{SWING}: $x_{COM}$ is held in place until the swing foot is aligned with the stance foot in the off-sagittal plane. At this point the $x_{COM}$ is deliberately pushed outside the region of support in the sagittal plane direction. \\
-
-\begin{figure}[!h]
-	\centering
-    \includegraphics[scale=0.7]{fig/fpe/comtraj3d.eps} 
-  	\caption{Trajectory for $x_{COM}$ to ensure forward progress and off-sagittal stability for 3D FPE. \Incomplete}
-	\label{fig:comtraj3d}
-\end{figure}
-
 
 A similar approach is used to generate trajectories for $x_{SWING}$ to achieve the desired behaviour of generating enough momentum to destabilize the biped in the sagittal plane while maintaining stability in the off-sagittal plane. Trajectories for $x_{SWING}$ (illustrated in Figure~\ref{fig:swingfoottraj}) are always computed to align with the sagittal plane formed by the stance foot at the start of the step cycle. This ensures that the solution to the 2D FPE equation remains valid as the \textbf{DROP} state is entered. \\
 
@@ -643,8 +649,6 @@ It was found that stiffening the ground contact by raising the model constants w
 \subsection{Side-to-Side Stepping} % (fold)
 \label{sub:3d_simulations}
 
-To demonstrate the dynamic stability of a 3D biped under this approach, the frontal plane was selected as the sagittal plane. Forward motion along this sagittal plane results in a side-to-side stepping sequence for the biped (as shown in Figure \ref{fig:sequence}). The gray plane in the frame captures moves along the Y-direction (biped's frontal plane). The intersection of the gray plane and the ground indicates the FPE point tracked during \textbf{DROP}. 
-
 \begin{figure}[!h]
 	\centering
     \includegraphics[scale=0.095]{fig/simulations/sequence.png}
@@ -652,11 +656,13 @@ To demonstrate the dynamic stability of a 3D biped under this approach, the fron
 	\label{fig:sequence}
 \end{figure}
 
+To demonstrate the dynamic stability of a 3D biped under this approach, the frontal plane was selected as the sagittal plane. Forward motion along this sagittal plane results in a side-to-side stepping sequence for the biped (as shown in Figure \ref{fig:sequence}). The gray plane in the frame captures moves along the Y-direction (biped's frontal plane). The intersection of the gray plane and the ground indicates the FPE point tracked during \textbf{DROP}. 
+
 The resulting $x_{COM}$ trajectories from simulating the side-to-side stepping motion (shown in Figure \ref{fig:comtraj}) demonstrate the stability of the biped through a complete gait sequence. The prioritized motion control framework handles the dynamic switching of constraints (from double support to single support) while generating the appropriate joint level commands for swinging the COM over. The colour coded dotted lines on Figure \ref{fig:comtraj} indicate the boundaries of each foot on the ground. Note that during the \textbf{SWING} state, the COM is pushed outside the region of support (around 11s). This in turn initiates the \textbf{DROP} state where the FPE point is tracked to regain stability.
 
 \begin{figure}[!h]
 	\centering
-    \includegraphics[scale=0.8]{fig/simulations/comtraj.eps}
+    \includegraphics[scale=0.6]{fig/simulations/comtraj.eps}
   	\caption{COM trajectory being tracked during the complete gait sequence of side stepping.}
 	\label{fig:comtraj}
 \end{figure}
@@ -666,7 +672,7 @@ In the terminal \textbf{DROP} state, the swing foot trajectory tracks the FPE po
 
 \begin{figure}[!h]
 	\centering
-    \includegraphics[scale=0.8]{fig/simulations/fpetrack.eps}
+    \includegraphics[scale=0.6]{fig/simulations/fpetrack.eps}
   	\caption{Swing foot tracks the a point on the ground given by $FPE + FPE_{offset}$ to ensure overstepping.}
 	\label{fig:fpetrack}
 \end{figure}
