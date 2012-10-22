@@ -199,11 +199,15 @@ By having the visualization rendered in an external application, the proposed to
 
 % section case_study (end)
 
-\section{Discussion} % (fold)
-\label{sec:toolchain_discussion}
-A streamlined toolchain was presented to enable rapid prototype development during the design and development phase of complex multibody systems. The toolchain exports a physical and visual representation of the CAD model which can be used to automatically generate dynamic simulations. After the initial model generation, subsequent exports simply update the physical model parameters and/or visualization blocks allowing for faster design iterations. 
+\section{Summary} % (fold)
+\label{sec:toolchain_summary}
+A streamlined toolchain was developed to enable rapid prototype development of complex multibody systems. The design process for these systems start from a mechanical design in CAD, transferring the kinematic/dynamic parameters to a dynamic simulation environment for analysis and revising the design to improve its performance. While a wide range of dynamic simulators already exist, very few of them provide the functionality to directly  import the kinematic/dynamic parameters from CAD. The toolchain provides a semi-automated two-step process for extracting the relevant parameters from CAD and automatically generating the equivalent model in a dynamic simulator. 
 
-The toolchain was used extensively during the design and development of the 14 DOF humanoid robot, demonstrating its usefulness in designing a physical robot. The simultaneous 3D visualization proved to be a tremendous benefit during the development of the 3D FPE theory that will be discussed in the following chapter. Through the use of visualization aids (i.e. for COM and ZMP position), it was very easy to analyze the behaviour of the system under control while the simulation was running. 
+The CAD export process is activated through a native plug-in developed for SolidWorks. The plug-in processes each link subassembly file to extract key physical parameters (kinematic/dynamics) and tessellates the surface of each link to generate a 3D mesh for visualization. During the initial export, the user is presented with a simple drag-and-drop interface to specify the kinematic hierarchy of links and joint definitions for the system. The extracted physical and visualization data are stored as XML files in subdirectory for subsequent model generation. 
+
+By storing the extracted data in the universal XML format, routines can be programmed to regenerate the CAD-equivalent model for almost any dynamic simulator. A model generation counterpart was developed for the MATLAB/Simulink environment. Calling a single function in MATLAB automatically parses the exported data and generates full dynamic simulations in Simulink using SimMechanics and 3D visualization using the QUARC toolbox. After the initial model generation, subsequent exports only update the physical model parameters and/or visualization blocks enabling faster design iterations. 
+
+The toolchain was used extensively during the design and development of the 14 DOF biped, demonstrating its usefulness in designing a physical robot. Through the use of visualization aids (i.e. for COM and ZMP position), it was very easy to analyze the behaviour of the initial electromechanical design (from the previous chapter) under control action. The forward dynamics and 3D visualization generation proved to be a tremendous benefit during the development of the walking control strategy discussed in the following chapter.
 % section discussion (end)
 
 % chapter toolchain (end)
