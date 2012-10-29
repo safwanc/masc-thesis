@@ -1,6 +1,6 @@
 \chapter{Related Work} % (fold) ===============================================
 \label{cha:background}
-Bipedal locomotion is one of the most active areas of research within humanoid robotics. This section presents a brief literature review on the design and gait synthesis for humanoid robotic applications. 
+Bipedal locomotion is one of the most active areas of research within humanoid robotics. This section presents a brief literature review on the electromechanical design and gait synthesis for humanoid robotic applications. 
 
 
 
@@ -12,12 +12,21 @@ Bipedal locomotion is one of the most active areas of research within humanoid r
 
 \section{Humanoid Electromechanical Design} % (fold) ==========================
 \label{sec:related_electromechanical_design}
-The electromechanical design of humanoid robots have undergone several generations of revisions. 
+Electromechanical machines capable of locomotion have existed for over a century. Some of the earliest designs date back to the late nineteenth century. Using a series of mechanical drivetrain components, Rygg developed a mechanical horse capable of generating fixed gait in 1983 \cite{rygg1893mechanical}. Several years later in 1988, Fallis developed the first \emph{passive} bipedal walking toy capable of stable gait \cite{pallis1888fallis}. The term \emph{passive} denotes the lack of any active power input to the system. Fallis's toy produced \emph{statically} stable walking, whereby the center-of-mass (COM) always remains within the base of support throughout the gait cycle. In contrast, the COM leaves the base of support during \emph{dynamically} stable gait. 
+
+Pioneering research nearly a century later by McGeer \cite{McGeer:1990uk} produced \emph{passive} bipeds capable of dynamically stable gait without any control effort. This work led to a new class of passivity-based electromechanical designs for bipedal robots (Section~\ref{sub:related_passive_designs}). Similarly, pioneering research in the area of actively controlled bipedal locomotion by Vukobratovic \cite{vukobratovic1969} gave rise to the most common electromechanical design approach (Section~\ref{sub:related_active_designs}). The first \emph{active} bipedal robot, WL-5 was developed in the 1972 by Kato et al. at Waseda University \cite{kato1972hydraulically}. Since then, the number of bipedal robots being developed for commercial and research applications has been growing rapidly.
 
 
 \subsection{Degrees of Freedom} % (fold) ======================================
 \label{sub:related_degrees_of_freedom}
-The selection of degrees-of-freedom (DOF) of a humanoid robot plays an essential role in the design and development phase. 
+A bipedal robot achieves locomotion by articulating the limbs connected by joints in the lower body. Therefore, the degrees-of-freedom (DOF) in the lower body of a humanoid robot plays an important role in bipedal locomotion. The obvious design parallel to draw inspiration for bipedal locomotion is from humans. However, the lower body of a human is difficult to model due to the large number of DOF formed by muscles and tendons. Therefore, the selection of lower body DOF is typically chosen to provide sufficient maneuverability while reducing redundant DOFs to the essential set required to achieve walking. 
+
+The primary DOF used to articulate the lower body limbs are the hip, knee and ankle joints. A simpler design widely used in robotics literature is the 2-dimensional (2D) planar biped. This approach typically uses a 1 DOF hip and 1 DOF knee joint in conjunction with point feet \cite{tzafestas1996robust}. Physical implementations of these planar bipeds constrain its motion to the sagittal plane by using a boom \cite{chevallereau2000design,pratt2001virtual,Wight:2008vt}. 
+
+The most common examples of \emph{active} 3-dimensional (3D) lower body designs use 3 DOF for the hip joint, 1 DOF at the knee and 2/3 DOF for the ankle joint \cite{Hirai1998,IllWooPark:2005et,Kaneko:2004wq,Ogura:2006bm,yamaguchi1999}. The hip joint is arguably the most complex joint to design as it must provide a wide range of motion and be capable of carrying the weight of each leg. Several bipedal robots use innovative hip joint designs to improve mobility and/or reduce the DOF. Aldebaraan's Nao robot strategically places the hip motors to reduce 1 DOF while maintaining a similar range of motion \cite{Gouaillier:2008ug}. The latest robot from the Japanese government's Humanoid Robot Project, HRP-2 utilizes a unique cantilever hip structure to enable cross-legged walking (i.e. on a tight rope) \cite{Kaneko:2004wq}. 
+
+More recent research has been aimed at mimicing the large number of DOF present in humans through complex electromechanical designs. Musculoskeletal robots \cite{Mizuuchi:2007em,Osada:2010cj} generate a high (variable) number of DOF using complex actuation mechanisms to emulate muscles. The additional complexitiy and large DOF drastically increases the complexity of the control strategy for gait synthesis. 
+
 % subsection degrees_of_freedom (end) =========================================
 
 
@@ -106,11 +115,9 @@ Recently, a more comprehensive approach using the capture point for foot placeme
 
 
 
-\section{FPE Algorithm in 2D} % (fold)
+\section{2D Foot Placement Estimator and Gait Generation} % (fold)
 \label{sec:fpe_algorithm}
-The existing 2D FPE theory introduced in Section~\ref{sub:related_foot_placement} is briefly reviewed in this section. The significance of the FPE point on the ground is demonstrated through simulation. 
-
-Consider the standard compass biped model used widely in bipedal locomotion research today (shown in Figure \ref{fig:compass}). This simplified model is commonly used as the first step to reduce the complex dynamics to the two dimensional sagittal plane. The physical parameters are the mass $m$, inertia about the center of mass $I_{COM}$, leg lengths $L$ and leg separation angle $\beta$. Note that the angle $\theta_A$ is measured from the axis normal to the ground. 
+The existing 2D FPE theory introduced in Section~\ref{sub:related_foot_placement} is reviewed in this section. Consider the standard compass biped model used widely in bipedal locomotion research today (shown in Figure \ref{fig:compass}). This simplified model is commonly used as the first step to reduce the complex dynamics to the two dimensional sagittal plane. The physical parameters are the mass $m$, inertia about the center of mass $I_{COM}$, leg lengths $L$ and leg separation angle $\beta$. Note that the angle $\theta_A$ is measured from the axis normal to the ground. 
 
 \begin{figure}[!h]
 	\centering
