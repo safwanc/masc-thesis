@@ -14,7 +14,7 @@ Bipedal locomotion is one of the most active areas of research within humanoid r
 \label{sec:related_electromechanical_design}
 Electromechanical machines capable of locomotion have existed for over a century. Some of the earliest designs date back to the late nineteenth century. Using a series of mechanical drivetrain components, Rygg developed a mechanical horse capable of generating fixed gait in 1983 \cite{rygg1893mechanical}. Several years later in 1988, Fallis developed the first \emph{passive} bipedal walking toy capable of stable gait \cite{pallis1888fallis}. The term \emph{passive} denotes the lack of any active power input to the system. Fallis's toy produced \emph{statically} stable walking, whereby the center-of-mass (COM) always remains within the base of support throughout the gait cycle. In contrast, the COM leaves the base of support during \emph{dynamically} stable gait. 
 
-Pioneering research nearly a century later by McGeer \cite{McGeer:1990uk} produced \emph{passive} bipeds capable of dynamically stable gait without any control effort. This work led to a new class of passivity-based electromechanical designs for bipedal robots (Section~\ref{sub:related_passive_designs}). Similarly, pioneering research in the area of actively controlled bipedal locomotion by Vukobratovic \cite{vukobratovic1969} gave rise to the most common electromechanical design approach (Section~\ref{sub:related_active_designs}). The first \emph{active} bipedal robot, WL-5 was developed in the 1972 by Kato et al. at Waseda University \cite{kato1972hydraulically}. Since then, the number of bipedal robots being developed for commercial and research applications has been growing rapidly.
+Pioneering research nearly a century later by McGeer \cite{McGeer:1990uk} produced \emph{passive} bipeds capable of dynamically stable gait without any control effort. This work led to a new class of passivity-based electromechanical designs for bipedal robots (Section~\ref{sub:related_passive_designs}). Similarly, pioneering research by Vukobratovic \cite{vukobratovic1969} gave rise to actively controlled electromechanical designs (Section~\ref{sub:related_active_designs}). The first \emph{active} bipedal robot, WL-5 was developed in the 1972 by Kato et al. at Waseda University \cite{kato1972hydraulically}. Since then, the number of bipedal robots being developed for commercial and research applications has been growing rapidly.
 
 
 \subsection{Degrees of Freedom} % (fold) ======================================
@@ -33,6 +33,19 @@ More recent research has been aimed at mimicing the large number of DOF present 
 \subsection{Mechanism Design} % (fold) ========================================
 \label{sub:related_mechanism_design}
 Linkage subsystems used to carry out motion is also an area where several approaches exist. 
+
+Most actively controlled bipedal robots use some form of linear inverted pendulum mode (LIPM) in the walking control strategy. This approach approximates the motion of a bipedal robot to that of a pendulum. 
+
+In addition to shifting the COM higher in the sturcture, parallel linked mechanisms provide the benefit of high stiffness and accuracy \cite{Sellaouti2005}. 
+
+It was found that the energy consumption of parallel linked structures is significantly lower than that of its serially linked counter part \cite{Morisawa2000}. 
+
+However, it is much more difficult to determine the singular configurations of the parallel structure without kinematic analysis \cite{Sellaouti2005}. 
+
+ROBIAN is a bipedal robot which utilizes parallel actuation mechanisms at the hip and ankle joints \cite{Konno2002}. 
+
+% The joint torques in parallel mechanisms are distributed almost equally on all actuators. These can be smaller in size which positively affects weight and power consumption of the robot. At the same time a parallel structure increases the stiffness of the joint. Parallel kinematics can be realized with HD gears or ballscrews. With 2 DoF each, the waist and ankle joints are perfectly suited for parallel mechanisms. Also it is desirable to have a parallel mechanism for the hip joint, however, the required work range of this 3-DoF joint makes the realization of an appropriate mechanism more difficult. As the only joint in the leg, the ankle joint is realized in a parallel configuration. \cite{Lohmeier2006} for LOLA
+
 % subsection mechanism_design (end) ===========================================
 
 
