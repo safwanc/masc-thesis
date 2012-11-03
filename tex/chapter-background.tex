@@ -111,7 +111,12 @@ While these minimally actuated bipeds have been shown to exhibit similar energet
 
 \subsection{Force/Impedance} % (fold) =========================================
 \label{sub:related_force_impedance}
-\Incomplete
+Pratt developed a motion control framework that uses abstract virtual components to generate compliant joint torques \cite{Pratt:1995ww}. This approach aims to augment the natural dynamics of the system by emulating the effects of virtual components (i.e. springs, dampers, dashpots). The mapping between the virtual forces and emulated joint torques are obtained only through the kinematic model \cite{Pratt:1998cf}. Pratt demonstrated walking with this approach on two bipedal robots with series elastic actuators (SEA), the Spring Flamingo and Spring Turkey \cite{Pratt:2001vu}. Using this motion control framework improves the biped's robustness to rough terrain and unexpected disturbances.
+
+The Dynamic Balance Force Control (DBFC) algorithm developed by Stephens et al developed a method for tracking desired COM motion for compliant humanoid robots \cite{Stephens:2010fj}. This approach uses Pratt's virtual model control framework (DBFC-VMC) to achieve generic force controlled tasks. The DBFC-VMC controller is extended beyond balancing to form complete gait cycles using preview control \cite{KajitaEtAlICRA2003} based on 3D LIPM dynamics to track COM trajectories for walking. 
+
+A similar robust and compliant control strategy capable of handling rough terrain is presented by Hyon et al \cite{Hyon2007}. This approach uses a passivity based force-controlled framework to balance and redistribute the ground reaction force over the supporting contact points. This framework was demonstrated on the hydraulically actuated SARCOS humanoid. Ott et all developed a similar compliant balancing and posture controller for the DLR biped \cite{Ott:2010jz}. Both approaches have only demonstrated balancing (no complete gait cycles) with force control thus far. 
+
 % subsection force_impedance_control (end) ====================================
 
 
