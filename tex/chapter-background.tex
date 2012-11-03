@@ -75,14 +75,28 @@ Hydraulics is used to generate mechanical power through pressure manipulation of
 
 \section{Walking Control Strategies and Gait Generation} % (fold) =============
 \label{sec:related_control_strategies}
-There exists a wide range of control strategies to achieve bipedal locomotion in robotics literature to date. Some of the most popular strategies are briefly reviewed in this section.
+There exists a wide range of walking control strategies and gait generation methods to achieve bipedal locomotion. Some of the most popular strategies are briefly reviewed in this section.
 
 
 \subsection{Zero-Moment Point} % (fold) =======================================
 \label{sub:related_zero_moment_point}
-The most popular techniques to achieve walking have been trajectory generation and control strategies based on the Zero-Moment Point (ZMP) criterion \cite{Vukobratovic:2004wy}. The ZMP defines a point on the ground where the forces acting on a biped do not produce a moment about the axes parallel to the ground plane. If the ZMP is kept within the region of foot support, the biped is stable. This stability criterion can be used to compute ZMP-stable trajectories offline that maximize the stability margin by maximizing the distance from the ZMP to the boundary of the support region. In the on-line phase, the stable trajectories are tracked online to execute walking \cite{HuangEtAlTRA2001}.  ZMP-based trajectories can also be generated on-line \cite{KajitaEtAlICRA2003,TakenakaEtAlIROS2009}. 
+The most popular techniques to achieve walking have been trajectory generation and control strategies based on the Zero-Moment Point (ZMP) criterion \cite{Vukobratovic:2004wy}. The ZMP defines a point on the ground where the forces acting on a biped do not produce a moment about the axes parallel to the ground plane (shown in Figure~\ref{fig:zmp}). The criterion states that the biped is stable if the ZMP is kept within the region of foot support at every time instant. The ZMP location is typically used as a feedback mechanism to achieve dynamically stable gait.  
 
-One of the biggest drawbacks of this approach is the resulting trajectory does not provide any strategy to respond to disturbances due to uneven terrain or unexpected forces. Typically, these strategies \cite{Kajita:1997vr,Kajita:2001fk,Sugihara:2002kq} are also energetically inefficient since they are constantly trying to maintain balance by keeping the ZMP point within the region of foot support. Furthermore, the resulting gait does not utilize the natural dynamics of the system and consequently does not look human-like. Despite the drawbacks, some of the most popular humanoid robots today utilize some variation of ZMP based feedback for bipedal locomotion. The most popular application is the famous Honda ASIMO \cite{Sakagami:2002cf}. Newer bipeds available for research like Aldebaraan's Nao \cite{Gouaillier2006} robot also use ZMP-based walking control strategies. 
+\begin{figure}[!h]
+	\begin{center}
+    \includegraphics[scale=0.3]{fig/background/zmp.png}
+	\end{center}
+  \caption{Planar view of the ZMP location (indicated by point P) on the ground.}
+  \label{fig:zmp}
+\end{figure}
+
+This criterion can be used to pre-compute ZMP-stable trajectories offline. Huang et al presented a walking pattern generation algorithm to compute the desired foot and hip trajectories offline \cite{HuangEtAlTRA2001}. This algorithm aimed to select a ZMP-stable hip trajectory which maximized the stability margin (distance from the ZMP point to the boundary of the support region). Exhaustive search computation was used offline to obtain the optimal solution for a given walking speed and step length. During the on-line phase, the selected optimal trajectories were tracked to execute walking.
+
+Kajita et al developed a walking pattern generation algorithm \cite{KajitaEtAlICRA2003} based on the 3D linear inverted pendulum mode (3D-LIPM) \cite{Kajita:2001fk} and preview control. Using this approach, the desired swing foot positions can be adjusted on-line to compute a new ZMP trajectory which remains within the support polygon. A ZMP tracking controller (based on the table-cart system) is used to generate the desired \emph{future} COM trajectory. The preview controller uses this future reference signal (within a specified time period) to generate the adjusted \emph{current} COM trajectory to remain dynamically stable. More recent methods use alternative modeling techniques (instead of 3D-LIPM) to compute ZMP-based trajectories on-line \cite{TakenakaEtAlIROS2009}.   
+
+The biggest drawback of ZMP-based methods is the resulting trajectory does not provide any strategy to respond to disturbances due to uneven terrain or unexpected forces. Typically, these strategies are also energetically inefficient since they are constantly trying to maintain balance by keeping the ZMP point within the region of foot support. Furthermore, the resulting gait does not utilize the natural dynamics of the system and consequently does not look human-like.
+
+Despite the drawbacks, some of the most popular humanoid robots for commercial and research applications utilize some variation of ZMP based feedback for bipedal locomotion. The well known Honda ASIMO \cite{Sakagami:2002cf} uses ZMP as part of its i-WALK technology (predicted movement control). Newer bipeds available for research like Aldebaraan's Nao \cite{Gouaillier2006} robot contains a pre-packaged walking algorithm which implements ZMP-based walking pattern generation \cite{Kajita:2006dx}. 
 % subsection zero_moment_point (end) ==========================================
 
 
