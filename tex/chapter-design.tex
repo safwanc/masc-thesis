@@ -15,7 +15,7 @@ The initial design specification was obtained by modeling the system dynamics an
 A dynamic model of the proposed system must be developed and analyzed under normal operating conditions to determine the effect of forces acting on the system and torques experienced at each of the joints. The forward or direct dynamic model is a mathematical system which provides a transformation from the joint torques to the resulting joint positions, velocities and accelerations. That is, it provides the mapping:
 
 \begin{equation}
-	\ddot{\vec{q}} = f(\vec{\tau})
+	\ddot{\vec{q}} = f(\vtau)
 \end{equation}
 
 Given this model, a dynamic simulation environment can be designed to estimate the torque loading at different joints on the bipedal robot during the gait cycle. This estimate can form the basis of the initial design specifications from which motors and gearing can be selected. An important consideration in this model is the inclusion of contact forces during the stance phase of the gait cycle. The ground reaction forces exerted on the robots feet have a significant impact on the dynamic requirements of each joint. Since the stance phase makes up approximately 60\% of the gait cycle, the effects these forces have to be incorporated for an accurate simulation. 
@@ -28,28 +28,28 @@ The general form of the equation of motion describing a $n$-DOF humanoid robot (
 
 \begin{equation}
 	\label{eq:eom1}
-	A(\vec{q})\ddot{\vec{q}} + C(\vec{q},\dot{\vec{q}})\dot{\vec{q}} + g(\vec{q}) = \vec{\tau}
+	A(\vec{q})\ddot{\vec{q}} + C(\vec{q},\dot{\vec{q}})\dot{\vec{q}} + g(\vec{q}) = \vtau
 \end{equation}
 
-Where $A(\vec{q})$ is the $(n+6) \times (n+6)$ inertia matrix, $C(\vec{q},\dot{\vec{q}})$ are the centripetal/Coriolis terms and $g(\vec{q})$ is the gravity vector. The $(n+6) \times 1$ generalized force vector $\vec{\tau}$ is segmented as follows:
+Where $A(\vec{q})$ is the $(n+6) \times (n+6)$ inertia matrix, $C(\vec{q},\dot{\vec{q}})$ are the centripetal/Coriolis terms and $g(\vec{q})$ is the gravity vector. The $(n+6) \times 1$ generalized force vector $\vtau$ is segmented as follows:
 
 \begin{equation}
 	\label{eq:gentau}
-	\vec{\tau} = {\begin{bmatrix} \vec{\tau_{act}} & \vec{\tau_{base}} \\ \end{bmatrix}}^T
+	\vtau = {\begin{bmatrix} {\vtau}_{\mathbf{act}} & {\vtau}_{\mathbf{base}} \\ \end{bmatrix}}^T
 \end{equation}
 
-Where $\tau_{act}$ represents the $n$ actuated DOF and $\tau_{base} = \bf{0}_{6 \times 1} $ are the remaining non-actuated DOF at the floating base. In order to incorporate the effects of contact forces at both feet of the biped robot, (\ref{eq:eom1}) is modified as follows: 
+Where ${\vtau}_{\mathbf{act}}$ represents the $n$ actuated DOF and ${\vtau}_{\mathbf{base}} = \bf{0}_{6 \times 1} $ are the remaining non-actuated DOF at the floating base. In order to incorporate the effects of contact forces at both feet of the biped robot, (\ref{eq:eom1}) is modified as follows: 
 
 \begin{equation}
 	\label{eq:eom2}
 	\begin{bmatrix} A_{11} & A_{12} \\ A_{21} & A_{22} \end{bmatrix} 
-	\begin{bmatrix} \ddot{\vec{q}}_{act} \\ \ddot{\vec{q}}_{base} \end{bmatrix} + 
-	\begin{bmatrix} b_{1} \\ b_{2} \end{bmatrix} = 
-	\begin{bmatrix} \vec{\tau_{act}} \\ 0 \end{bmatrix} + 
-    J^{T}\vec{F}_{left} + J^{T}\vec{F}_{right}
+	\begin{bmatrix} \ddot{\vec{q}}_{\mathbf{act}} \\ \ddot{\vec{q}}_{\mathbf{base}} \end{bmatrix} + 
+	\begin{bmatrix} \vec{b}_{\mathbf 1} \\ \vec{b}_{\mathbf 2} \end{bmatrix} = 
+	\begin{bmatrix} {\vtau}_{\mathbf{act}} \\ 0 \end{bmatrix} + 
+    J^{T}_{left}\vec{F}_{\mathbf{left}} + J^{T}_{right}\vec{F}_{\mathbf{right}}
 \end{equation}
 
-Where the generalized acceleration vector $\ddot{q}_{act}$ represents the $n$-DOF joint motion and $\ddot{q}_{base}$ is for the 6 DOF base motion. The gravitational and Coriolis terms are combined into the $\vec{b}$ vector. Finally, $J$ is a 6 x $n$ Jacobian matrix provides the mapping between the joint space and work space. The force vectors $\vec{F}_{left}$ and $\vec{F}_{right}$ represent the contact force felt at the left and right foot, respectively. With this modification of the equation of motion, the external forces felt during the stance phase can be incorporated into the dynamic model of the overall system. The method of calculating the magnitude of the force itself depends on the contact model used for the system. Equation (\ref{eq:eom2}) represents the complete dynamics of the 14 DOF bipedal robot with $n = 14 + 6 = 20$ generalized coordinates.
+Where the generalized acceleration vector $\ddot{\vec{q}}_{\mathbf{act}}$ represents the $n$-DOF joint motion and $\ddot{\vec{q}}_{\mathbf{base}}$ is for the 6 DOF base motion. The gravitational and Coriolis terms are combined into the $\vec{b}$ vector. The $J_{left}$ and $J_{right}$ are 6 x $n$ Jacobian matrices which provide the mapping between the joint space and work space for the left and right legs, respectively. The force vectors $\vec{F}_{\mathbf{left}}$ and $\vec{F}_{\mathbf{right}}$ represent the contact force felt at the left and right foot, respectively. With this modification of the equation of motion, the external forces felt during the stance phase can be incorporated into the dynamic model of the overall system. The method of calculating the magnitude of the force itself depends on the contact model used for the system. Equation (\ref{eq:eom2}) represents the complete dynamics of the 14 DOF bipedal robot with $n = 14 + 6 = 20$ generalized coordinates.
 % section forward_dynamics (end)
 
 \subsection{Recursive Newton-Euler} % (fold)
@@ -83,11 +83,11 @@ One challenging aspect of dynamic simulations is to accurately model the effects
   \label{fig:springdamper}
 \end{figure}
 
-To incorporate the effects of ground contact into the existing dynamic model, the resulting force produced by (\ref{eq:contactf}) is injected into the RNE algorithm between the end of the first pass and the start of the second pass. At the start of the second pass, the external contact force is used to initialize the backwards recursion. Due to the serial nature of RNE, this force traverses up the kinematic chain(s) for each leg and is ultimately resolved at the base. Alternatively, the equivalent force can be substituted into the overall system dynamics represented in Equation \ref{eq:eom2} for $F_{left}$ and $F_{right}$. Both approaches will yield identical results as the contact force is resolved into each joint of the biped robot. 
+To incorporate the effects of ground contact into the existing dynamic model, the resulting force produced by (\ref{eq:contactf}) is injected into the RNE algorithm between the end of the first pass and the start of the second pass. At the start of the second pass, the external contact force is used to initialize the backwards recursion. Due to the serial nature of RNE, this force traverses up the kinematic chain(s) for each leg and is ultimately resolved at the base. Alternatively, the equivalent force can be substituted into the overall system dynamics represented in Equation \ref{eq:eom2} for $\vec{F}_{\mathbf{left}}$ and $\vec{F}_{\mathbf{right}}$. Both approaches will yield identical results as the contact force is resolved into each joint of the biped robot. 
 
 \begin{equation}
 	\label{eq:contactf}
-	\vec{F}_{contact} = B\vec{\dot{x}} + K\vec{x}
+	\vec{F}_{\mathbf{contact}} = B\vec{\dot{x}} + K\vec{x}
 \end{equation}
 
 Since the direct dynamics routine packaged with Professor Shuuji Kajita's toolbox is based on the RNE algorithm, the modication required to incorporate the contact model was minimal. The contact force proportional to the output of the spring-damper system was used to initialize the backwards pass as shown below: 
@@ -119,7 +119,7 @@ In order to use kinematic parameters from human gait, data published from the 20
   \label{fig:ulinkframes}
 \end{figure}
 
-An experiment was devised in the MATLAB environment which used a combination of the BodyMech toolbox and Professor Shuuji Kajita's toolbox. The BodyMech toolbox was used to extract the frame-by-frame 3D kinematic parameters as a human executed the gait cycle. These parameters were processed and stored in order to be played back on the robot model defined by the \texttt{uLINK} structure. To compensate for the differences in size between humans and the small biped, the joint velocities and accelerations were scaled by selecting a different reference gait speed from the published data set. Once the parameters were applied, the RNE-based inverse dynamics algorithm was used to determine the torques at each joint in the structure as result of the estimated gait. This process was repeated for each frame (illustrated in Figure~\ref{fig:ulinkframes}) in the captured dataset and the results of robots kinematics/dynamics ($\vec{q}$, $\vec{\dot{q}}$, $\vec{\ddot{q}}$ and $\vec{\tau}$) were tabulated for post processing. 
+An experiment was devised in the MATLAB environment which used a combination of the BodyMech toolbox and Professor Shuuji Kajita's toolbox. The BodyMech toolbox was used to extract the frame-by-frame 3D kinematic parameters as a human executed the gait cycle. These parameters were processed and stored in order to be played back on the robot model defined by the \texttt{uLINK} structure. To compensate for the differences in size between humans and the small biped, the joint velocities and accelerations were scaled by selecting a different reference gait speed from the published data set. Once the parameters were applied, the RNE-based inverse dynamics algorithm was used to determine the torques at each joint in the structure as result of the estimated gait. This process was repeated for each frame (illustrated in Figure~\ref{fig:ulinkframes}) in the captured dataset and the results of robots kinematics/dynamics ($\vec{q}$, $\vec{\dot{q}}$, $\vec{\ddot{q}}$ and $\vtau$) were tabulated for post processing. 
 % section gait_estimation (end)
 
 
