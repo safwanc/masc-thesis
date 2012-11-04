@@ -50,6 +50,11 @@ Where $i_a$ is the current through the armature wiring. Substituting equations (
 
 Note that the drivetrain constants specific to the $k$-th joint are used (i.e. ${J _{m_k}}$, ${B _{m_k}}$, $g _{r_k}$, etc.) in this equation (\ref{eq:actdyn5}). 
 
+\subsection{Independent Joint Control} % (fold)
+\label{sub:independent_joint_control}
+
+% subsection independent_joint_control (end)
+
 Using independent joint control \cite{Sciavicco2001}, each joint $k$ of the system is decoupled from the rest of the system and controlled individually. The control signal for each joint is computed directly from its own reference trajectory, position and velocity. This approach does not account for the coupled dynamics of the overall system described by (\ref{eq:eom1}). To account for this, the link side torques in (\ref{eq:actdyn5}) is treated as a disturbance to the second order system and the motor inertia and damping are modified as follows: 
 
 \begin{equation}
@@ -93,13 +98,43 @@ One thing in particular to note is the calculation of $a_{kk}$ in (\ref{eq:actdy
   Select diagonal elements of $A(\vec{q})$\;
  }
  \caption{Computing mass matrix diagonal terms with RNE algorithm}
+ \label{alg:massdiag}
 \end{algorithm}
 
 % section actuator_model (end)
 
 \section{HIL Architecture} % (fold)
 \label{sec:hil_architecture}
-\Incomplete 
+The architecture used to control the physical 14 DOF bipedal robot is presented in this section. In general, controlling DC motors requires a controller (to host the control algorithm) and a driver (typically serves as a power amplifier). The controller outputs a low voltage control signal which is amplified by the driver and applied to the terminals of the motor. Encoders are used to sense the rotor position information and passed back to the controller for closed loop  control. 
+
+The physical hardware developed in Chapter~\ref{cha:design} is treated as the plant. Using Quanser's QUARC toolbox, control algorithms developed in the Simulink environment can be compiled for a variety of target platforms ranging from embedded microcontrollers to standard PC. This allows the use of a shared codebase for simulation and for the physical hardware. The control algorithms used for the biped are compiled and executed on a PC which communicates with the physical hardware through a data acquisition (DAQ) board. A separate and dedicated voltage amplifier is used to drive the DC motors from a low voltage analog control signal (labeled ``amplifier command'' on Figure~\ref{fig:hilarch}) from the controller via the DAQ. 
+
+\begin{figure}[!h]
+	\centering
+    \includegraphics[scale=0.65]{fig/experiments/hilarchitecture.eps} 
+  	\caption{Hardware architecture used to control the physical 14 DOF bipedal robot.}
+	\label{fig:hilarch}
+\end{figure}
+
+The actuator subassemblies selected in Section~\ref{sub:final_configurations} were preassembled with incremental optical encoders mounted to the motor side. These encoders output digital signals on two channels for an indication and control of the motor shaft position and direction.  These digital signals are passed back to the controller running on the PC via the DAQ. Using quadrature decoding, the motor angle $\Theta _m$ and velocity $\dot{\Theta}_m$ can be retrieved from the encoder output in degrees: 
+
+\begin{equation}
+	{\Theta _m} = \frac{{360}}{{n \cdot l}} \cdot Encoder_{output}
+\end{equation}
+
+Where $n = 4$ for quadrature (4X) decoding and $l$ is the lines per revolution specified from the encoder manufacturer. Using the relationship between the motor variables and the joint variables in (\ref{eq:actdyn2}), an estimate of the $k$-th link side angle (at the output of the gearhead) can be obtained: 
+
+\begin{equation}
+	{q_k} = \frac{{360}}{{4 \cdot l \cdot {g_{{r_k}}}}} \cdot Encode{r_k}
+	\label{eq:quadrature}
+\end{equation}
+
+This is only an estimate of the joint angle since there are drivetrain losses (i.e. in the gearhead) which are ignored by an encoder mounted to the motor side. 
+
+\subsection{Parallel Models} % (fold)
+\label{sub:parallel_models}
+
+The ability to develop a single controller and target either a simulation environment or the physical hardware is extremely useful. Using the Quanser's QUARC toolbox, a Q8-USB (DAQ) board and a VoltPAQ (voltage amplifier), the control algorithms were redeveloped as parallel models capable of switching target platforms (shown in Figure~\ref{fig:parallelmodels}).
 
 \begin{figure}[!h]
 	\centering
@@ -108,12 +143,16 @@ One thing in particular to note is the calculation of $a_{kk}$ in (\ref{eq:actdy
 	\label{fig:parallelmodels}
 \end{figure}
 
+In the physical environment mode shown in Figure~\ref{fig:hilmodel}, the hardware target subsystem is initialized to interface with the Q8-USB DAQ board. The control algorithm running on the PC communicates with the physical hardware using ``HIL Read'' and ``HIL Write'' blocks which communicate with the DAQ over USB. The PD controller output is an analog signal corresponding to the desired voltage at the motor terminals (amplifier command). The DAQ is also reads the raw digital signals from the motor side encoders. The VoltPAQ voltage amplifier also provides a current sense ability to read the current in the armature circuit ($i_a$) of the DC motor. This value is passed back to the controller through the DAQ using an analog channel. Due to the noise in current sense techniques, a low pass filter is used to produce a cleaner signal. The quadrature decoding formula (\ref{eq:quadrature}) is used in the controller to obtain the joint angle for the closed loop feedback. The link side angle information is also used to determine whether a joint is out of its limits. The controller detects and sends a ``shut down'' command to the amplifier channel if it is. 
+
 \begin{figure}[!h]
 	\centering
     \includegraphics[scale=0.45]{fig/experiments/hilmodel.eps} 
   	\caption{HIL subsystem from Figure~\ref{fig:parallelmodels} used to target physical hardware with voltage control signal.}
 	\label{fig:hilmodel}
 \end{figure}
+
+In the simulated environment mode, the controllers were reformulated to use the voltage signal as the control input. The actuator dynamics were incorporated into the simulation using the independent joint control formulation presented in (\ref{eq:actdyn7}). The simulation target subsystem shown in Figure~\ref{fig:simmodel} computes the effective motor inertia and damping seen by the joint using Algorithm~\ref{alg:massdiag}. The link side joint angle, velocity and accelerations are used with inverse dynamics to compute the link side torque which is treated as a disturbance to the system. 
 
 \begin{figure}[!h]
 	\centering
@@ -122,10 +161,20 @@ One thing in particular to note is the calculation of $a_{kk}$ in (\ref{eq:actdy
 	\label{fig:simmodel}
 \end{figure}
 
+
+% subsection parallel_models (end)
+
 % section hil_architecture (end)
 
 \section{Single DOF Validation} % (fold)
 \label{sec:1dof_validation}
+This section aims to validate the simulation models for 1 DOF through experiments using the HIL environment. 
+
+\subsection{Joint Tracking} % (fold)
+\label{sub:joint_tracking}
+The parallel model for targetting the simulation environment and physical hardware was used to tune the PD controller gains for a single joint of the bipedal robot. By using the shared controller architecture, gains were tuned to improve tracking performance in the simulation environment and then immediately verified on the physical hardware. The experimental results presented in this section show the results of the hip yaw joint tracking a sine wave at 0.5 Hz with a $15^{\circ}$ amplitude. 
+% subsection joint_tracking (end)
+
 \Incomplete
 % section 1dof_results (end)
 
