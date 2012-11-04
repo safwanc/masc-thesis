@@ -172,7 +172,18 @@ This section aims to validate the simulation models for 1 DOF through experiment
 
 \subsection{Joint Tracking} % (fold)
 \label{sub:joint_tracking}
-The parallel model for targetting the simulation environment and physical hardware was used to tune the PD controller gains for a single joint of the bipedal robot. By using the shared controller architecture, gains were tuned to improve tracking performance in the simulation environment and then immediately verified on the physical hardware. The experimental results presented in this section show the results of the hip yaw joint tracking a sine wave at 0.5 Hz with a $15^{\circ}$ amplitude. 
+The parallel model for targetting the simulation environment and physical hardware was used to tune the PD controller gains for a single joint of the bipedal robot. By using the shared controller architecture, gains were tuned to improve tracking performance in the simulation environment and then immediately verified on the physical hardware. The experimental results presented in this section show the results of the hip yaw joint tracking a sine wave at 0.5 Hz with a $15^{\circ}$ amplitude.
+
+\begin{figure}[!h]
+	\begin{center}
+	\subfigure{\includegraphics[scale=0.45]{fig/experiments/simtrack1dof.eps}}
+	\subfigure{\includegraphics[scale=0.45]{fig/experiments/hiltrack1dof.eps}}
+	\end{center}
+  	\caption{Single joint tracking results shown in simulation (left) and hardware (right).}
+	\label{fig:tracking1dof}
+\end{figure} 
+
+The tracking results shown in Figure~\ref{fig:tracking1dof} validate the simulation models. The same controller gains were used on the physical hardware and the tracking performance is almost identical to the simulated case.   
 % subsection joint_tracking (end)
 
 \Incomplete
@@ -185,6 +196,14 @@ The parallel model for targetting the simulation environment and physical hardwa
 
 \section{Discussion} % (fold)
 \label{sec:experiments_discussion}
+Validating control algorithms on physical hardware is important due to modeling imperfections in the simulation environment. The physical 14 DOF bipedal robot developed in earlier chapters was used for experimental validation through HIL testing. 
+
+For the physical hardware, DC motors are controlled by a voltage signal $v_m$. A second order system was used to model the actuator dynamics and reformulate the existing controllers which controlled the link side torques $\tau _k$. Independent joint control decouples each joint for individual control. Since this approach does not account for the coupled dynamics of the overall system, the link side torques are treated as a disturbance to the actuator dynamics model. The effective motor inertia is reformulated to include the link inertia seen by the joint. A generic RNE-based algorithm was used to extract the mass matrix of the system at every time step to compute the effective motor inertia.
+
+The HIL architecture was developed using Quanser's QUARC toolbox, DAQ board and a voltage amplifier. The controller code developed in Simulink was targetted to execute on the PC. The DAQ board allowed the PC-based controller to communicate with the physical hardware through analog and digital I/O. Quadrature decoding was on the encoder output to obtain the link side joint angles on physical hardware for closed loop feedback control. Parallel simulation models were developed for experimental validation to target the physical hardware or the simulated actuator dynamics. 
+
+The single DOF simulations were demonstrated on physical hardware. The simulated environment was used to tune the PD gains for the physical hardware. It was shown that tracking performance of the PD controller was identical in both environments.  
+
 \Incomplete
 % section discussion (end)
 
