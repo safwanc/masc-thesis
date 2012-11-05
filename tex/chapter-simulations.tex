@@ -395,34 +395,58 @@ It was found that stiffening the ground contact by raising the model constants w
 	\centering
     \includegraphics[scale=0.095]{fig/simulations/sidesequence.png}
   	\caption{Frame captures from the realtime 3D visualization while side-to-side stepping.}
-	\label{fig:sequence}
+	\label{fig:sidesequence}
 \end{figure}
 
-To demonstrate the dynamic stability of a 3D biped under this approach, the frontal plane was selected as the sagittal plane. Forward motion along this sagittal plane results in a side-to-side stepping sequence for the biped (as shown in Figure \ref{fig:sequence}). The gray plane in the frame captures moves along the Y-direction (biped's frontal plane). The intersection of the gray plane and the ground indicates the FPE point tracked during \textbf{DROP}. 
+To demonstrate the dynamic stability of a 3D biped under this approach, the frontal plane was selected as the sagittal plane. Forward motion along this sagittal plane results in a side-to-side stepping sequence for the biped (as shown in Figure \ref{fig:sidesequence}). The gray plane in the frame captures moves along the Y-direction (biped's frontal plane). The intersection of the gray plane and the ground indicates the FPE point tracked during \textbf{DROP}. 
 
-The resulting $x_{COM}$ trajectories from simulating the side-to-side stepping motion (shown in Figure \ref{fig:comtraj}) demonstrate the stability of the biped through a complete gait sequence. The prioritized motion control framework handles the dynamic switching of constraints (from double support to single support) while generating the appropriate joint level commands for swinging the COM over. The colour coded dotted lines on Figure \ref{fig:comtraj} indicate the boundaries of each foot on the ground. Note that during the \textbf{SWING} state, the COM is pushed outside the region of support (around 11s). This in turn initiates the \textbf{DROP} state where the FPE point is tracked to regain stability.
+The resulting $x_{COM}$ trajectories from simulating the side-to-side stepping motion (shown in Figure \ref{fig:sidecomtraj}) demonstrate the stability of the biped through a complete gait sequence. The prioritized motion control framework handles the dynamic switching of constraints (from double support to single support) while generating the appropriate joint level commands for swinging the COM over. The colour coded dotted lines on Figure \ref{fig:sidecomtraj} indicate the boundaries of each foot on the ground. Note that during the \textbf{SWING} state, the COM is pushed outside the region of support (around 11s). This in turn initiates the \textbf{DROP} state where the FPE point is tracked to regain stability.
 
 \begin{figure}[!h]
 	\centering
     \includegraphics[scale=0.6]{fig/simulations/sidecomtraj.eps}
   	\caption{COM trajectory being tracked during the complete gait sequence of side stepping.}
-	\label{fig:comtraj}
+	\label{fig:sidecomtraj}
 \end{figure}
 
 
-In the terminal \textbf{DROP} state, the swing foot trajectory tracks the FPE point on the ground (shown in Figure \ref{fig:fpetrack}) with an added offset to ensure that the biped oversteps to guarantee stability (as per the 2D FPE theory). Once ground contact is made (around 11.6s), the stabilization substate is entered and the swing foot trajectory is controlled directly to align the foot with the ground. This causes the biped to rock back and forth (similar to the 2D case) until stability is reached.
+In the terminal \textbf{DROP} state, the swing foot trajectory tracks the FPE point on the ground (shown in Figure \ref{fig:sidefpetrack}) with an added offset to ensure that the biped oversteps to guarantee stability (as per the 2D FPE theory). Once ground contact is made (around 11.6s), the stabilization substate is entered and the swing foot trajectory is controlled directly to align the foot with the ground. This causes the biped to rock back and forth (similar to the 2D case) until stability is reached.
 
 \begin{figure}[!h]
 	\centering
     \includegraphics[scale=0.6]{fig/simulations/sidefpetrack.eps}
   	\caption{Swing foot tracks the a point on the ground given by $FPE + FPE_{offset}$ to ensure overstepping.}
-	\label{fig:fpetrack}
+	\label{fig:sidefpetrack}
 \end{figure}
 
 
 \subsection{Forward Walking Gait} % (fold)
 \label{sub:forward_walking_gait}
 \Incomplete 
+
+\begin{figure}[!h]
+	\centering
+    \includegraphics[scale=0.6]{fig/simulations/fwdcomtraj.eps}
+  	\caption{\Incomplete}
+	\label{fig:fwdcomtraj}
+\end{figure}
+
+\begin{figure}[!h]
+	\centering
+    \includegraphics[scale=0.7]{fig/simulations/fwdfpetraj.eps}
+  	\caption{\Incomplete}
+	\label{fig:fwdfpetraj}
+\end{figure}
+
+\begin{figure}[!h]
+	\begin{center}
+	\subfigure{\includegraphics[scale=0.45]{fig/simulations/fwdlfoottraj.eps}}
+	\subfigure{\includegraphics[scale=0.45]{fig/simulations/fwdrfoottraj.eps}}
+	\end{center}
+  	\caption{\Incomplete}
+	\label{fig:fwdfoottraj}
+\end{figure}
+
 % subsection forward_walking_gait (end)
 
 % section simulations_and_results (end)
