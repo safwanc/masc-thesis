@@ -1,9 +1,9 @@
 \chapter{Electromechanical Design} % (fold)
 \label{cha:design}
 
-This chapter presents the electromechanical design of the 14 DOF bipedal robot. There are several key design considerations which impact the performance of the finished product. The complete process consisted of selecting the appropriate drivetrain components (electric machines) and designing the mechanical chassis. The primary design objective was to produce enough mechanical power for the robot to achieve walking. The secondary design objective was to keep the overall weight low and raise center of mass (COM) position as high as possible. 
+This chapter presents the electromechanical design of the 14 DOF bipedal robot. There are several key design considerations which impact the performance of the finished product. The complete process consisted of selecting the appropriate drivetrain components and designing the mechanical chassis. The primary design objective was to produce enough mechanical power for the robot to achieve walking. The secondary design objective was to keep the overall weight low and raise center of mass (COM) position as high as possible. 
 
-The initial design specification was obtained by modeling the system dynamics and gait estimation (Section~\ref{sec:designspec}). The selection of electromechanical components which compose the drivetrain system was used to address the primary design objective (Section~\ref{sec:drivetrain}). These drivetrain components include electric machines (DC motors) and adequate gearing which provide the reduction ratio required to meet the initial design specifications. After the primary objective was addressed and the drivetrain components were selected, the secondary design objectives were satisfied by adjusting the mechanical structure and manipulating placement of components (Section~\ref{sec:chassis}).
+The initial design specification was obtained by modeling the system dynamics during an estimated gait cycle (Section~\ref{sec:designspec}). The selection of electromechanical components which comprise the drivetrain system was used to address the primary design objective (Section~\ref{sec:drivetrain}). These drivetrain components include DC motors and appropriate gearing to provide the reduction ratio required to meet the initial design specifications. After the primary objective was addressed and the drivetrain components were selected, the secondary design objectives were satisfied by adjusting the mechanical structure and manipulating placement of components (Section~\ref{sec:chassis}).
 
 %======================================================================
 %   D Y N A M I C  M O D E L I N G
@@ -12,7 +12,7 @@ The initial design specification was obtained by modeling the system dynamics an
 \section{Dynamic Modeling} % (fold)
 \label{sec:designspec}
 
-A dynamic model of the proposed system must be developed and analyzed under normal operating conditions to determine the effect of forces acting on the system and torques experienced at each of the joints. The forward or direct dynamic model is a mathematical system which provides a transformation from the joint torques to the resulting joint positions, velocities and accelerations. That is, it provides the mapping:
+A dynamic model of the proposed system must be developed and analyzed under normal operating conditions to determine the forces acting on the system and torques experienced at each of the joints. The forward or direct dynamic model is a mathematical system which provides a transformation from the joint torques ($\vtau$) to the resulting joint positions ($\vec{q}$), velocities ($\vec{\dot{q}}$) and accelerations ($\vec{\ddot{q}}$). That is, it provides the mapping:
 
 \begin{equation}
 	\ddot{\vec{q}} = f(\vtau)
@@ -55,10 +55,10 @@ Where the generalized acceleration vector $\ddot{\vec{q}}_{\mathbf{act}}$ repres
 \subsection{Recursive Newton-Euler} % (fold)
 \label{sec:kajita_s_matlab_toolbox}
 
-One method of computing a direct dynamic model for the biped robot is through the use of the Recursive Newton-Euler (RNE) algorithm. This algorithm computes the inverse dynamics model iteratively in order to arrive at a final solution for the direct dynamics \cite{Perrin:1997wn}. The algorithm serially traverses through the kinematic chain to perform calculations using Newtonian mechanics. The first pass of the algorithm starts at the base link and traverses down the serial chains of the left and right legs calculating the kinematics. The second pass starts at the end of the serial chain(s) and works back up to the base link calculating the effect of dynamics. After the final pass, the RNE algorithm produces the torques at each joint and the 6 dimensional forces and moments felt by the (floating) base joint. The RNE algorithm reformulates the equation representing the complete dynamics of the system (\ref{eq:eom2}) to obtain the direct dynamics model. 
+The Recursive Newton-Euler (RNE) algorithm computes the inverse dynamics model recursively in order to arrive at a final solution for the direct dynamics \cite{Perrin:1997wn}. The algorithm serially traverses through the kinematic chain to perform calculations using Newtonian mechanics. The first pass of the algorithm starts at the base link and traverses down the serial chains of the left and right legs calculating the kinematics. The second pass starts at the end of the serial chain(s) and works back up to the base link calculating the force transmissions. After the final pass, the RNE algorithm produces the torques at each joint and the 6 dimensional forces and moments felt by the (floating) base joint. The RNE algorithm reformulates the equation representing the complete dynamics of the system (\ref{eq:eom2}) to obtain the direct dynamics model. 
 % The pseudocode listed in Appendix \ref{sec:rne_direct_dynamics} describes the procedure for computing the direct dynamics model by utilizing the RNE formulation.
 
-Professor Shuuji Kajita packages a simple MATLAB \cite{sw:matlab} toolbox with his textbook on humanoid robotics \cite{kajitatxt} which was used as a starting point for the direct dynamics model to obtain initial design specifications. The toolbox provides preprogrammed routines for common robotics algorithms (i.e. forward/inverse kinematics, etc). The kinematic and dynamic parameters of the robot is defined in a global structure variable called \texttt{uLINK}. The packaged scripts and functions access key information (i.e. kinematic hierarchy of links) from the global struct to perform the calculations. An external application was developed to interface with the CAD software package's application programming interface (API) to extract the kinematic and dynamic parameters directly. The application used the extracted data to automatically generate the CAD-equivalent \texttt{uLINK} representation in MATLAB code (shown in Figure~\ref{fig:ulinkdrawn}).
+Kajita's toolbox \cite{kajitatxt} was used as a starting point for the direct dynamics model. The toolbox provides preprogrammed routines for common robotics algorithms (i.e. forward/inverse kinematics, etc). The kinematic and dynamic parameters of the robot are defined in a global structure variable called \texttt{uLINK}. The packaged scripts and functions access key information (i.e. kinematic hierarchy of links) from the global structure to perform the calculations. An external application was developed to interface with the CAD software package's application programming interface (API) to extract the kinematic and dynamic parameters directly. The application used the extracted data to automatically generate the CAD-equivalent \texttt{uLINK} representation in MATLAB code (shown in Figure~\ref{fig:ulinkdrawn}).
 
 \begin{figure}[!ht]
 	\begin{center}
@@ -68,12 +68,12 @@ Professor Shuuji Kajita packages a simple MATLAB \cite{sw:matlab} toolbox with h
   \label{fig:ulinkdrawn}
 \end{figure}
 
-With the \texttt{uLINK} structure is generated, any of the preprogrammed routines in the toolbox can be used. The toolbox provides a function \texttt{ForwardDynamics} to compute the direct dynamics model using the RNE algorithm. However, the calculations omit the effects of any external forces acting on the system. Since it is important to incorporate the contribution of the ground reaction forces, the toolbox was modified to model the complete dynamics of the system. 
+With the \texttt{uLINK} structure generated, any of the preprogrammed routines in the toolbox can be used. The toolbox provides a function \texttt{ForwardDynamics} to compute the direct dynamics model using the RNE algorithm. However, the calculations omit the effects of any external forces acting on the system. Since it is important to incorporate the contribution of the ground reaction forces, the toolbox was modified to model the complete dynamics of the system. 
 
 \subsection{Contact Modeling} % (fold)
 \label{sub:initial_contact_modeling}
 
-One challenging aspect of dynamic simulations is to accurately model the effects of external forces on the system during the stance phase. To emulate the ground reaction forces during this period of the gait cycle, a contact model is used to generate an approximate contact force. For the initial design specifications, a spring-damper contact model is used (shown in Figure~\ref{fig:springdamper}). Both feet are modelled as point contacts which experience a normal force proportional to the output of the spring-damper system when in contact with the ground. A more complex version of (\ref{eq:contactf}) is used for full dynamic simulations in later chapters (specifically in Section~\ref{sub:full_contact_modeling}).
+One challenging aspect of dynamic simulations is to accurately model the effects of external forces on the system during the stance phase. To emulate the ground reaction forces during this period of the gait cycle, a contact model is used to generate an approximate contact force. For the initial design specifications, a spring-damper contact model is used (shown in Figure~\ref{fig:springdamper}). Both feet are modelled as point contacts which experience a normal force proportional to the output of the spring-damper system when in contact with the ground. A more complex version of (\ref{eq:contactf}) is used for full dynamic simulations in later chapters (Section~\ref{sub:full_contact_modeling}).
 
 \begin{figure}[!h]
 	\begin{center}
@@ -83,18 +83,18 @@ One challenging aspect of dynamic simulations is to accurately model the effects
   \label{fig:springdamper}
 \end{figure}
 
-To incorporate the effects of ground contact into the existing dynamic model, the resulting force produced by (\ref{eq:contactf}) is injected into the RNE algorithm between the end of the first pass and the start of the second pass. At the start of the second pass, the external contact force is used to initialize the backwards recursion. Due to the serial nature of RNE, this force traverses up the kinematic chain(s) for each leg and is ultimately resolved at the base. Alternatively, the equivalent force can be substituted into the overall system dynamics represented in Equation \ref{eq:eom2} for $\vec{F}_{\mathbf{left}}$ and $\vec{F}_{\mathbf{right}}$. Both approaches will yield identical results as the contact force is resolved into each joint of the biped robot. 
+To incorporate the effects of ground contact into the existing dynamic model, the resulting force produced by (\ref{eq:contactf}) is injected into the RNE algorithm between the end of the first pass and the start of the second pass. At the start of the second pass, the external contact force is used to initialize the backwards recursion. 
 
 \begin{equation}
 	\label{eq:contactf}
 	\vec{F}_{\mathbf{contact}} = B\vec{\dot{x}} + K\vec{x}
 \end{equation}
 
-Since the direct dynamics routine packaged with Professor Shuuji Kajita's toolbox is based on the RNE algorithm, the modication required to incorporate the contact model was minimal. The contact force proportional to the output of the spring-damper system was used to initialize the backwards pass as shown below: 
+The contact force proportional to the output of the spring-damper system (\ref{eq:contactf}) was used to initialize the backwards pass as shown below: 
 
 \lstinputlisting{code/kajitamod.m}
 
-Where the variables \texttt{Kr} and \texttt{Br} represent the spring and damper coefficients in the spring-damper contact model. \texttt{RCONTACT} is simply a constant link number representing the point contact foot. The velocity due to the point foot coming in contact with the ground (\texttt{vr}) is recomputed by considering the original velocity (\texttt{vo}) and the cross product between the position of the foot (\texttt{uLINK.p}) and angular velocity (\texttt{uLINK.w}). The resulting normal force is computed and injected into the backwards pass if the foot position is below the ground level (condition shown in line 1). With this modification included, the complete direct dynamics can be used to obtain the joint torques during an estimated gait cycle for the initial design specification.   
+Where the variables \texttt{Kr} and \texttt{Br} represent the spring and damper coefficients in the spring-damper contact model. \texttt{RCONTACT} is a constant link number representing the point contact foot. The velocity due to the point foot coming in contact with the ground (\texttt{vr}) is recomputed by considering the original velocity (\texttt{vo}) and the cross product between the position of the foot (\texttt{uLINK.p}) and angular velocity (\texttt{uLINK.w}). The resulting normal force is computed and injected into the backwards pass if the foot position is below the ground level (condition shown in line 1). With this modification included, the complete direct dynamics can be used to obtain the joint torques during an estimated gait cycle for the initial design specification.   
 % subsection modifications (end)
 
 % section contact_modelling (end)
@@ -104,9 +104,9 @@ Where the variables \texttt{Kr} and \texttt{Br} represent the spring and damper 
 \subsection{Gait Estimation} % (fold)
 \label{sec:gait_estimation}
 	
-In order to emulate the operating conditions for the 14 DOF bipedal robot once it is built, the dynamic simulation must include all dynamic effects experienced during a complete gait cycle. One method of emulating the normal operating conditions to use human gait as an estimate. While it is ambitious to expect a bipedal robot to match the performance of human-like walking, it provides a basis from which the initial selection of electromechanical components can emerge. The goal is to extract the kinematic parameters experienced by the human limbs while walking and impose similar conditions on the robot in dynamic simulation. Given these constraints, the inverse dynamics problem can be solved to obtain the joint torque estimates during various stages of the gait cycle. Coupled with the modifications to emulate contact forces during the stance phase, this approach provides a fast method of estimating the torque loading at each joint to develop the initial design specification. 
+In order to emulate the operating conditions for the 14 DOF bipedal robot, the dynamic simulation must include all dynamic effects experienced during a complete gait cycle. One method of emulating the normal operating conditions to use human gait as an estimate. While it is ambitious to expect a bipedal robot to match the performance of human-like walking, it provides a basis from which the initial selection of electromechanical components can be made. The goal is to extract the kinematic parameters experienced by the human limbs while walking and impose similar conditions on the robot in dynamic simulation. Given these constraints, the inverse dynamics problem can be solved to obtain the joint torque estimates during various stages of the gait cycle. Coupled with the modifications to emulate contact forces during the stance phase, this approach provides a fast method of estimating the torque loading at each joint to develop the initial design specification. 
 	
-In order to use kinematic parameters from human gait, data published from the 2008 Dynamic Walking conference was used \cite{dw2008}. The published dataset used sensors to measure the joint angles and velocities of lower body human limbs under several gait cycle speeds (fast, slow walk and normal walk). During the data collection, sensors were strategically placed such that key information such as the knee and hip pitch joint angles were captured. This raw sensory data was imported into the MATLAB environment using a 3D motion analysis toolbox BodyMech \cite{bodymech}. This information was incorporated into the dynamic simulation by enforcing the joint angles, velocities and accelerations from each captured frame of the reference dataset. The forced joint parameters were assigned to the global \texttt{uLINK} structure to be used in conjunction with the RNE-based inverse dynamics algorithm. 
+In order to use kinematic parameters from human gait, data published from the 2008 Dynamic Walking conference was used \cite{dw2008}. The published dataset used sensors to measure the joint angles and velocities of lower body human limbs under several gait cycle speeds (fast, slow walk and normal walk). This raw sensory data was imported into the MATLAB environment using a 3D motion analysis toolbox BodyMech \cite{bodymech}. This information was incorporated into the dynamic simulation by enforcing the joint angles, velocities and accelerations from each captured frame of the reference dataset. The forced joint parameters were assigned to the global \texttt{uLINK} structure to be used in conjunction with the RNE-based inverse dynamics algorithm. 
 
 \begin{figure}[!h]
 	\begin{center}
@@ -119,13 +119,13 @@ In order to use kinematic parameters from human gait, data published from the 20
   \label{fig:ulinkframes}
 \end{figure}
 
-An experiment was devised in the MATLAB environment which used a combination of the BodyMech toolbox and Professor Shuuji Kajita's toolbox. The BodyMech toolbox was used to extract the frame-by-frame 3D kinematic parameters as a human executed the gait cycle. These parameters were processed and stored in order to be played back on the robot model defined by the \texttt{uLINK} structure. To compensate for the differences in size between humans and the small biped, the joint velocities and accelerations were scaled by selecting a different reference gait speed from the published data set. Once the parameters were applied, the RNE-based inverse dynamics algorithm was used to determine the torques at each joint in the structure as result of the estimated gait. This process was repeated for each frame (illustrated in Figure~\ref{fig:ulinkframes}) in the captured dataset and the results of robots kinematics/dynamics ($\vec{q}$, $\vec{\dot{q}}$, $\vec{\ddot{q}}$ and $\vtau$) were tabulated for post processing. 
+A simulation was implemented in the MATLAB environment which used a combination of the BodyMech toolbox and Kajita's toolbox. The BodyMech toolbox was used to extract the frame-by-frame 3D kinematic parameters as a human executed the gait cycle. These parameters were processed and stored in order to be played back on the robot model defined by the \texttt{uLINK} structure. To compensate for the differences in size between humans and the small biped, the joint velocities and accelerations were scaled by selecting a different reference gait speed from the published data set. Once the parameters were applied, the RNE-based inverse dynamics algorithm was used to determine the torques at each joint in the structure during the estimated gait. This process was repeated for each frame (illustrated in Figure~\ref{fig:ulinkframes}) in the captured dataset and the results of robot's kinematics/dynamics ($\vec{q}$, $\vec{\dot{q}}$, $\vec{\ddot{q}}$ and $\vtau$) were tabulated for post processing. 
 % section gait_estimation (end)
 
 
 \subsection{Initial Design Specifications} % (fold)
 \label{sec:initial_design_requirements}
-The results of the dynamic simulations under human-gait analysis form the basis for the initial electromechanical components selection process. As expected, it was observed that the largest demands in torque loading on each of the joints occurred during the stance phase immediately after the heel strike (refer to Frame 36 in Figure \ref{fig:gaitplot}). The torque demands at that instant spike immediately to almost 3x the steady state torque loading on the joints. While it is expected that a walking robot will experience large spikes in the torque demands such as the ones observed in the dynamic simulation, it is unreasonable to use only the peak torque values as the required specifications for design. 
+The results of the dynamic simulations under human-gait analysis form the basis for the initial electromechanical components selection process. As expected, it was observed that the largest demands in torque loading on each of the joints occurred during the stance phase immediately after the heel strike (refer to Frame 36 in Figure \ref{fig:gaitplot}). The torque demands at that instant spike immediately to almost 3x the steady state torque loading on the joints. 
 
 \begin{figure}[!h]
 	\label{fig:gaitplot}
@@ -135,7 +135,9 @@ The results of the dynamic simulations under human-gait analysis form the basis 
   \caption{Joint torque profile during the estimated gait cycle obtained from a published data set.}
 \end{figure}
 
-Since one of the secondary objectives is to keep the overall mass of the biped as low as possible, it is desirable to select smaller motors where the peak torque loading on the joints are outside of the allowable range of continuous operation. This is a reasonable estimate since the peaks are impulsive forces which only last for a short period of time. The practical approach for deriving specifications from the dynamic simulations is to analyze the continuous torque loading while the system undergoes the gait cycle while keeping the peak loading requirements as a secondary objective. 
+Selecting motor specifications based only on the peak torque requirements would result in large and overpowered actuators for the continuous operational loads. The secondary design objective is to keep the overall system mass low, making it desirable to minimize the actuator size since it contributes to the majority of the weight in the system. 
+
+Motor manufacturers specify rated conditions for \emph{continuous} operation, while the peak torque demands in this application only exist for a short period of time when ground contact is made. It is possible to safely push DC motors beyond the nominal rated capacities for short periods of time by considering the maximum mechanical power output and thermal characteristics. Therefore, it is desirable to select motors primarily on the steady state torque load requirements while investigating other characteristics to ensure that they can handle the peak load requirements. 
 
 \begin{table}[!h]
   \centering
@@ -157,7 +159,7 @@ Since one of the secondary objectives is to keep the overall mass of the biped a
   \label{jointtable}%
 \end{table}%
 
-While the torque demands vary for each joint (see Table \ref{jointtable}), the results from the analysis are concatenated to obtain a single set of design specifications. This limit the different models of motors selected from the manufacturer and it also simplifies the electromechanical design process. The combined initial design specifications for the drivetrain components are summarized in Table \ref{tab:spectable}. For the initial design consideration, the normal torque specification is obtained by taking an average of joint torque values during the swing phase. Since the ground reaction forces experienced during the stance phase produce large torques in a short period of time, the peak torque specification is obtained by selecting the highest torque value from all frames. 
+While the torque demands vary for each joint (see Table \ref{jointtable}), the results from the analysis are concatenated to obtain a single set of design specifications. This reduces the number of different models selected from the manufacturer and it also simplifies the electromechanical design process. The combined initial design specifications for the drivetrain components are summarized in Table \ref{tab:spectable}. For the initial design, the normal torque specification is obtained by taking an average of joint torque values during the swing phase. Since the ground reaction forces experienced during the stance phase produce large torques in a short period of time, the peak torque specification is obtained by selecting the highest torque value from all frames. 
 
 \begin{table}[!h]
   \centering
@@ -185,11 +187,11 @@ The contact model parameters (spring and damping coefficients) were observed to 
 
 \section{Drivetrain Selection} % (fold)
 \label{sec:drivetrain}
-The drivetrain selection process includes selecting the appropriate components which transmit the required torque (as per the initial design specifications) to each joint. The electric machines used to generate mechanical power for the purposes of this project are coreless DC motors. The motors used for the 14 DOF bipedal robot were supplied by the Micromo Solutions (part of the Faulhaber Group) \cite{sw:micromo}. The online product catalog was used as a reference tool for the drivetrain selection process. The majority of the weight contribution of the complete system is attributed to the motors. Therefore, the design objective was to select a combination of motor and appropriately sized gearhead to meet the design specifications while keeping the overall mass of the system as low as possible. The remainder of this section presents the selection of appropriate motor and gearhead combination to meet the design objectives. 
+The drivetrain selection process includes selecting the appropriate components which transmit the required torque (as per the initial design specifications) to each joint. The electric machines used to generate mechanical power for the purposes of this project are coreless DC motors. The motors used for the 14 DOF bipedal robot were supplied by the Micromo Solutions (part of the Faulhaber Group) \cite{sw:micromo}. The online product catalog was used as a reference tool for the drivetrain selection process. The majority of the weight contribution of the complete system is attributed to the motors. Therefore, the design objective was to select a combination of motors and appropriately sized gearheads to meet the design specifications while keeping the overall mass of the system as low as possible. The remainder of this section presents the selection of appropriate motor and gearhead combinations to meet the design objectives. 
 
 \subsection{Mechanical Power Requirements} % (fold)
 \label{sub:mechanical_power_requirements}
-Similar to most large scale manufacturers of electric machines, Micromo Solutions provide a large catalog of DC motors which are aimed towards a wide variety of applications. To narrow down the selection process into a subset of the motors which meet the initial design specifications, preliminary mechanical power calculations are performed. The mechanical power output required by each generator is specified by the required torque ($\tau$) and speed ($\omega$) of the motor: 
+To narrow down the selection process into a subset of the motors which meet the initial design specifications, preliminary mechanical power calculations are performed. The mechanical power output required by each generator is specified by the required torque ($\tau$) and speed ($\omega$) of the motor: 
 
 \begin{equation}
 	P = \tau \times \omega
@@ -201,12 +203,12 @@ The initial specifications for the drivetrain components listed in Table \ref{ta
 	P = \tau \times \omega = 14Nm \times 65RPM \times 0.1047 = 95.28W
 \end{equation}
 
-Using this value of mechanical power as a starting guide, the motor catalog is consulted to eliminate the majority of the solutions provided. Note that due to the assumptions placed in calculating this value, 95.28W represents an upper bound on the amount of power the design should be capable of providing. Therefore the potential solution candidates should be rated for the nominal power around the region of this value. The analysis tools presented in the following sections were used to evaluate motor and gearhead combinations from the remaining pool of candidates. Note that only the plots for the final selection is presented as a reference.
+Note that due to the assumptions placed in calculating this value, 95.28W represents an upper bound on the amount of power the design should be capable of providing. Therefore the potential solution candidates should be rated for the nominal power around the region of this value. The analysis tools presented in the following sections were used to evaluate motor and gearhead combinations from the remaining pool of candidates. Note that only the plots for the final selection are presented as a reference.
 % subsection mechanical_power_requirements (end)
 
 \subsection{Torque-Speed Analysis} % (fold)
 \label{sub:torque_speed_analysis}
-The primary tool used to analyze and compare alternative solutions is the torque-speed graph. Given the structure of the motor specifications provided by Micromo Solutions, a spreadsheet was constructed to automatically generate the torque-speed characteristics from the motor constants. These constants were prepopulated from the manufacturer specification sheets and the torque-speed graphs were automatically. 
+The primary tool used to analyze and compare alternative solutions is the torque-speed graph. Given the structure of the motor specifications provided by Micromo Solutions, a spreadsheet was constructed to automatically generate the torque-speed characteristics from the motor constants. These constants were prepopulated from the manufacturer specification sheets and the torque-speed graphs were automatically generated. 
 
 \begin{equation}
 	\omega = \omega_{no-load} - k\tau
@@ -225,7 +227,7 @@ The relationship between the torque of the motor and the speed of the revolving 
 
 \subsection{Power and Efficiency Analysis} % (fold)
 \label{sub:power_and_efficiency_analysis}
-Another key factor in comparing drivetrain components is the relationship between the power produced and the overall efficiency of the motor as a function of its torque. The efficiency curve compares the ratio of electrical power input to mechanical power output. While it is typically desirable to operate the motor at its peak efficiency, the torque demands flactuate throughout the gait cycle making it difficult to base the motor selection process on this premise alone. However, it is desirable to ensure that the motor is reasonably efficient around the intended region of operation. 
+Another key factor in comparing drivetrain components is the relationship between the power produced and the overall efficiency of the motor as a function of its torque. The efficiency curve compares the ratio of electrical power input to mechanical power output. While it is typically desirable to operate the motor at its peak efficiency, the torque demands flactuate throughout the gait cycle making it difficult to base the motor selection process on this basis alone. However, it is desirable to ensure that the motor is reasonably efficient around the intended region of operation. 
 
 \begin{figure}[!ht]
 	\begin{center}
@@ -238,7 +240,7 @@ Another key factor in comparing drivetrain components is the relationship betwee
 
 \subsection{Thermal Analysis} % (fold)
 \label{sub:thermal_analysis}
-As mentioned previously, out of the initial design specifications the motor selection process is based on the continuous or average torque loading on the joints. However, during each gait cycle the torque demands peak due to external, impulsive force interaction with the environment (i.e. heel-strike). While these peaks may be outside of the motors continuous operating range for a very short period of time, the heat generated inside the motor core can build up and cause significant damage. Another consideration is the effect of thermal build up of the motor under continuous use at the specification of 14Nm. Therefore it is necessary to generate thermal plots alongside the torque-speed analysis to verify that the selected motors can withstand the temperature rise due to its operation. Given an assumed value for the ambient temperature, the total temperature of the motor can be calculated as: 
+As mentioned previously, out of the initial design specifications the motor selection process is based on the continuous or average torque loading on the joints. However, during each gait cycle the torque demands peak due to external, impulsive force interaction with the environment (i.e. heel-strike). While these peaks may be outside of the motor's continuous operating range for a very short period of time, the heat generated inside the motor core can build up and cause significant damage. Another consideration is the effect of thermal build up of the motor under continuous use at the specification of 14Nm. Therefore it is necessary to generate thermal plots alongside the torque-speed analysis to verify that the selected motors can withstand the temperature rise during operation. Given an assumed value for the ambient temperature, the total temperature of the motor can be calculated as: 
 
 \begin{equation}
 	T_{total} = T_{ambient} + T_{inc}
@@ -250,7 +252,7 @@ Where the temperature increase inside the motor core is provided by the followin
 	T_{inc} = I^{2}R \times (R_{th1} + R_{th2})
 \end{equation}
 
-Note that $I$ and $R$ is the current through and the resistance of the motor windings, respectively. Constants $R_{th1}$ and $R_{th2}$ are specified by the motor manufacturer. 
+$I$ and $R$ are the current through and the resistance of the motor windings, respectively. Constants $R_{th1}$ and $R_{th2}$ are specified by the motor manufacturer. 
 
 
 \begin{figure}[!ht]
@@ -263,7 +265,7 @@ Note that $I$ and $R$ is the current through and the resistance of the motor win
 
 \subsection{Final Configurations} % (fold)
 \label{sub:final_configurations}
-Aside from the torque-speed, power, efficiency and thermal analyses, there are several other factors which come factor in to the design consideration while selecting drivetrain components. These considerations pertain to the secondary objective to minimize the overall weight of the system while simultaneously shifting the COM higher. Between the motor and the gearhead, the majority of the weight comes from the actual coreless DC motor so it is desirable to select a smaller (lighter) motor and meet the specified torque requirements by increasing the gear reduction ratio the gearhead. Another consideration is the physical size of the motor itself, as the diameter and length of each motor vary significantly between different offerings. Since gearheads are coupled directly onto the motor shaft, the complete drivetrain assembly is usually long. 
+Aside from the torque-speed, power, efficiency and thermal analyses, there are several other considerations which factor into the design  while selecting drivetrain components. These considerations pertain to the secondary objective to minimize the overall weight of the system while simultaneously shifting the COM higher. Between the motor and the gearhead, the majority of the weight comes from the actual coreless DC motor so it is desirable to select a smaller (lighter) motor and meet the specified torque requirements by increasing the gear reduction ratio. Another consideration is the physical size of the motor itself, as the diameter and length of each motor vary significantly between different offerings. Since gearheads are coupled directly onto the motor shaft, the complete drivetrain assembly is usually long. 
 
 \begin{figure}[!h]
 	\begin{center}
@@ -273,7 +275,7 @@ Aside from the torque-speed, power, efficiency and thermal analyses, there are s
   \label{fig:micromo38a}
 \end{figure}
 
-Given the considerations and the points of analysis stated in the previous sections, a coreless DC motor from the Micromo Solutions catalog was selected. This motor achieved all of the primary design considerations (average torque requirements, operating within a stable thermal region). Coupled with the motor is a precision gearhead which is capable of producing torques slightly above the initial design specification requirements. The torque-speed characteristics at the gearhead shaft (as shown in Figure~\ref{fig:micromo38a}) is used to verify that the mechanical power output meets the design specification for normal operation. 
+Given these considerations and the analysis stated in the previous sections, a coreless DC motor from the Micromo Solutions catalog was selected. This motor achieved all of the primary design considerations (average torque requirements, operating within a stable thermal region). Coupled with the motor is a precision gearhead which is capable of producing torques slightly above the initial design specification requirements. The torque-speed characteristics at the gearhead shaft (as shown in Figure~\ref{fig:micromo38a}) are used to verify that the mechanical power output meets the design specification for normal operation. 
 
 While it is desirable to limit the number of different motor and gearhead combinations, it was determined that this combination of drivetrain components was vastly overpowered for the very last joint on the leg (ankle roll). A second combination of motor and gearhead was selected specifically for this joint to reduce the overall mass and raise the COM while meeting the lower joint requirements. This approach improves the controllability of the final system while limiting the total number of different design configurations. The final higher and lower power configurations are defined in Tables \ref{tab:higherconfig} and \ref{tab:lowerconfig}, respectively. 
 
@@ -312,11 +314,11 @@ While it is desirable to limit the number of different motor and gearhead combin
 \section{Mechanical Design} % (fold)
 \label{sec:chassis}
 
-The mechanical design of the 14 DOF bipedal robot starts from the initial motor selection presented in the previous section. The 3D CAD models for each motor and gearhead combination is obtained directly from the manufacturer. The design goals for the mechanical chassis are to produce a solid light weight structure which is capable of withstanding external forces from the environment during gait and the applied torques from each joint. The secondary design objective of minimizing the overall weight while shifting the COM higher must also be addressed intrinsically through the mechanical design. 
+The mechanical design of the 14 DOF bipedal robot starts from the initial motor selection presented in the previous section. The 3D CAD models for each motor and gearhead combination are obtained directly from the manufacturer. The design goals for the mechanical chassis are to produce a solid light weight structure which is capable of withstanding external forces from the environment during gait and the applied torques from each joint. The secondary design objective of minimizing the overall weight while shifting the COM higher must also be addressed through the mechanical design. 
 
 \subsection{Anthropometric Dimensioning} % (fold)
 \label{sub:anthropometric_dimensioning}
-The ultimate end goal for the 14 DOF bipedal robot is to achieve walking with human-like gait. To this end, anthropometric dimensioning is used as a starting point for the mechanical chassis design. Starting from a soft height requirement of the full lower body, the relative lengths are obtained for the main linkages (i.e. thigh, shank) from the anthropometric resource shown in Figure~\ref{fig:anthropo}. 
+The goal for the 14 DOF bipedal robot is to achieve walking with human-like gait. To this end, anthropometric dimensioning is used as a starting point for the mechanical chassis design. Starting from a soft height requirement of the full lower body, the relative lengths are obtained for the main linkages (i.e. thigh, shank) from the anthropometric resource shown in Figure~\ref{fig:anthropo}. 
 
 \begin{figure}[!h]
 	\begin{center}
@@ -332,15 +334,15 @@ Given the ratios between major body segment lengths, a rough estimate for each o
   \centering
   \caption{Estimated segment lengths based on anthropometric dimensioning}
   \label{tab:anthropo}%
-    \begin{tabular}{lcc}
+    \begin{tabular}{lc}
     \addlinespace
     \toprule
-    \textbf{Segment} & \textbf{Height [mm]} & \textbf{Height [In]} \\
+    \textbf{Segment} & \textbf{Height [mm]} \\
     \midrule
-    Hip   & 11.32 & 0.45 \\
-    Thigh & 277.34 & 10.92 \\
-    Shank & 278.47 & 10.96 \\
-    Foot  & 44.15 & 1.74 \\
+    Hip   & 11.32 \\
+    Thigh & 277.34 \\
+    Shank & 278.47 \\
+    Foot  & 44.15 \\
     \bottomrule
     \end{tabular}%
 \end{table}
@@ -349,16 +351,16 @@ Given the ratios between major body segment lengths, a rough estimate for each o
 
 \subsection{Chassis Structural Design} % (fold)
 \label{sub:structural_design}
-Aluminum was selected as the light weight rigid material to compose the mechanical chassis for several reasons. The key factors include the widespread availability of various forms of aluminum stock (i.e. channels, beams, etc) and its (relatively) light weight compared to other metal alloys. More specifically, Aluminum 5052 was selected due to its high fatigue strength. While no quantitative stress calculations were performed, this particular attribute is appealing due to the high impact forces the structure will have to absorb with each step. Aluminum 5052 is also easy to work with for manual machining or computer numerical control (CNC) machine tools. 
+Aluminum was selected as the light weight rigid material to compose the mechanical chassis, based on the widespread availability of various forms of aluminum stock (i.e. channels, beams, etc) and its (relatively) light weight compared to other metal alloys. More specifically, Aluminum 5052 was selected due to its high fatigue strength. This alloy is also easy to work with for manual machining or computer numerical control (CNC) machine tools. 
 
-The chassis is designed as a light weight but rigid frame to house the drivetrain components (actuators, gears, etc). The amount of stock material used in the frame itself also impacts the overall weight and structural rigidity. For example, a link segment designed from a C-Channel beam is structurally sound (since it is a single solid piece of metal). However, it may significantly heavier than a link segment composed of multiple pieces. The trade off between minimizing the overall weight and structural rigidity can sometimes be mitigated by using mechanical design techniques. For example, using a cross brace between adjacent parallel pieces of a frame can significantly improve its structural rigidity while keeping the mass low.  
+The chassis is designed as a light weight but rigid frame to house the drivetrain components (actuators, gears, etc). The amount of stock material used in the frame itself also impacts the overall weight and structural rigidity. For example, a link segment designed from a C-Channel beam is structurally sound (since it is a single solid piece of metal). However, it maybe significantly heavier than a link segment composed of multiple pieces. The trade off between minimizing the overall weight and structural rigidity can sometimes be mitigated by using a cross brace between adjacent parallel pieces of a frame.  
 
 The lightness of aluminum also helps address the secondary design objective of reducing the overall weight. However, the primary weight contribution to the overall system comes from the drivetrain components. This limits the flexibility for weight manipulation from a purely chassis design standpoint. However, mechanical design techniques can be used manipulate the COM location by strategically positioning the mounting points for motors and gearheads. 
 % subsubsection structural_design (end)
 
 \subsection{Mechanical Power Transmission} % (fold)
 \label{sub:mechanical_power_transmission}
-The biped consists entirely of rotating mechanical joints between link segments. Machine components such as shafts and bearings are used to transmit the rotational mechanical poewr between links. However, this type of mechanical coupling is also used to address the secondary objective of shifting the COM position higher. By using components such as miter gears, the mechanical power transmission is be shifted with a perpendicular offset (90$^\circ$). This technique is used to strategically decouple the mounting position of a drivetrain assembly (i.e. motor with fixed gearhead) from the actual axis of rotation. Consequently, this decoupling is used to relocate motors in a way such that the weight distribution is manipulated in favour of having a higher COM position (illustrated in Figure \ref{fig:miter}).
+The biped consists entirely of rotating mechanical joints between link segments. Machine components such as shafts and bearings are used to transmit the rotational mechanical power between links. This type of mechanical coupling is also used to address the secondary objective of shifting the COM position higher. By using components such as miter gears, the mechanical power transmission is be shifted with a perpendicular offset (90$^\circ$). This technique is used to strategically decouple the mounting position of a drivetrain assembly (i.e. motor with fixed gearhead) from the actual axis of rotation. Consequently, this decoupling is used to relocate motors such that the weight distribution is manipulated in favour of having a higher COM position (illustrated in Figure \ref{fig:miter}).
 	
 \begin{figure}[!h]
 	\begin{center}
@@ -398,21 +400,21 @@ For yaw joints which actuate along the vertical axis, the impact forces experien
 \label{fig:yawbearing}
 \end{figure}
 
+The complete mechanical CAD drawings of the 14-DOF bipedal robot can be found in Appendix~\ref{app:bipedcad}. 
+
 % subsubsection mechanical_power_transmission (end)
 
 % section mechanical_design (end)
 
 \section{Summary} % (fold)
 \label{sec:design_summary}
-The electromechanical design of the 14 DOF bipedal robot had two primary design objectives. The first was to produce enough mechanical power for the biped to achieve walking. The secondary design objective to keep the overall weight low and raise the COM improves the controllability of the final design. The initial design process started from the basics of dynamic modeling of multibody systems. The forward and inverse dynamic models computed with the RNE algorithm provided a mathematical framework for estimating the torque requirements at each joint. 
+The electromechanical design of the 14 DOF bipedal robot had two primary design objectives. The first was to produce enough mechanical power for the biped to achieve walking. The secondary design objective to keep the overall weight low and raise the COM improves the controllability of the final design. The initial design process started by basic dynamic modeling of the lower body. The forward and inverse dynamic models computed with the RNE algorithm provided a mathematical framework for estimating the torque requirements at each joint. 
 
 Since the end goal is to develop a biped capable of human-like walking, a published dataset of motion captured human gait was used for the initial dynamic simulation. Using MATLAB toolboxes, the kinematic constraints on each joint ($\vec{q}$, $\vec{\dot{q}}$, $\vec{\ddot{q}}$) were imposed on the dynamic model of the biped. A spring-damper contact model was used to generate an approximate ground reaction force experienced by the biped while walking. Finally, the initial joint torque and velocity demands under the estimated gait cycle were obtained through the dynamic simulations. 
 
-These initial design specifications formed the basis for drivetrain selection. The primary design goal of producing enough mechanical power for bipedal locomotion was addressed by appropriately sizing electric machines to the specifications. A combination of DC motors and precision gearheads were evaluated by analyzing the torque-speed, power, efficiency and thermal characteristics. The selection process revealed that a set of high and low power configuration of drivetrain components would meet the specifications while minimizing the overall weight of the system. 
+These initial design specifications formed the basis for drivetrain selection. The primary design goal of producing enough mechanical power for bipedal locomotion was addressed by appropriately sizing motors to the specifications. A combination of DC motors and precision gearheads were evaluated by analyzing the torque-speed, power, efficiency and thermal characteristics. The selection process revealed that a set of high and low power configuration of drivetrain components would meet the specifications while minimizing the overall weight of the system. 
 
-After the drivetrain configurations were established, the secondary design goal of minimizing the overall weight and raising the COM were addressed intrinsically through the mechanical design in CAD. A rough guideline for dimensioning the lower body segments (i.e. thigh, shank) was obtained through anthropometric dimensioning and the desired height of the lower body. Aluminum 5052 was selected as the material to construct the chassis frame due to its light weight, fatigue strength and machineability. The power transmission system (composed of shafts, bearings and gears) connecting the actuators to the linkages were strategically designed to raise the COM and support the loading during gait. 
-
-This concluded the initial prototype design of the 14 DOF bipedal robot in CAD. Further improvements to the mechanical design (i.e. adjusting link lengths or motor positioning) and analysis of the electromechanical system under control action required dynamic simulations. The following chapter presents a rapid prototyping toolchain for accomplishing these objectives with minimal user input. 
+After the drivetrain configurations were established, the secondary design goal of minimizing the overall weight and raising the COM were addressed through the mechanical design of the chassis. A rough guideline for dimensioning the lower body segments (i.e. thigh, shank) was obtained through anthropometric dimensioning and the desired height of the lower body. Aluminum 5052 was selected as the material to construct the chassis frame due to its light weight, fatigue strength and machineability. The power transmission system (composed of shafts, bearings and gears) connecting the actuators to the linkages were strategically designed to raise the COM and support the loading during gait. 
 % section discussion (end)
 
 % chapter design (end)
