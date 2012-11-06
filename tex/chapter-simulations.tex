@@ -1,7 +1,7 @@
 \chapter{3D Foot Placement Estimator and Gait Generation} % (fold)
 \label{cha:simulations}
 
-This chapter extends the Foot Placement Estimator (FPE) algorithm for 3D bipedal robots. Section~\ref{sec:extension_to_3d} presents the method of extending the existing 2D theory (reviewed in Section~\ref{sub:related_foot_placement}) for 3D space. The proposed algorithm selects a 2D plane in the chosen direction of motion and generates trajectories to produce a forward moving momentum along the plane. A whole body motion control framework coupled with a finite state machine is used to track the generated trajectories and form complete gait cycles. The toolchain described in the preivous chapter is used to generate dynamic simulations for the 14 DOF bipedal robot and the proposed extension to 3D is validated (Section~\ref{sec:simulations_and_results}).
+This chapter extends the Foot Placement Estimator (FPE) algorithm for 3D bipedal robots. Section~\ref{sec:extension_to_3d} presents the method of extending the existing 2D theory (reviewed in Section~\ref{sub:related_foot_placement}) to 3D movement. The proposed algorithm selects a 2D plane in the chosen direction of motion and generates trajectories to produce a forward momentum along the plane. A whole body motion control framework coupled with a finite state machine is used to track the generated trajectories and form complete gait cycles. The toolchain described in the preivous chapter is used to generate dynamic simulations for the 14 DOF bipedal robot and the proposed extension to 3D is validated (Section~\ref{sec:simulations_and_results}).
 
 \section{FPE Extension to 3D} % (fold)
 \label{sec:extension_to_3d}
@@ -243,7 +243,7 @@ In this terminal state, the Jacobian is used to track the fixed stance foot posi
 
 \subsubsection{\textbf{CONTACT STABILIZATION}} 
 
-By the assumption of an arbitrary 3D biped with finite sized feet, it is possible for the biped to land on the edge of the foot instead of landing perfectly above the FPE point on the ground. Once ground contact is made, the solution to the FPE equation is no longer valid (since a real biped will not have instantaneous transfer of balance). To handle this behaviour, a stabilization substate is used where the joint level control is computed directly. At this point, trajectories are generated for the ankles to align the surface of the foot with the ground and switch to high gain PD control for tracking. This ensures that both feet are in full contact with the ground prior to executing the opposite legs gait sequence. The biped-ground contact interface is shown before and after the stabilization substate in Figure~\ref{fig:contact_stabilization}. 
+With an arbitrary 3D biped with finite sized feet, it is possible for the biped to land on the edge of the foot instead of landing perfectly above the FPE point on the ground. Once ground contact is made, the solution to the FPE equation is no longer valid (since a real biped will not have instantaneous transfer of balance). To handle this behaviour, a stabilization substate is used where the joint level control is computed directly. At this point, trajectories are generated for the ankles to align the surface of the foot with the ground and switch to high gain PD control for tracking. This ensures that both feet are in full contact with the ground prior to executing the opposite leg's gait sequence. The biped-ground contact interface is shown before and after the stabilization substate in Figure~\ref{fig:contact_stabilization}. 
 
 \begin{figure}[!h]
 	\begin{center}
@@ -259,9 +259,9 @@ By the assumption of an arbitrary 3D biped with finite sized feet, it is possibl
 
 % subsection joint_level_control (end)
 
-\subsection{Computing FPE Parameters} % (fold)
+\subsection{Computing the FPE Parameters} % (fold)
 \label{sub:computing_fpe_parameters}
-The 2D FPE equation (\ref{eq:fpe}) requires the total inertia about the COM ($I_{COM}$) and average angular velocity about the pivoted fixed foot ($\dot{\theta}_{avg}$). In the 2D case, the moment of inertia for link $k$ is a scalar value since there is only one plane of rotation. The total inertia about the COM is computed by summing the moment of inertia for each link in the system. However, the moment of inertia for each link is a $3\times3$ tensor: 
+The 2D FPE equation (\ref{eq:fpe}) requires the total inertia about the COM ($I_{COM}$) and average angular velocity about the pivoted fixed foot ($\dot{\theta}_{avg}$). In the 2D case, the moment of inertia for link $k$ is a scalar value since there is only one plane of rotation. The total inertia about the COM is computed by summing the moment of inertia for each link in the system. In the 3D case, the moment of inertia for each link is a $3\times3$ tensor: 
 
 \begin{equation}
 	\begin{aligned}
@@ -273,7 +273,7 @@ The 2D FPE equation (\ref{eq:fpe}) requires the total inertia about the COM ($I_
 	\end{aligned}
 \end{equation}
 
-The inertia tensor of each link is taken at the COM aligned with the local coordinate system. If the $xz$-plane is selected as the sagittal plane in 3D space and the moment of inertia of link $k$ is the $I_{yy}$ term. However, in the 3D case the motion of the biped is no longer fixed to a single plane of rotation. By attaching a fixed coordinate frame to the selected sagittal plane at the start of each step, the orientation of the sagittal plane can be expressed as a $3\times3$ rotation matrix $R$. The local inertia tensor can be rotated into the selected sagittal plane's coordinate frame by: 
+The inertia tensor of each link is taken at the COM aligned with the local coordinate system. If the $xz$-plane is selected as the sagittal plane in 3D space, the moment of inertia of link $k$ is the $I_{yy}$ term. However, in the 3D case the motion of the biped is no longer fixed to a single plane of rotation. By attaching a fixed coordinate frame to the selected sagittal plane at the start of each step, the orientation of the sagittal plane can be expressed as a $3\times3$ rotation matrix $R$. The local inertia tensor can be rotated into the selected sagittal plane's coordinate frame by: 
 
 \begin{equation}
 	\begin{aligned}
@@ -282,7 +282,7 @@ The inertia tensor of each link is taken at the COM aligned with the local coord
 	\label{eq:isagittal}
 \end{equation}
 
-Then the effective moment of inertia of each link \emph{projected on to the selected sagittal plane} can be obtained by transforming the inertia tensor with (\ref{eq:isagittal}) and pulling out the $I_{yy}$ term, $I_{k,yy}$. The total inertia about the COM can easily be computed by summing the effective inertia of each link on the sagittal plane: 
+Then the effective moment of inertia of each link \emph{projected on to the selected sagittal plane} can be obtained by transforming the inertia tensor with (\ref{eq:isagittal}) and pulling out the $I_{yy}$ term, $I_{k,yy}$. The total inertia about the COM can then be computed by summing the effective inertia of each link on the sagittal plane: 
 
 \begin{equation}
 	\begin{aligned}
@@ -384,8 +384,7 @@ Where $\dot x$ is the tangential velocity of the contact point (in the $x$ and $
   \label{tab:contactk}
 \end{table}
 
-It was found that stiffening the ground contact by raising the model constants would produce singularities with fixed time step simulations at 1 KHz. Reducing the time step helped avoid singularities but the simulation runtime drastically increased. The use of variable step solvers was explored as an option to reduce simulation runtime while providing a stiffer ground with much higher contact model constants. 
-
+It was found that stiffening the ground contact by raising the model constants would produce singularities with fixed time step simulations at 1 KHz. Reducing the time step helped avoid singularities but the simulation runtime drastically increased. 
 % subsection contact_modeling (end)
 
 \subsection{Side-to-Side Stepping} % (fold)
@@ -453,17 +452,13 @@ In the terminal \textbf{DROP} state, the swing foot trajectory tracks the FPE po
 
 \section{Summary} % (fold)
 \label{sec:simulations_summary}
-The underlying FPE theory begins by analyzing a 2D compass biped in motion. The impact of the contact points with the ground is modeled using the conservation of angular momentum to determine the regions in the state space where the compass biped remains stable after ground contact, by analyzing the total system energy post impact. The stability analysis is then used to determine where a biped must step to remain within the stability region. This forms the basis of the FPE, which is a point on the ground where, if the robot were to step onto that point, the kinetic energy of the biped system would equal the peak potential energy. 
-
-As shown through simulations, placing the swing foot beyond the FPE point results in the biped not having enough kinetic energy post impact to overcome the peak potential energy (overstepping). In this case, the biped remains stable. Conversely, placing the swing foot before the FPE point causes the kinetic energy post impact to exceed the peak potential energy (understepping). In this situation the biped begins to fall over. The FPE theory was extended to form complete gait cycles with a simple state machine and joint level PD control. 
-
 The FPE theory is extended to the 3D case to form dynamically stable gait cycles by selecting a 2D sagittal plane parallel to the desired direction of motion. The primary goal in the 3D case is to generate a forward momentum along this selected sagittal plane. For the duration of the step cycle, the FPE equation is used to determine the appropriate swing foot placement to restore balance from the momentum generated along the plane. A new sagittal plane is selected with each step to enable turning. 
 
 Trajectories are generated for the swing foot and COM position to simultaneously generate the forward momentum along the plane while remaining stable in the off sagittal plane until the \textbf{DROP} state is reached. Upon entering this terminal state, the 3D biped is falling forward in the desired direction of motion and the swing foot tracks the FPE point to restore balance. 
 
-A whole body motion control framework is used to generate the appropriate joint level trajectories during each state of the proposed control strategy. The framework uses prioritized control scheme where the low priority constraints of each state are projected onto the null space of higher priority tasks. This approach handles the dynamic switching of constraints as the biped moves between the single and double support phases. 
+A whole body motion control framework is used to generate the appropriate joint level trajectories during each state of the proposed control strategy. The framework uses a prioritized control scheme where the low priority constraints of each state are projected into the null space of higher priority tasks. This approach handles the dynamic switching of constraints as the biped moves between the single and double support phases. 
 
-The 14 DOF bipedal robot developed in previous chapters is used to demonstrate the control strategy presented in this chapter. Dynamic simulations with 3D visualization is generated directly from the CAD model using the toolchain. The simulations are used to verify the efficacy of the proposed control strategy for side-stepping and forward walking gait. Despite using a more complex contact model, tuning the parameters to accurately model a stiff ground in reality proved to be challenging. This imperfection in the simulation environment highlights the need to develop physical hardware to validate walking control strategies, as presented in the following chapter.
+The 14 DOF bipedal robot developed in previous chapters is used to demonstrate the control strategy presented in this chapter. Dynamic simulations with 3D visualization are generated directly from the CAD model using the toolchain. The simulations are used to verify the efficacy of the proposed control strategy for side-stepping and forward walking gait. Despite using a more complex contact model, tuning the parameters to accurately model a stiff ground in reality proved to be challenging. This imperfection in the simulation environment highlights the need to develop physical hardware to validate walking control strategies, as presented in the following chapter.
 % section discussion (end)
 
 % chapter simulations (end)
