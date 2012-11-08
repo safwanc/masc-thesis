@@ -399,13 +399,20 @@ It was found that stiffening the ground contact by raising the model constants w
 
 To demonstrate the dynamic stability of a 3D biped under this approach, the frontal plane was selected as the sagittal plane. Forward motion along this sagittal plane results in a side-to-side stepping sequence for the biped (as shown in Figure \ref{fig:sidesequence}). The gray plane in the frame captures moves along the Y-direction (biped's frontal plane). The intersection of the gray plane and the ground indicates the FPE point tracked during \textbf{DROP}. 
 
+\begin{figure}[!h]
+	\centering
+    \includegraphics[scale=0.7]{fig/simulations/sidecomtraj.eps}
+  	\caption{COM trajectory being tracked during the complete gait sequence of side stepping.}
+	\label{fig:sidecomtraj}
+\end{figure}
+
 The resulting $x_{COM}$ trajectories from simulating the side-to-side stepping motion (shown in Figure \ref{fig:sidecomtraj}) demonstrate the stability of the biped through a complete gait sequence. The prioritized motion control framework handles the dynamic switching of constraints (from double support to single support) while generating the appropriate joint level commands for swinging the COM over. The colour coded dotted lines on Figure \ref{fig:sidecomtraj} indicate the boundaries of each foot on the ground. Note that during the \textbf{SWING} state, the COM is pushed outside the region of support (around 11s). This in turn initiates the \textbf{DROP} state where the FPE point is tracked to regain stability.
 
 \begin{figure}[!h]
 	\centering
-    \includegraphics[scale=0.6]{fig/simulations/sidecomtraj.eps}
-  	\caption{COM trajectory being tracked during the complete gait sequence of side stepping.}
-	\label{fig:sidecomtraj}
+    \includegraphics[scale=0.7]{fig/simulations/sidefpetrack.eps}
+  	\caption{Swing foot tracks the a point on the ground given by $FPE + FPE_{offset}$ to ensure overstepping.}
+	\label{fig:sidefpetrack}
 \end{figure}
 
 
@@ -413,37 +420,42 @@ In the terminal \textbf{DROP} state, the swing foot trajectory tracks the FPE po
 
 \begin{figure}[!h]
 	\centering
-    \includegraphics[scale=0.6]{fig/simulations/sidefpetrack.eps}
-  	\caption{Swing foot tracks the a point on the ground given by $FPE + FPE_{offset}$ to ensure overstepping.}
-	\label{fig:sidefpetrack}
+    \includegraphics[scale=0.1]{fig/simulations/fwdsequenceside.png}
+  	\caption{Frame captures from the realtime 3D visualization with forward walking gait.}
+	\label{fig:fwdsequenceside}
 \end{figure}
-
 
 \subsection{Forward Walking Gait} % (fold)
 \label{sub:forward_walking_gait}
-\Incomplete 
 
-\begin{figure}[!h]
+\begin{figure}[!b]
 	\centering
-    \includegraphics[scale=0.6]{fig/simulations/fwdcomtraj.eps}
+    \includegraphics[scale=0.7]{fig/simulations/fwdcomtraj.eps}
   	\caption{COM and foot trajectories in the direction of forward progress and off-sagittal plane during a complete gait cycle.}
 	\label{fig:fwdcomtraj}
 \end{figure}
 
-\begin{figure}[!h]
-	\centering
-    \includegraphics[scale=0.7]{fig/simulations/fwdfpetraj.eps}
-  	\caption{FPE and foot trajectories in the direction of forward progress during a complete gait cycle.}
-	\label{fig:fwdfpetraj}
-\end{figure}
+Forward walking is achieved by selecting the biped's sagittal plane as the direction of motion. The frame captures from forward walking simulations are shown in Figure~\ref{fig:fwdsequenceside}. The key challenge is maintaining stability in the off-sagittal plane while the swing foot is raised off the ground during the \textbf{LIFT} state. The $x_{COM}$ trajectories shown in Figure~\ref{fig:fwdcomtraj} demonstrate the dynamic stability in the off-sagittal plane while forward progress is made along the chosen direction of motion. The proposed trajectory generation for $x_{COM}$ illustrated by Figure~\ref{fig:comtraj3d} can be seen at 8s and 22s when the COM is pushed outside the region of support once the swing foot is aligned. 
+
+The alternating foot trajectories on the selected sagittal plane during a complete gait cycle are shown in Figure~\ref{fig:fwdfoottraj}. The first step is taken with the left foot tracking $x_{SWING}$ (between 5-12s). The \textbf{DROP} state is entered around 12s and the left foot tracks a $x_{SWING}$ trajectory given by $FPE + FPE_{offset}$ to ensure over stepping. Once ground contact is made, the contact stabilization state is used to straighten both feet and spread the ground reaction force evenly (around 12-14s). The step cycle begins for the right leg from 15s to complete the gait sequence. 
 
 \begin{figure}[!h]
 	\begin{center}
 	\subfigure{\includegraphics[scale=0.45]{fig/simulations/fwdlfoottraj.eps}}
 	\subfigure{\includegraphics[scale=0.45]{fig/simulations/fwdrfoottraj.eps}}
 	\end{center}
-  	\caption{Foot trajectories on the selected sagittal plane during a complete gait cycle.}
+  	\caption{Left and right foot trajectories on the selected sagittal plane during a complete gait cycle.}
 	\label{fig:fwdfoottraj}
+\end{figure}
+
+The FPE trajectory along the forward walking direction is shown in Figure~\ref{fig:fwdfpetraj}. The FPE location on the ground is tracked (with an offset) to regain stability around 12s by the swinging left foot and again around 25s by the swinging right foot. The FPE location also remains safely between the feet during the double support phase after each step is made (approximately 13-15s). 
+
+
+\begin{figure}[!h]
+	\centering
+    \includegraphics[scale=0.7]{fig/simulations/fwdfpetraj.eps}
+  	\caption{FPE and foot trajectories in the direction of forward progress during a complete gait cycle.}
+	\label{fig:fwdfpetraj}
 \end{figure}
 
 % subsection forward_walking_gait (end)
