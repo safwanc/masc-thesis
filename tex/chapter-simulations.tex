@@ -3,14 +3,22 @@
 
 This chapter extends the Foot Placement Estimator (FPE) algorithm for 3D bipedal robots. Section~\ref{sec:extension_to_3d} presents the method of extending the existing 2D theory (reviewed in Section~\ref{sub:related_foot_placement}) to 3D movement. The proposed algorithm selects a 2D plane in the chosen direction of motion and generates trajectories to produce a forward momentum along the plane. A whole body motion control framework coupled with a finite state machine is used to track the generated trajectories and form complete gait cycles. The toolchain described in the preivous chapter is used to generate dynamic simulations for the 14 DOF bipedal robot and the proposed extension to 3D is validated (Section~\ref{sec:simulations_and_results}).
 
+The remainder of this thesis assumes a 3D bipedal robot with $n$ actuated degrees of freedom (DOF) and $n+6$ generalized coordinates defined by (\ref{eq:eom1}). The biped's local coordinate system $oxyz$ rigidly attached to the floating base is shown in Figure~\ref{fig:bipedcoord}. The $xz$ and $yz$ planes form the biped's \emph{local} sagittal and frontal planes, respectively. 
+
+\begin{figure}[!h]
+	\centering
+    \includegraphics[trim = 0mm 13mm 0mm 0mm,clip,scale=0.7]{fig/fpe/aslbiped.eps} 
+  	\caption{Local coordinate system for the 3D 14 DOF bipedal robot.}
+	\label{fig:bipedcoord}
+\end{figure}
+
+
 \section{FPE Extension to 3D} % (fold)
 \label{sec:extension_to_3d}
 
 In order to extend the FPE approach to the 3D case, the concept of generating complete gait cycles described in Section~\ref{sub:gait_cycles} is revisted. The primary goal of the first three states in each step cycle (\textbf{PUSH}, \textbf{LIFT} and \textbf{SWING}) is to force the biped into an unstable configuration so that the FPE algorithm can be used to regain stability in the terminal state (\textbf{DROP}).
 
-To extend the 2D algorithm to the general 3D case, we begin by selecting a suitable plane in 3D space as the sagittal plane. The off-sagittal plane is perpendicular to the sagittal plane and the ground.  In the proposed approach, the goal of each step cycle is to control the motion of a 3D bipedal robot to generate a forward moving momentum \emph{along} the selected sagittal plane. Upon entering the terminal state, the FPE equation (\ref{eq:fpe}) is solved on the selected plane to determine the swing foot placement and ultimately regain stability. Unlike the 2D case, consider a 3D bipedal robot with finite foot length and width rather than a biped with point feet as demonstrated in \cite{Wight:2008vt}. The larger size of the region of support increases robustness to these approximation errors. 
-
-The remainder of this thesis assumes a 3D bipedal robot with $n$ actuated degrees of freedom (DOF) and $n+6$ generalized coordinates defined by (\ref{eq:eom1}). 
+To extend the 2D algorithm to the general 3D case, we begin by selecting a suitable plane in 3D space as the sagittal plane for motion. The off-sagittal plane is perpendicular to the sagittal plane and the ground.  In the proposed approach, the goal of each step cycle is to control the motion of a 3D bipedal robot to generate a forward moving momentum \emph{along} the selected sagittal plane. Upon entering the terminal state, the FPE equation (\ref{eq:fpe}) is solved on the selected plane to determine the swing foot placement and ultimately regain stability. Unlike the 2D case, consider a 3D bipedal robot with finite foot length and width rather than a biped with point feet as demonstrated in \cite{Wight:2008vt}. The larger size of the region of support increases robustness to these approximation errors. 
 
 \subsection{Sagittal Plane} % (fold)
 \label{sub:sagittal_plane}

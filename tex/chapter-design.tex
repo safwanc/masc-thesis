@@ -1,7 +1,25 @@
 \chapter{Electromechanical Design} % (fold)
 \label{cha:design}
 
-This chapter presents the electromechanical design of the 14 DOF bipedal robot. There are several key design considerations which impact the performance of the finished product. The complete process consisted of selecting the appropriate drivetrain components and designing the mechanical chassis. The primary design objective was to produce enough mechanical power for the robot to achieve walking. The secondary design objective was to keep the overall weight low and raise center of mass (COM) position as high as possible. 
+This chapter presents the electromechanical design of a bipedal robot for experimental validation. The basic design requirements are based on existing lower body humanoid designs discussed in Section~\ref{sec:related_electromechanical_design}. Each leg is selected to have 7 DOF (breakdown provided in Table~\ref{tab:doftable}) to enable a wide range of motion for balancing and walking. This provides a total of 14 DOF for the bipedal robot. A serial link mechanism approach is used for its simplicity in design and kinematics. The bipedal robot is a fully powered active walker (i.e. every joint is completely controlled) with an electric motor drivetrain. DC motors with geared drives are selected because it is easy to model the actuator dynamics and achieve accurate joint level position control. 
+
+\begin{table}[h]
+  \centering
+  \caption{Degrees-of-Freedom in each leg of the bipedal robot.}
+    \begin{tabular}{rc}
+    \addlinespace
+    \toprule
+    \textbf{Joint} & \textbf{DOF} \\
+    \midrule
+    Hip   & 3 \\
+    Knee  & 1 \\
+    Ankle & 3 \\
+    \bottomrule
+    \end{tabular}
+  \label{tab:doftable}
+\end{table}
+
+There are several other key design considerations which impact the performance of the finished product. The complete design process consisted of selecting the appropriate drivetrain components and designing the mechanical chassis. The primary design objective was to produce enough mechanical power for the robot to achieve walking. The secondary design objective was to keep the overall weight low and raise center of mass (COM) position as high as possible. 
 
 The initial design specification was obtained by modeling the system dynamics during an estimated gait cycle (Section~\ref{sec:designspec}). The selection of electromechanical components which comprise the drivetrain system was used to address the primary design objective (Section~\ref{sec:drivetrain}). These drivetrain components include DC motors and appropriate gearing to provide the reduction ratio required to meet the initial design specifications. After the primary objective was addressed and the drivetrain components were selected, the secondary design objectives were satisfied by adjusting the mechanical structure and manipulating placement of components (Section~\ref{sec:chassis}).
 
