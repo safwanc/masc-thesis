@@ -194,8 +194,8 @@ The tracking results shown in Figure~\ref{fig:tracking1dof} validate the simulat
 \Incomplete
 % section motion_control_results (end)
 
-\section{Discussion} % (fold)
-\label{sec:experiments_discussion}
+\section{Summary} % (fold)
+\label{sec:experiments_summary}
 Validating control algorithms on physical hardware is important due to modeling imperfections in the simulation environment. The physical 14 DOF bipedal robot developed in earlier chapters was used for experimental validation through HIL testing. 
 
 For the physical hardware, DC motors are controlled by a voltage signal $v_m$. A second order system was used to model the actuator dynamics and reformulate the existing controllers which controlled the link side torques $\tau _k$. Independent joint control decouples each joint for individual control. Since this approach does not account for the coupled dynamics of the overall system, the link side torques are treated as a disturbance to the actuator dynamics model. The effective motor inertia is reformulated to include the link inertia seen by the joint. A generic RNE-based algorithm was used to extract the mass matrix of the system at every time step to compute the effective motor inertia.
