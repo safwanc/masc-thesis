@@ -333,14 +333,14 @@ The proposed control strategy to extend the FPE theory to 3D was implemented in 
 	Provides the state dependent control logic for the whole body motion control framework in Section~\ref{sub:control_strategy}. The resulting joint space velocities are integrated to obtain the joint position reference command. The contact stabilization substate used in the second half of \textbf{DROP} is also implemented here to generate joint level trajectories directly. \\
 
 	\item \textbf{Joint Controller} \\ 
-	High gain joint level PD controllers with gain scheduling based on the current state of the control strategy. The output of this block ($\tau$) is used to drive the forward dynamics simulation generated with the toolchain. \\
+	High gain joint level PD controllers with gain scheduling based on the current state of the control strategy. The output of this block ($\vtau$) is used to drive the forward dynamics simulation generated with the toolchain. \\
 
 \end{enumerate}
 
 \begin{figure}[!h]
 	\centering
-    \includegraphics[scale=0.6]{fig/simulations/stateflow.png} 
-  	\caption{Finite state machine implemented in Stateflow for 3D FPE-based walking control strategy. \Incomplete}
+    \includegraphics[trim = 30mm 60mm 25mm 53mm,clip,width=17cm]{fig/simulations/statemachine.pdf} 
+  	\caption{Finite state machine implemented in Stateflow for 3D FPE-based walking control strategy.}
 	\label{fig:stateflow}
 \end{figure}
 
@@ -426,14 +426,14 @@ In the terminal \textbf{DROP} state, the swing foot trajectory tracks the FPE po
 \begin{figure}[!h]
 	\centering
     \includegraphics[scale=0.6]{fig/simulations/fwdcomtraj.eps}
-  	\caption{\Incomplete}
+  	\caption{COM and foot trajectories in the direction of forward progress and off-sagittal plane during a complete gait cycle.}
 	\label{fig:fwdcomtraj}
 \end{figure}
 
 \begin{figure}[!h]
 	\centering
     \includegraphics[scale=0.7]{fig/simulations/fwdfpetraj.eps}
-  	\caption{\Incomplete}
+  	\caption{FPE and foot trajectories in the direction of forward progress during a complete gait cycle.}
 	\label{fig:fwdfpetraj}
 \end{figure}
 
@@ -442,7 +442,7 @@ In the terminal \textbf{DROP} state, the swing foot trajectory tracks the FPE po
 	\subfigure{\includegraphics[scale=0.45]{fig/simulations/fwdlfoottraj.eps}}
 	\subfigure{\includegraphics[scale=0.45]{fig/simulations/fwdrfoottraj.eps}}
 	\end{center}
-  	\caption{\Incomplete}
+  	\caption{Foot trajectories on the selected sagittal plane during a complete gait cycle.}
 	\label{fig:fwdfoottraj}
 \end{figure}
 
