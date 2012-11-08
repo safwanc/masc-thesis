@@ -1,29 +1,38 @@
 \chapter{Conclusions} % (fold)
 \label{cha:conclusion}
-\ifthenelse{\boolean{VoidIncomplete}}{\Incomplete}{
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+This thesis presented a novel walking control strategy for on-line gait synthesis and the development of a 3D 14 DOF bipedal robot for experimental validation. 
+
+The electromechanical design specifications for the bipedal robot were  derived using motion captured human gait data. Electric motors used in the drivetrain were selected based on these specifications and DC motor characteristics. The chassis and power transmission system were designed in CAD to improve the controllability during walking. A rapid prototyping toolchain was presented to streamline the iterative design of complex multibody systems. Full dynamic simulations and real-time 3D visualizations were automatically generated for the biped using this toolchain. It was also used to revise the physical design prior to manufacturing. 
+
+The FPE algorithm was extended to form complete gait cycles for 3D bipedal robots. The proposed algorithm selects a 2D plane in a chosen direction of motion and generates to forward momentum along the plane. A trajectory generation scheme was developed for the COM and swing foot to maintain balance in the off-sagittal plane while generating the forward momentum. By solving the 2D FPE equation along the selected plane, a 3D biped was shown to regain stability by taking a step in the chosen direction of motion. A whole body motion control framework coupled with a state machine was used to form dynamically stable gait cycles. The efficacy of the proposed algorithm was demonstrated in dynamic simulations for side stepping and forward walking. 
+
+Experimental validation on the physical hardware was presented. A HIL architecture was used to develop parallel controller models which can target the simulated or physical bipedal robot. The actuator dynamics and motion control framework were validated through the parallel models for single joints and a complete leg.  
 
 \section{Future Work} % (fold)
 \label{sec:future_work}
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Directions for future work on this topic are primarily divided into the areas of software and hardware. First, the simulation environment can be improved for more accurate modeling of ground reaction force. The parallel models used for experimental validation on hardware make it more valuable to have accurate simulations. Secondly, the complete walking control and gait synthesis strategy must be implemented on the hardware for more extensive validation. 
+
+\subsection{Simulations} % (fold)
+\label{sub:simulations}
+One of the most difficult challenges in setting up the dynamic simulations in Chapter~\ref{cha:simulations} was the contact model. The initial spring-damper model was replaced with the more complex Hunt and Crossley model to eliminate discontinuities at the contact point. The difficult task was to appropriately tune the parameters to model a stiff ground contact. This was particularly important due to the change of weight loading during the double to single support transitions. Poorly tuned contact models (soft ground) resulted in oscillations as the stance foot attempted to support the entire weight of the biped. This often destabilized the biped during the \textbf{LIFT} and \textbf{SWING} states in the off-sagittal plane. 
+
+Raising the contact parameters to model a stiff ground resulted in singularities for large time steps using a fixed step solver. These singularities could often be avoided by selecting a sufficiently smaller time step. However, this drastically increased the simulation run times making it difficult to iteratively adjust the control strategy and observe the resulting behaviour in dynamic simulations. The use of variable step solvers can be explored as an option to reduce simulation runtime while providing a stiffer ground with much higher contact model constants. The key challenge here would be to verify the modeling accuracy with the new solver. 
+% subsection simulations (end) 
+
+\subsection{Experiments} % (fold)
+\label{sub:experiments}
+The experimental validation presented in Chapter~\ref{cha:experiments} was limited to controlling the motion of a single leg due to hardware constraints. While the experiments validate the simulation models for key components of the proposed strategy, the complete algorithm must be implemented on the physical 14 DOF bipedal robot for more extensive validation. 
+
+It is difficult to accurately model some dynamic forces in simulation (i.e. contact, friction), while other effects were left completely unmodeled (i.e. vibrations). The specific difficulties with contact modeling mentioned in Section~\ref{sub:simulations} reinforce the need for experimental validation of a leg in contact with the ground. While it may be easier to control the biped under single support due to a physically stiff ground, the torque loading on the motors can be different from the simulation evironment. More extensive validation can also provide a source for tuning the contact model parameters in simulation to improve the modeling accuracy. 
+
+% Furthermore, the simulation environments assume perfect signal quality from sensors and the control algorithms are executed on systems with significantly more processing power than what is available on embedded microcontrollers. Factors like the communications with all 14 motor controllers can impact the control bandwidth available for walking. These differences in simulation and hardware reinforce the need for extensive validation of the proposed a
+
+% subsection experiments (end)
 
 
-% FROM SECTION 5.3.1: 
-
-The use of variable step solvers was explored as an option to reduce simulation runtime while providing a stiffer ground with much higher contact model constants. 
 
 
 % section future_work (end)
-}
+
 % chapter conclusion (end)
