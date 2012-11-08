@@ -211,8 +211,9 @@ Note that assumption \ref{assump:betafix} implies that if both feet were to rema
 
 \begin{figure}[!h]
 	\centering
-    \includegraphics[scale=0.6]{fig/fpe/fig2.eps}
-  	\caption{Compass biped model in the swing phase of the gait cycle in the (a) pre-impact and (b) post-impact configurations.}
+	\subfigure{\includegraphics[scale=0.6]{fig/fpe/preimpact.eps}}
+	\subfigure{\includegraphics[scale=0.6]{fig/fpe/postimpact.eps}}
+  	\caption{Compass biped model in the swing phase of the gait cycle in the pre-impact (left) and post-impact (post) configurations.}
 	\label{fig:prepost}
 \end{figure}
 
@@ -232,7 +233,7 @@ To formulate a state space representation of the biped, the equations of motion 
 	\end{aligned}
 \end{equation}
 
-This equation is only valid while the inverted pendulum swings about point $A$ (i.e. pre-impact). When the swing leg comes in contact with the ground and based on the assumptions, point $B$ becomes the new pivot for the inverted pendulum (post-impact). The motion of the post-impact system is now based on a different angular velocity (namely, $\dot{\theta}_B$). However, the assumptions 1-4 also relate the angular momentum of the system in the pre-impact stage (Figure \ref{fig:prepost}a) to the post-impact stage (Figure \ref{fig:prepost}b). Applying the conservation of angular momentum about point $B$, the post-impact angular velocity ($\dot{\theta}_B$) is a function of the pre-impact angular velocity ($\dot{\theta}_A$) \cite{Wight:2008vt}: 
+This equation is only valid while the inverted pendulum swings about point $A$ (i.e. pre-impact). When the swing leg comes in contact with the ground and based on the assumptions, point $B$ becomes the new pivot for the inverted pendulum (post-impact). The motion of the post-impact system is now based on a different angular velocity (namely, $\dot{\theta}_B$). However, the assumptions 1-4 also relate the angular momentum of the system in the pre-impact stage to the post-impact stage (Figure \ref{fig:prepost}). Applying the conservation of angular momentum about point $B$, the post-impact angular velocity ($\dot{\theta}_B$) is a function of the pre-impact angular velocity ($\dot{\theta}_A$) \cite{Wight:2008vt}: 
 
 \begin{equation}
 	\begin{aligned}
@@ -280,7 +281,7 @@ The system defined by \eqref{eq:unifiedeom} is used to investigate stability and
 
 \begin{figure}[!t]
 	\centering
-    \includegraphics[scale=0.7]{fig/fpe/fig3.eps} 
+    \includegraphics[scale=0.8]{fig/fpe/unifiedstate.eps} 
   	\caption{Unified variable $\theta$ used to simplify the analysis. It is easily observed that $\theta_A = \theta  + \beta /2$ and $\theta_B = \theta  - \beta /2$}.
 	\label{fig:unified}
 \end{figure}
@@ -359,7 +360,7 @@ The simple compass biped model used made several assumptions which are now lifte
 
 \begin{figure}[h]
 	\centering
-    \includegraphics[scale=0.6]{fig/fpe/fig5.eps}
+    \includegraphics[scale=0.8]{fig/fpe/fpeangle.eps}
   	\caption{Graphical representation of the solution to the FPE equation for arbitrary robot configurations.}
 	\label{fig:phi}
 \end{figure}
