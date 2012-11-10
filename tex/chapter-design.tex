@@ -1,7 +1,7 @@
 \chapter{Electromechanical Design} % (fold)
 \label{cha:design}
 
-This chapter presents the electromechanical design of a bipedal robot for experimental validation. The basic design requirements are based on existing lower body humanoid designs discussed in Section~\ref{sec:related_electromechanical_design}. Each leg is selected to have 7 DOF (breakdown provided in Table~\ref{tab:doftable}) to enable a wide range of motion for balancing and walking. This provides a total of 14 DOF for the bipedal robot. A serial link mechanism approach is used for its simplicity in design and kinematics. The bipedal robot is a fully powered active walker (i.e. every joint is completely controlled) with an electric motor drivetrain. DC motors with geared drives are selected because it is easy to model the actuator dynamics and achieve accurate joint level position control. 
+This chapter presents the electromechanical design of a bipedal robot for experimental validation. Each leg is selected to have 7 DOF (breakdown provided in Table~\ref{tab:doftable}) to enable a wide range of motion for balancing and walking. This provides a total of 14 actuated DOF for the bipedal robot. A serial link mechanism approach is used for its simplicity in design and kinematics. The bipedal robot is a fully powered active walker (i.e. every joint is actively controlled) with an electric motor drivetrain. DC motors with geared drives are selected because it is easy to model the actuator dynamics and achieve accurate joint level position control. 
 
 \begin{table}[h]
   \centering
@@ -30,13 +30,13 @@ The initial design specification was obtained by modeling the system dynamics du
 \section{Dynamic Modeling} % (fold)
 \label{sec:designspec}
 
-A dynamic model of the proposed system must be developed and analyzed under normal operating conditions to determine the forces acting on the system and torques experienced at each of the joints. The forward or direct dynamic model is a mathematical system which provides a transformation from the joint torques ($\vtau$) to the resulting joint positions ($\vec{q}$), velocities ($\vec{\dot{q}}$) and accelerations ($\vec{\ddot{q}}$). That is, it provides the mapping:
+A dynamic model of the proposed system must be developed and analyzed under normal operating conditions to determine the forces acting on the system and torques experienced at each of the joints. The forward or direct dynamic model provides a transformation from the joint torques ($\vtau$) to the resulting joint positions ($\vec{q}$), velocities ($\vec{\dot{q}}$) and accelerations ($\vec{\ddot{q}}$).
 
 \begin{equation}
-	\ddot{\vec{q}} = f(\vtau)
+	\ddot{\vec{q}} = f(\vtau, \vec{q}, \dot{\vec{q}}, \vec{F}_{\mathbf{C}})
 \end{equation}
 
-Given this model, a dynamic simulation environment can be designed to estimate the torque loading at different joints on the bipedal robot during the gait cycle. This estimate can form the basis of the initial design specifications from which motors and gearing can be selected. An important consideration in this model is the inclusion of contact forces during the stance phase of the gait cycle. The ground reaction forces exerted on the robots feet have a significant impact on the dynamic requirements of each joint. Since the stance phase makes up approximately 60\% of the gait cycle, the effects these forces have to be incorporated for an accurate simulation. 
+Where $\vec{F}_{\mathbf{C}}$ represents the contact force(s) felt at the feet. Given this model, a dynamic simulation environment can be designed to estimate the torque loading at different joints on the bipedal robot during the gait cycle. This estimate can form the basis of the initial design specifications from which motors and gearing can be selected. An important consideration in this model is the inclusion of contact forces during the stance phase of the gait cycle. The ground reaction forces exerted on the robots feet have a significant impact on the dynamic requirements of each joint.
 % section overview (end)
 
 \subsection{Equations of Motion} % (fold)
@@ -46,10 +46,10 @@ The general form of the equation of motion describing a $n$-DOF humanoid robot (
 
 \begin{equation}
 	\label{eq:eom1}
-	A(\vec{q})\ddot{\vec{q}} + C(\vec{q},\dot{\vec{q}})\dot{\vec{q}} + g(\vec{q}) = \vtau
+	A(\vec{q})\ddot{\vec{q}} + C(\vec{q},\dot{\vec{q}})\dot{\vec{q}} + g(\vec{q}) = \vtau + J^{T} \vec{F}_{\mathbf{C}}
 \end{equation}
 
-Where $A(\vec{q})$ is the $(n+6) \times (n+6)$ inertia matrix, $C(\vec{q},\dot{\vec{q}})$ are the centripetal/Coriolis terms and $g(\vec{q})$ is the gravity vector. The $(n+6) \times 1$ generalized force vector $\vtau$ is segmented as follows:
+Where $A(\vec{q})$ is the $(n+6) \times (n+6)$ inertia matrix, $C(\vec{q},\dot{\vec{q}})$ are the centripetal/Coriolis terms, $g(\vec{q})$ is the gravity vector and $J$ is the Jacobian matrix which provides the mapping between the joint and work space variables. The $(n+6) \times 1$ generalized force vector $\vtau$ is segmented as follows:
 
 \begin{equation}
 	\label{eq:gentau}
@@ -67,7 +67,7 @@ Where ${\vtau}_{\mathbf{act}}$ represents the $n$ actuated DOF and ${\vtau}_{\ma
     J^{T}_{left}\vec{F}_{\mathbf{left}} + J^{T}_{right}\vec{F}_{\mathbf{right}}
 \end{equation}
 
-Where the generalized acceleration vector $\ddot{\vec{q}}_{\mathbf{act}}$ represents the $n$-DOF joint motion and $\ddot{\vec{q}}_{\mathbf{base}}$ is for the 6 DOF base motion. The gravitational and Coriolis terms are combined into the $\vec{b}$ vector. The $J_{left}$ and $J_{right}$ are 6 x $n$ Jacobian matrices which provide the mapping between the joint space and work space for the left and right legs, respectively. The force vectors $\vec{F}_{\mathbf{left}}$ and $\vec{F}_{\mathbf{right}}$ represent the contact force felt at the left and right foot, respectively. With this modification of the equation of motion, the external forces felt during the stance phase can be incorporated into the dynamic model of the overall system. The method of calculating the magnitude of the force itself depends on the contact model used for the system. Equation (\ref{eq:eom2}) represents the complete dynamics of the 14 DOF bipedal robot with $n = 14 + 6 = 20$ generalized coordinates.
+Where the generalized acceleration vector $\ddot{\vec{q}}_{\mathbf{act}}$ represents the $n$-DOF joint motion and $\ddot{\vec{q}}_{\mathbf{base}}$ is for the 6 DOF base motion. The gravitational and Coriolis terms are combined into the $\vec{b}$ vector. The $J_{left}$ and $J_{right}$ are 6 x $n$ Jacobian matrices for the left and right legs, respectively. The force vectors $\vec{F}_{\mathbf{left}}$ and $\vec{F}_{\mathbf{right}}$ represent the contact force felt at the left and right foot, respectively. With this modification of the equation of motion, the external forces felt during the stance phase can be incorporated into the dynamic model of the overall system. The method of calculating the magnitude of the force itself depends on the contact model used for the system. Equation (\ref{eq:eom2}) represents the complete dynamics of the 14 DOF bipedal robot with $n = 14 + 6 = 20$ generalized coordinates.
 % section forward_dynamics (end)
 
 \subsection{Recursive Newton-Euler} % (fold)
@@ -82,7 +82,7 @@ Kajita's toolbox \cite{kajitatxt} was used as a starting point for the direct dy
 	\begin{center}
     \includegraphics[scale=0.6]{fig/design/ulinkdrawn.eps}
 	\end{center}
-  \caption{Screenshot of robot structure drawn from uLINK definition generated directly from CAD.}
+  \caption{Screenshot of robot structure drawn from the uLINK definition generated directly from CAD.}
   \label{fig:ulinkdrawn}
 \end{figure}
 
@@ -108,11 +108,28 @@ To incorporate the effects of ground contact into the existing dynamic model, th
 	\vec{F}_{\mathbf{contact}} = B\vec{\dot{x}} + K\vec{x}
 \end{equation}
 
-The contact force proportional to the output of the spring-damper system (\ref{eq:contactf}) was used to initialize the backwards pass as shown below: 
+The contact force proportional to the output of the spring-damper system (\ref{eq:contactf}) was used to initialize the backwards pass as shown in Listing~\ref{contactcode}:
 
-\lstinputlisting{code/kajitamod.m}
+\begin{lstlisting}[label=contactcode,caption=Contact force injection in RNE backwards recursion.]
+if uLINK(RCONTACT).p(3) < 0.0
+	Kr = K;	 % Spring Constant
+	Br = B;  % Damper Constant
+	u = 0.4; % Coefficient of Static Friction
+	
+	% Velocity of the Contact Point in World Frame:
+	vr = uLINK(RCONTACT).vo + cross(uLINK(RCONTACT).w, uLINK(RCONTACT).p); 
+	
+	% Normal Force Exerted by Spring-Damper Contact Model:
+	N = -Kr*uLINK(RCONTACT).p(3)-Br*vr(3);
+	
+	% Inject Normal Force Into RNE Backwards Pass Initialization:
+	FCR = [0 0 N]';
+else
+	FCR = [0 0 0]'; 
+end
+\end{lstlisting}
 
-Where the variables \texttt{Kr} and \texttt{Br} represent the spring and damper coefficients in the spring-damper contact model. \texttt{RCONTACT} is a constant link number representing the point contact foot. The velocity due to the point foot coming in contact with the ground (\texttt{vr}) is recomputed by considering the original velocity (\texttt{vo}) and the cross product between the position of the foot (\texttt{uLINK.p}) and angular velocity (\texttt{uLINK.w}). The resulting normal force is computed and injected into the backwards pass if the foot position is below the ground level (condition shown in line 1). With this modification included, the complete direct dynamics can be used to obtain the joint torques during an estimated gait cycle for the initial design specification.   
+The variables \texttt{Kr} and \texttt{Br} represent the spring and damper coefficients in the spring-damper contact model. \texttt{RCONTACT} is a constant link number representing the point contact foot. The velocity due to the point foot coming in contact with the ground (\texttt{vr}) is recomputed by considering the original velocity (\texttt{vo}) and the cross product between the position of the foot (\texttt{uLINK.p}) and angular velocity (\texttt{uLINK.w}). The resulting normal force is computed and injected into the backwards pass if the foot position is below the ground level (condition shown in line 1). With this modification included, the complete direct dynamics can be used to obtain the joint torques during an estimated gait cycle for the initial design specification.   
 % subsection modifications (end)
 
 % section contact_modelling (end)
@@ -146,11 +163,11 @@ A simulation was implemented in the MATLAB environment which used a combination 
 The results of the dynamic simulations under human-gait analysis form the basis for the initial electromechanical components selection process. As expected, it was observed that the largest demands in torque loading on each of the joints occurred during the stance phase immediately after the heel strike (refer to Frame 36 in Figure \ref{fig:gaitplot}). The torque demands at that instant spike immediately to almost 3x the steady state torque loading on the joints. 
 
 \begin{figure}[!h]
-	\label{fig:gaitplot}
 	\begin{center}
     \includegraphics[scale=0.6]{fig/design/gaitplot.eps}
 	\end{center}
   \caption{Joint torque profile during the estimated gait cycle obtained from a published data set.}
+  	\label{fig:gaitplot}
 \end{figure}
 
 Selecting motor specifications based only on the peak torque requirements would result in large and overpowered actuators for the continuous operational loads. The secondary design objective is to keep the overall system mass low, making it desirable to minimize the actuator size since it contributes to the majority of the weight in the system. 
@@ -293,7 +310,7 @@ Aside from the torque-speed, power, efficiency and thermal analyses, there are s
   \label{fig:micromo38a}
 \end{figure}
 
-Given these considerations and the analysis stated in the previous sections, a coreless DC motor from the Micromo Solutions catalog was selected. This motor achieved all of the primary design considerations (average torque requirements, operating within a stable thermal region). Coupled with the motor is a precision gearhead which is capable of producing torques slightly above the initial design specification requirements. The torque-speed characteristics at the gearhead shaft (as shown in Figure~\ref{fig:micromo38a}) are used to verify that the mechanical power output meets the design specification for normal operation. 
+Given these considerations and the analysis in the previous sections, a coreless DC motor from the Micromo Solutions catalog was selected. This motor achieved all of the primary design considerations (average torque requirements, operating within a stable thermal region). Coupled with the motor is a precision gearhead which is capable of producing torques slightly above the initial design specification requirements. The torque-speed characteristics at the gearhead shaft (as shown in Figure~\ref{fig:micromo38a}) are used to verify that the mechanical power output meets the design specification for normal operation. 
 
 While it is desirable to limit the number of different motor and gearhead combinations, it was determined that this combination of drivetrain components was vastly overpowered for the very last joint on the leg (ankle roll). A second combination of motor and gearhead was selected specifically for this joint to reduce the overall mass and raise the COM while meeting the lower joint requirements. This approach improves the controllability of the final system while limiting the total number of different design configurations. The final higher and lower power configurations are defined in Tables \ref{tab:higherconfig} and \ref{tab:lowerconfig}, respectively. 
 
@@ -371,7 +388,7 @@ Given the ratios between major body segment lengths, a rough estimate for each o
 \label{sub:structural_design}
 Aluminum was selected as the light weight rigid material to compose the mechanical chassis, based on the widespread availability of various forms of aluminum stock (i.e. channels, beams, etc) and its (relatively) light weight compared to other metal alloys. More specifically, Aluminum 5052 was selected due to its high fatigue strength. This alloy is also easy to work with for manual machining or computer numerical control (CNC) machine tools. 
 
-The chassis is designed as a light weight but rigid frame to house the drivetrain components (actuators, gears, etc). The amount of stock material used in the frame itself also impacts the overall weight and structural rigidity. For example, a link segment designed from a C-Channel beam is structurally sound (since it is a single solid piece of metal). However, it maybe significantly heavier than a link segment composed of multiple pieces. The trade off between minimizing the overall weight and structural rigidity can sometimes be mitigated by using a cross brace between adjacent parallel pieces of a frame.  
+The chassis is designed as a light weight but rigid frame to house the drivetrain components (actuators, gears, etc). The amount of stock material used in the frame itself also impacts the overall weight and structural rigidity. For example, a link segment designed from a C-Channel beam is structurally sound (since it is a single solid piece of metal). However, it may be significantly heavier than a link segment composed of multiple pieces. The trade off between minimizing the overall weight and structural rigidity can sometimes be mitigated by using a cross brace between adjacent parallel pieces of a frame.  
 
 The lightness of aluminum also helps address the secondary design objective of reducing the overall weight. However, the primary weight contribution to the overall system comes from the drivetrain components. This limits the flexibility for weight manipulation from a purely chassis design standpoint. However, mechanical design techniques can be used manipulate the COM location by strategically positioning the mounting points for motors and gearheads. 
 % subsubsection structural_design (end)
@@ -426,7 +443,7 @@ The complete mechanical CAD drawings of the 14-DOF bipedal robot can be found in
 
 \section{Summary} % (fold)
 \label{sec:design_summary}
-The electromechanical design of the 14 DOF bipedal robot had two primary design objectives. The first was to produce enough mechanical power for the biped to achieve walking. The secondary design objective to keep the overall weight low and raise the COM improves the controllability of the final design. The initial design process started by basic dynamic modeling of the lower body. The forward and inverse dynamic models computed with the RNE algorithm provided a mathematical framework for estimating the torque requirements at each joint. 
+The electromechanical design of the 14 DOF bipedal robot had two primary design objectives. The first was to produce enough mechanical power for the biped to achieve walking. The secondary design objective to keep the overall weight low and raise the COM improves the controllability of the final design. The initial design process started with basic dynamic modeling of the lower body. The forward and inverse dynamic models computed with the RNE algorithm provided a mathematical framework for estimating the torque requirements at each joint. 
 
 Since the end goal is to develop a biped capable of human-like walking, a published dataset of motion captured human gait was used for the initial dynamic simulation. Using MATLAB toolboxes, the kinematic constraints on each joint ($\vec{q}$, $\vec{\dot{q}}$, $\vec{\ddot{q}}$) were imposed on the dynamic model of the biped. A spring-damper contact model was used to generate an approximate ground reaction force experienced by the biped while walking. Finally, the initial joint torque and velocity demands under the estimated gait cycle were obtained through the dynamic simulations. 
 
