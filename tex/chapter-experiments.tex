@@ -172,21 +172,71 @@ This section describes the experiments validating the simulation models for 1 DO
 
 \subsection{Joint Tracking} % (fold)
 \label{sub:joint_tracking}
-The parallel model for targetting the simulation environment and physical hardware was used to tune the PD controller gains for a single joint of the bipedal robot. By using the shared controller architecture, gains were tuned to improve tracking performance in the simulation environment and then immediately verified on the physical hardware. The experimental results presented in this section show the results of the hip yaw joint tracking a sine wave at 0.5 Hz with a $15^{\circ}$ amplitude.
+The parallel model for targetting the simulation environment and physical hardware was used to tune the PD controller gains for a single joint of the bipedal robot. By using the shared controller architecture, gains were tuned to improve tracking performance in the simulation environment and then immediately verified on the physical hardware. The experimental results presented in this section show the results of the joint tracking a sine wave at 0.5 Hz in hardware and simulation. 
+
+%The same controller gains were used on the physical hardware and the tracking performance is almost identical to the simulated case. The tracking results shown in Figure~\ref{fig:hipyawtracking} validate the simulation model for the hip yaw joint. 
+
+\Incomplete
+
+\cleardoublepage
 
 \begin{figure}[!h]
 	\begin{center}
-	\subfigure{\includegraphics[scale=0.45]{fig/experiments/simtrack1dof.eps}}
-	\subfigure{\includegraphics[scale=0.45]{fig/experiments/hiltrack1dof.eps}}
+	\subfigure{\includegraphics[scale=0.45]{fig/experiments/hipyawtrackingsim.eps}}
+	\subfigure{\includegraphics[scale=0.45]{fig/experiments/hipyawtrackinghil.eps}}
 	\end{center}
-  	\caption{Single joint tracking results shown in simulation (left) and hardware (right).}
-	\label{fig:tracking1dof}
+  	\caption{Hip yaw joint tracking results for simulation and hardware.}
+	\label{fig:hipyawtracking}
 \end{figure} 
 
-The tracking results shown in Figure~\ref{fig:tracking1dof} validate the simulation models. The same controller gains were used on the physical hardware and the tracking performance is almost identical to the simulated case.   
+\begin{figure}[!h]
+	\begin{center}
+	\subfigure{\includegraphics[scale=0.45]{fig/experiments/hipyawvoltages.eps}}
+	\subfigure{\includegraphics[scale=0.45]{fig/experiments/hipyawcurrents.eps}}
+	\end{center}
+  	\caption{Hip yaw joint voltage and current in simulation and hardware.}
+	\label{fig:hipyawelectrical}
+\end{figure} 
+
+\begin{figure}[!h]
+	\begin{center}
+	\subfigure{\includegraphics[scale=0.45]{fig/experiments/hippitchtrackingsim.eps}}
+	\subfigure{\includegraphics[scale=0.45]{fig/experiments/hippitchtrackinghil.eps}}
+	\end{center}
+  	\caption{Hip pitch joint tracking results for simulation and hardware.}
+	\label{fig:hippitchtracking}
+\end{figure} 
+
+\begin{figure}[!h]
+	\begin{center}
+	\subfigure{\includegraphics[scale=0.45]{fig/experiments/hippitchvoltages.eps}}
+	\subfigure{\includegraphics[scale=0.45]{fig/experiments/hippitchcurrents.eps}}
+	\end{center}
+  	\caption{Hip pitch joint voltage and current in simulation and hardware.}
+	\label{fig:hippitchelectrical}
+\end{figure} 
+
+\begin{figure}[!h]
+	\begin{center}
+	\subfigure{\includegraphics[scale=0.45]{fig/experiments/kneepitchtrackingsim.eps}}
+	\subfigure{\includegraphics[scale=0.45]{fig/experiments/kneepitchtrackinghil.eps}}
+	\end{center}
+  	\caption{Knee pitch joint tracking results for simulation and hardware.}
+	\label{fig:kneepitchtracking}
+\end{figure} 
+
+\begin{figure}[!h]
+	\begin{center}
+	\subfigure{\includegraphics[scale=0.45]{fig/experiments/kneepitchvoltages.eps}}
+	\subfigure{\includegraphics[scale=0.45]{fig/experiments/kneepitchcurrents.eps}}
+	\end{center}
+  	\caption{Knee pitch joint voltage and current in simulation and hardware.}
+	\label{fig:kneepitchelectrical}
+\end{figure} 
+ 
 % subsection joint_tracking (end)
 
-\Incomplete
+\cleardoublepage
 % section 1dof_results (end)
 
 \section{Motion Control Validation} % (fold)
