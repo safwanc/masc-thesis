@@ -45,9 +45,9 @@ In addition to developing the bipedal robot, a supporting frame was also designe
 	\label{fig:bipedwired}
 \end{figure}
 
-The electronics used for controlling the bipedal robot was developed by an industry collaboration partner. Quanser Inc developed custom motor controllers and drivers as per the current requirements derived from torque estimates in dynamic simulations. Each joint in the bipedal robot has a (dedicated) local motor controller and driver unit. A control system model developed in Matlab/Simulink using Quanser's QUARC toolbox communicates with the electronics hardware through a serial interface (USB). Quanser's complete system enables hardware-in-the-loop (HIL) experiments with the physical bipedal robot (described further in Section~\ref{sec:hil_architecture}).    
+The electronics used for controlling the bipedal robot was developed by an industry partner. Quanser Inc developed custom motor controllers and drivers for the current requirements derived from torque estimates in dynamic simulations. Each joint in the bipedal robot has a (dedicated) local motor controller and driver unit. A control system model developed in Matlab/Simulink using Quanser's QUARC toolbox communicates with the electronics hardware through a serial interface (USB). Quanser's complete system enables hardware-in-the-loop (HIL) experiments with the physical bipedal robot (described further in Section~\ref{sec:hil_architecture}).    
 
-Unfortunately, the electronics hardware developed by Quanser was not ready in time for experimental validation. Since it is a custom solution, further development was required before it could be used to control the complete 14 DOF bipedal robot. Quanser provided the author with control electronics from their existing product offerings in the interim to complete \emph{some} experimental validation on the physical robot. The general idea is that the HIL experiment models developed to target the interim solution could easily be switched to target the custom solution once it is ready. The interim solution is hardware constrained to 7 channels available for control and current output per channel. A single 7 DOF leg shown in Figure~\ref{fig:bipedwired} was wired to these channels for \emph{some} experimental validation. 
+Unfortunately, the electronics hardware developed by Quanser was not ready in time for experimental validation. Since it is a custom solution, further development was required before it could be used to control the complete 14 DOF bipedal robot. Quanser provided the author with control electronics from their existing product offerings in the interim to complete \emph{some} experimental validation on the physical robot. The general idea is that the HIL experiment models developed to target the interim solution could easily be switched to target the custom solution once it is ready. The interim solution is hardware constrained to 7 channels and the current output per channel. A single 7 DOF leg shown in Figure~\ref{fig:bipedwired} was wired to these channels for experimental validation in this chapter. 
 
 % subsubsection electronics_implementation (end)
 
@@ -131,7 +131,7 @@ Where ${d_k} = \tau _k$ is the link side torque treated as a disturbance to the 
 	\label{fig:pdmotorcontroller}
 \end{figure}
 
-To improve the estimate of the motor side inertia, $a_{kk}$ is required in (\ref{eq:actdyn6}). The dynamic simulation package used in Section~\ref{sec:simulations_and_results} is based on Mathwork's Simulink environment and uses the SimMechanics toolbox which does not allow the mass matrix $A(\vec{q})$ to be isolated. Algorithm~\ref{alg:massdiag} was used to compute the mass matrix and extract the diagonal terms at each time step.  
+To improve the estimate of the motor side inertia, $a_{kk}$ is required in (\ref{eq:actdyn6}). The dynamic simulation package used in Section~\ref{sec:simulations_and_results} is based on the Matlab/Simulink environment and uses the SimMechanics toolbox which does not allow the mass matrix $A(\vec{q})$ to be isolated. Algorithm~\ref{alg:massdiag} was used to compute the mass matrix and extract the diagonal terms at each time step. \\
 
 \begin{algorithm}[H]
  \SetAlgoLined
@@ -222,7 +222,7 @@ This section describes the experiments validating the simulation models for sing
 
 \subsection{Joint Tracking} % (fold)
 \label{sub:joint_tracking}
-Local PD controllers are used to track the joint level trajectories. The parallel model shown in Figure~\ref{fig:parallelmodels} was developed to tune the proportional ($K_P$) and derivative ($K_D$) gains for individual joints on the bipedal robot. First, the gains were tuned in the simulation environment to achieve the desired tracking performance. The shared controller architecture was used to target the physical hardware to validate the tracking results. 
+Local PD controllers are used to track the joint level trajectories. The parallel model shown in Figure~\ref{fig:parallelmodels} was developed to tune the proportional ($K_P$) and derivative ($K_D$) gains for individual joints on the bipedal robot. First, the gains were tuned in the simulation environment to achieve the desired tracking performance. The shared controller architecture was then switched to target the physical hardware to validate the tracking results. 
 
 The experimental results presented in this section compare the tracking performance of three joints in simulation and in hardware. Each joint tracks a sinusoidal reference trajectory at $0.5 Hz$. The amplitude and bias of each reference trajectory is selected to maintain the motion within the joint limits. Figures~\ref{fig:hipyawtracking}, \ref{fig:hippitchtracking} and \ref{fig:kneepitchtracking} compare the tracking performance for the hip yaw, hip pitch and knee pitch joints, respectively. 
 
@@ -290,21 +290,38 @@ With the tuned PD gains, the tracking performance on the physical hardware is ne
 
 \section{Motion Control Validation} % (fold)
 \label{sec:motion_control_validation}
-\Incomplete
+This section describes the experiments validating the motion control framework in Section~\ref{sub:control_strategy} using the HIL environment. The parallel model concept was extended to develop higher level task space controllers to generate the joint level trajectories for simulation and hardware. The interim control electronics provided by Quanser Inc is limited to controlling 7 DOF simultaneously. Therefore, only a single 7 DOF bipedal robot leg wired to the control electronics was used for the experiments in this section. The biped's torso was rigidly attached to the supporting frame in the fixed configuration, removing the 6 unactuated DOF. The Jacobian matrix used to map the task space and joint space velocities in (\ref{eq:jmap}) is reduced to: 
+
+\begin{eqnarray}
+	\J{}{} &=& \begin{bmatrix} \partial \qact \\ \end{bmatrix}_{m \times n} \\
+	\dqref &=& \J{}{\#} \dxref \label{eq:calcqref}
+\end{eqnarray}
+
+Where $n \leq 7$ is the actuated and controllable DOF supported by the control electronics. The joint level commands are generated from the task space trajectories ($\dxref$) using (\ref{eq:calcqref}). Alternatively, the prioritized task space control scheme in Section~\ref{sub:control_strategy} can be used to simultaneously satisfy high priority constraints. The mapping provided by (\ref{eq:priori}) is simplified by removing the actuator selection matrix $\mathbf{S}$, since there are no unactuated DOF. 
+
+The fixed configuration of the supporting frame causes the 7 DOF leg to naturally hang straight at the start of each experiment (i.e. $\q = \mathbf{0_{7 \times 1}}$). This represents a singular configuration of the leg. In Section~\ref{sec:1dof_validation}, the joint level commands were provided directly to the local PD controller. Computing the joint level commands with (\ref{eq:calcqref}) requires inverting the Jacobian matrix, which is problematic for singular configurations. To address this issue, each experiment starts by directly controlling the joint level trajectories for $t_{init} = 5$ seconds to manually move the leg into a non-singular configuration. 
 
 \subsection{Planar Motion Control} % (fold)
 \label{sub:planar_motion_control}
+Some motions during the bipedal gait cycle can be simplified to a planar motion control problem. Common motions during the swing phase include bending of the knee joint and tracking an arc-like trajectory for the swing foot position. For these cases, the 3 pitch joints in the 7 DOF leg are primarily used to carry out the desired motion. A simplified version of the motion control framework (\ref{eq:calcqref}) can be used to control the swing foot position in the biped's sagittal plane.
+
+\begin{equation}
+	\dqref = \J{}{\#} \dxswing
+\end{equation}
 
 \subsubsection{Knee Bending Motion} % (fold)
 \label{ssub:knee_bending_motion}
-\begin{figure}[!h]
+
+\begin{figure}[!b]
 	\centering
     \includegraphics[scale=0.22]{fig/experiments/kneebendframes.png} 
   	\caption{Captured frames during knee bending experiment in simulation and physical hardware.}
 	\label{fig:kneebendframes}
 \end{figure}
 
-\begin{figure}[!h]
+A knee bending motion is achieved by holding the swing foot position and adjusting the height only. The frame captures shown in Figure~\ref{fig:kneebendframes} demonstrate this experiment in simulation and on the physical hardware. The first frame represents a slightly angled configuration of the leg joints after $t_{init} = 5$ seconds. The leg is not completely straightened to avoid the singular configuration. 
+
+\begin{figure}[!t]
 	\begin{center}
 	\subfigure{\includegraphics[scale=0.45]{fig/experiments/simkneebendp.eps}}
 	\subfigure{\includegraphics[scale=0.45]{fig/experiments/hilkneebendp.eps}}
