@@ -46,7 +46,7 @@ Once the sagittal plane has been identified at the beginning of each step cycle,
 \begin{figure}[!h]
 	\centering
     \includegraphics[scale=0.8]{fig/fpe/comtraj3d.eps} 
-  	\caption{Trajectory for $x_{COM}$ to ensure forward progress and off-sagittal stability for 3D FPE.}
+  	\caption{Trajectory for $x_{COM}$ to ensure forward progress and off-sagittal stability for 3D FPE. \Incomplete \textbf{ - need to regenerate figure with knees}}
 	\label{fig:comtraj3d}
 \end{figure}
 
@@ -443,7 +443,7 @@ In the terminal \textbf{DROP} state, the swing foot trajectory tracks the FPE po
 	\label{fig:fwdcomtraj}
 \end{figure}
 
-Forward walking is achieved by selecting the biped's sagittal plane as the direction of motion. The frame captures from forward walking simulations are shown in Figure~\ref{fig:fwdsequenceside}. The key challenge is maintaining stability in the off-sagittal plane while the swing foot is raised off the ground during the \textbf{LIFT} state. The $x_{COM}$ trajectories shown in Figure~\ref{fig:fwdcomtraj} demonstrate the dynamic stability in the off-sagittal plane while forward progress is made along the chosen direction of motion. The proposed trajectory generation for $x_{COM}$ illustrated by Figure~\ref{fig:comtraj3d} can be seen at 8s and 22s when the COM is pushed outside the region of support once the swing foot is aligned. 
+Forward walking is achieved by selecting the biped's sagittal plane as the direction of motion. The frame captures from forward walking simulations are shown in Figure~\ref{fig:fwdsequenceside}. The key challenge is maintaining stability in the off-sagittal plane while the swing foot is raised off the ground during the \textbf{LIFT} state. The $x_{COM}$ trajectories shown in Figure~\ref{fig:fwdcomtraj} demonstrate the dynamic stability in the off-sagittal plane while forward progress is made along the chosen direction of motion. The gait cycle in the forward walking direction is slow due to the use of a soft contact model to enable simulations at 1 KHz. The softer contact model also requires a longer stabilization period (around 5s) once ground contact is made to ensure that the foot is perfectly stable and aligned with the ground plane before proceeding. The proposed trajectory generation for $x_{COM}$ illustrated by Figure~\ref{fig:comtraj3d} can be seen at 8s and 22s when the COM is pushed outside the region of support once the swing foot is aligned. 
 
 The alternating foot trajectories on the selected sagittal plane during a complete gait cycle are shown in Figure~\ref{fig:fwdfoottraj}. The first step is taken with the left foot tracking $x_{SWING}$ (between 5-12s). The \textbf{DROP} state is entered around 12s and the left foot tracks the $x_{SWING}$ trajectory given by $FPE + FPE_{offset}$ to ensure over stepping. Once ground contact is made, the contact stabilization state is used to straighten both feet and spread the ground reaction force evenly (around 12-14s). The step cycle begins for the right leg from 15s to complete the gait sequence. 
 
