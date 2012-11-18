@@ -41,35 +41,35 @@ Upon impact, the angle $\phi$ converges to $\beta/2$ and a new sagittal plane ca
 
 \subsection{Trajectory Generation} % (fold)
 \label{sub:trajectory_generation}
-Once the sagittal plane has been identified at the beginning of each step cycle, appropriate task space trajectories must be generated for the COM ($x_{COM}$) and the swing foot ($x_{SWING}$). In the 2D case, the main goal of the initial states \textbf{PUSH}, \textbf{LIFT} and \textbf{SWING} was to achieve enough forward motion to destabilize the biped. In the 3D case, the robot must also remain stable in the off-sagittal plane while achieving the desired sagittal plane motion. If the ZMP leaves the region of support formed by the stance foot as the swing foot is lifted, the biped begins to fall in the off-sagittal plane and the solution to the 2D FPE equation is insufficient to maintain stable gait. To ensure both forward progress and off-sagittal plane stability, the generated trajectories for $x_{COM}$ are shown in Figure~\ref{fig:comtraj3d}. \\
+Once the sagittal plane has been identified at the beginning of each step cycle, appropriate task space trajectories must be generated for the COM ($\xcom$) and the swing foot ($\xswing$). In the 2D case, the main goal of the initial states \textbf{PUSH}, \textbf{LIFT} and \textbf{SWING} was to achieve enough forward motion to destabilize the biped. In the 3D case, the robot must also remain stable in the off-sagittal plane while achieving the desired sagittal plane motion. If the ZMP leaves the region of support formed by the stance foot as the swing foot is lifted, the biped begins to fall in the off-sagittal plane and the solution to the 2D FPE equation is insufficient to maintain stable gait. To ensure both forward progress and off-sagittal plane stability, the generated trajectories for $\xcom$ are shown in Figure~\ref{fig:comtraj3d}. \\
 
 \begin{figure}[!b]
 	\centering
     \includegraphics[scale=0.8]{fig/fpe/comtraj3d.eps} 
-  	\caption{Trajectory for $x_{COM}$ to ensure forward progress and off-sagittal stability.}
+  	\caption{Trajectory for $\xcom$ to ensure forward progress and off-sagittal stability.}
 	\label{fig:comtraj3d}
 \end{figure}
 
-\textbf{PUSH}: $x_{COM}$ is moved above the leading stance foot to maintain stability in the off-sagittal and sagittal planes.
+\textbf{PUSH}: $\xcom$ is moved above the leading stance foot to maintain stability in the off-sagittal and sagittal planes.
 
-\textbf{LIFT}: $x_{COM}$ is held at its current location (above stance foot) while the swing foot is lifted from the ground to achieve sufficient clearance.
+\textbf{LIFT}: $\xcom$ is held at its current location (above stance foot) while the swing foot is lifted from the ground to achieve sufficient clearance.
 
-\textbf{SWING}: $x_{COM}$ is held in place until the swing foot is aligned with the stance foot in the off-sagittal plane. At this point the $x_{COM}$ is deliberately pushed outside the region of support in the sagittal plane direction. \\
+\textbf{SWING}: $\xcom$ is held in place until the swing foot is aligned with the stance foot in the off-sagittal plane. At this point the $\xcom$ is deliberately pushed outside the region of support in the sagittal plane direction. \\
 
-A similar approach is used to generate trajectories for $x_{SWING}$ to achieve the desired behaviour of generating enough momentum to destabilize the biped in the sagittal plane while maintaining stability in the off-sagittal plane. Trajectories for $x_{SWING}$ (illustrated in Figure~\ref{fig:swingfoottraj}) are always computed to align with the sagittal plane formed by the stance foot at the start of the step cycle. This ensures that the solution to the 2D FPE equation remains valid as the \textbf{DROP} state is entered. \\
+A similar approach is used to generate trajectories for $\xswing$ to achieve the desired behaviour of generating enough momentum to destabilize the biped in the sagittal plane while maintaining stability in the off-sagittal plane. Trajectories for $\xswing$ (illustrated in Figure~\ref{fig:swingfoottraj}) are always computed to align with the sagittal plane formed by the stance foot at the start of the step cycle. This ensures that the solution to the 2D FPE equation remains valid as the \textbf{DROP} state is entered. \\
 
 \begin{figure}[!b]
 	\centering
     \includegraphics[scale=0.8]{fig/fpe/swingfoottraj.eps} 
-  	\caption{Trajectory for $x_{SWING}$ along the selected (sagittal) $xz$-plane.}
+  	\caption{Trajectory for $\xswing$ along the selected (sagittal) $xz$-plane.}
 	\label{fig:swingfoottraj}
 \end{figure}
 
-\textbf{PUSH}: $x_{SWING}$ is held in place as the $x_{COM}$ trajectory is tracked.
+\textbf{PUSH}: $\xswing$ is held in place as the $\xcom$ trajectory is tracked.
 
-\textbf{LIFT}: $x_{SWING}$ follows a ramped trajectory to simultaneously raise the foot off the ground and move it forward in the sagittal plane.
+\textbf{LIFT}: $\xswing$ follows a ramped trajectory to simultaneously raise the foot off the ground and move it forward in the sagittal plane.
 
-\textbf{SWING}: $x_{SWING}$ follows a straight line trajectory at a specific ground clearance (shown as $h_{LIFT}$ on Figure~\ref{fig:swingfoottraj}) until it reaches the FPE angle $\phi$ or the biped is unstable. \\
+\textbf{SWING}: $\xswing$ follows a straight line trajectory at a specific ground clearance (shown as $h_{LIFT}$ on Figure~\ref{fig:swingfoottraj}) until it reaches the FPE angle $\phi$ or the biped is unstable. \\
 
 The ramp trajectory used to raise the swing foot during \textbf{LIFT} should be parameterized in terms of the velocity of the FPE point so that this state transitions faster in the event of larger disturbances (since the biped would have a shorter amount of time to swing the foot over and catch itself).
 
@@ -82,14 +82,14 @@ Depending on the supervisory control mode (i.e. \textbf{WALK} or \textbf{STAND})
 
 A hybrid control strategy is used to simultaneously maintain stability in the off-sagittal plane, achieve sufficient forward momentum along a selected sagittal plane and ultimately track the FPE location to regain stability by taking a step. Similar to the approach presented in \cite{Wight:2008vt}, this approach uses a state machine to transition through the step sequence with each state having a local controller.
 
-During the initial states of the step cycle, whole body motion control is used to track the $x_{COM}$ and $x_{SWING}$ trajectories described in  Section~\ref{sub:trajectory_generation}. To generate the corresponding joint level trajectories, the Jacobian matrix is used to map between the task space and the joint space velocities:
+During the initial states of the step cycle, whole body motion control is used to track the $\xcom$ and $\xswing$ trajectories described in  Section~\ref{sub:trajectory_generation}. To generate the corresponding joint level trajectories, the Jacobian matrix is used to map between the task space and the joint space velocities:
 
 \begin{IEEEeqnarray}{rCl}
 	\label{eq:jmap}
 	J & = & \begin{bmatrix} \partial q_{act} & \partial x_{base} \\ \end{bmatrix}_{m \times (n+6)}
 \end{IEEEeqnarray}
 
-A prioritized task space control scheme is used to generate joint level trajectories which simultaneously achieve state goals while satisfying the highest priority constraint (i.e. holding the $x_{COM}$ position). The state-dependent joint level trajectories can be computed by projecting the lower priority task space goals onto the null space of higher priorities:
+A prioritized task space control scheme is used to generate joint level trajectories which simultaneously achieve state goals while satisfying the highest priority constraint (i.e. holding the $\xcom$ position). The state-dependent joint level trajectories can be computed by projecting the lower priority task space goals onto the null space of higher priorities:
 
 \begin{eqnarray}
 	\label{eq:priori}
@@ -107,7 +107,7 @@ This section presents the specific controller formulation used during each state
 
 \subsubsection{\textbf{STAND}} % (fold)
 \label{ssub:stand}
-The goal during this state is to maintain the COM position at the geometric centroid of both feet. In order to remain stable under small disturbances, the Jacobian under double support phase is used to compensate for the error $\Delta x_{COM}$ in the X and Y directions.
+The goal during this state is to maintain the COM position at the geometric centroid of both feet. In order to remain stable under small disturbances, the Jacobian under double support phase is used to compensate for the error $\Delta \xcom$ in the $x$ and $y$ directions.
 
 \begin{IEEEeqnarray}{rClrCl}
 	J_{H} & = &
@@ -136,7 +136,7 @@ The goal during this state is to maintain the COM position at the geometric cent
 
 \subsubsection{\textbf{PUSH}} % (fold)
 \label{ssub:push}
-The goal during this state is to track the trajectory generated for $x_{COM}$ to move to the stance foot support region while remaining in the double support phase. An augmented Jacobian matrix is used to track the trajectory while simultaneously maintaining the foothold constraints.
+The goal during this state is to track the trajectory generated for $\xcom$ to move to the stance foot support region while remaining in the double support phase. An augmented Jacobian matrix is used to track the trajectory while simultaneously maintaining the foothold constraints.
 
 \begin{IEEEeqnarray}{rClrCl}
 	J_{H} & = &
@@ -167,7 +167,7 @@ The joint level reference velocities are calculated from (\ref{eq:priori}) and i
 
 \subsubsection{\textbf{LIFT}} % (fold)
 \label{ssub:lift}
-In the lift stage, the highest priority task is maintaining the foothold of the stance foot, holding the $x_{COM}$ directly above it and simultaneously raising the swing foot from the ground. The key challenge in this state is that lifting the swing foot can potentially cause the centre of pressure to leave the support region formed by the contact points of the stance foot. The prioritized task space control scheme is used to generate joint level commands to track the $x_{SWING}$ trajectory while satisfying the higher priority goal of maintaining the foothold and balance.
+In the lift stage, the highest priority task is maintaining the foothold of the stance foot, holding the $\xcom$ directly above it and simultaneously raising the swing foot from the ground. The key challenge in this state is that lifting the swing foot can potentially cause the centre of pressure to leave the support region formed by the contact points of the stance foot. The prioritized task space control scheme is used to generate joint level commands to track the $\xswing$ trajectory while satisfying the higher priority goal of maintaining the foothold and balance.
 
 \begin{IEEEeqnarray}{rClrCl}
 	J_{H} & = &
@@ -198,7 +198,7 @@ The joint level reference velocities are calculated from (\ref{eq:priori}) and i
 \label{ssub:swing}
 
 
-At this point, the goal of the control approach is to generate a forward moving momentum along the selected sagittal plane. This deliberately destabilizes the biped by pushing $x_{COM}$ outside the region of support in the chosen direction of motion. The task space prioritization in this state remains consistent with the previous state until the biped is unstable, at which point the control strategy enters the terminal \textbf{DROP} state.
+At this point, the goal of the control approach is to generate a forward moving momentum along the selected sagittal plane. This deliberately destabilizes the biped by pushing $\xcom$ outside the region of support in the chosen direction of motion. The task space prioritization in this state remains consistent with the previous state until the biped is unstable, at which point the control strategy enters the terminal \textbf{DROP} state.
 
 \begin{IEEEeqnarray}{rClrCl}
 	J_{H} & = &
@@ -332,7 +332,7 @@ The proposed control strategy to extend the FPE theory to 3D was implemented in 
 	Finite state machine logic was implemented in Stateflow as shown in Figure~\ref{fig:stateflow}. The state names follow the same convention as the 2D FPE case (shown in Figure~\ref{fig:statemachine}) while the transition logic is updated for the 3D case described in Section~\ref{sub:joint_level_control}.  \\
 
 	\item \textbf{Trajectory Generator} \\ 
-	Generates the task space COM ($x_{COM}$) and the swing foot ($x_{SWING}$) trajectories detailed in Section~\ref{sub:trajectory_generation} based on the current state of the controller. Also uses the higher level supervisory control mode (i.e. \textbf{WALK} or \textbf{STAND}) to adjust the trajectory generation for understepping/overstepping the FPE point. \\
+	Generates the task space COM ($\xcom$) and the swing foot ($\xswing$) trajectories detailed in Section~\ref{sub:trajectory_generation} based on the current state of the controller. Also uses the higher level supervisory control mode (i.e. \textbf{WALK} or \textbf{STAND}) to adjust the trajectory generation for understepping/overstepping the FPE point. \\
 
 	\item \textbf{Foot Placement Estimator} \\ 
 	Computes the FPE parameters about the COM ($I_{COM}$, $\dot{\theta}_{avg}$) for the 3D case (detailed in Section~\ref{sub:computing_fpe_parameters}) and solves the FPE equation (\ref{eq:fpe}) using a numerical methods-based nonlinear solver from \cite{Wight:2008vt}. \\
@@ -405,7 +405,7 @@ It was found that stiffening the ground contact by raising the model constants w
 	\label{fig:sidesequence}
 \end{figure}
 
-To demonstrate the dynamic stability of a 3D biped under this approach, the frontal plane was selected as the sagittal plane. Forward motion along this sagittal plane results in a side-to-side stepping sequence for the biped (as shown in Figure \ref{fig:sidesequence}). The gray plane in the frame captures moves along the Y-direction (biped's frontal plane). The intersection of the gray plane and the ground indicates the FPE point tracked during \textbf{DROP}. 
+To demonstrate the dynamic stability of a 3D biped under this approach, the frontal plane was selected as the sagittal plane. Forward motion along this sagittal plane results in a side-to-side stepping sequence for the biped (as shown in Figure \ref{fig:sidesequence}). The gray plane in the frame captures moves along the $y$-direction (biped's frontal plane). The intersection of the gray plane and the ground indicates the FPE point tracked during \textbf{DROP}. 
 
 \begin{figure}[!h]
 	\centering
@@ -414,7 +414,7 @@ To demonstrate the dynamic stability of a 3D biped under this approach, the fron
 	\label{fig:sidecomtraj}
 \end{figure}
 
-The resulting $x_{COM}$ trajectories from simulating the side-to-side stepping motion (shown in Figure \ref{fig:sidecomtraj}) demonstrate the stability of the biped through a complete gait sequence. The prioritized motion control framework handles the dynamic switching of constraints (from double support to single support) while generating the appropriate joint level commands for swinging the COM over. The colour coded dotted lines on Figure \ref{fig:sidecomtraj} indicate the boundaries of each foot on the ground. Note that during the \textbf{SWING} state, the COM is pushed outside the region of support (around 11s). This in turn initiates the \textbf{DROP} state where the FPE point is tracked to regain stability.
+The resulting $\xcom$ trajectories from simulating the side-to-side stepping motion (shown in Figure \ref{fig:sidecomtraj}) demonstrate the stability of the biped through a complete gait sequence. The prioritized motion control framework handles the dynamic switching of constraints (from double support to single support) while generating the appropriate joint level commands for swinging the COM over. The colour coded dotted lines on Figure \ref{fig:sidecomtraj} indicate the boundaries of each foot on the ground. Note that during the \textbf{SWING} state, the COM is pushed outside the region of support (around 11s). This in turn initiates the \textbf{DROP} state where the FPE point is tracked to regain stability.
 
 \begin{figure}[!h]
 	\centering
@@ -443,9 +443,9 @@ In the terminal \textbf{DROP} state, the swing foot trajectory tracks the FPE po
 	\label{fig:fwdcomtraj}
 \end{figure}
 
-Forward walking is achieved by selecting the biped's sagittal plane as the direction of motion. The frame captures from forward walking simulations are shown in Figure~\ref{fig:fwdsequenceside}. The key challenge is maintaining stability in the off-sagittal plane while the swing foot is raised off the ground during the \textbf{LIFT} state. The $x_{COM}$ trajectories shown in Figure~\ref{fig:fwdcomtraj} demonstrate the dynamic stability in the off-sagittal plane while forward progress is made along the chosen direction of motion. The gait cycle in the forward walking direction is slow due to the use of a soft contact model to enable simulations at 1 KHz. The softer contact model also requires a longer stabilization period (around 5s) once ground contact is made to ensure that the foot is perfectly stable and aligned with the ground plane before proceeding. The proposed trajectory generation for $x_{COM}$ illustrated by Figure~\ref{fig:comtraj3d} can be seen at 8s and 22s when the COM is pushed outside the region of support once the swing foot is aligned. 
+Forward walking is achieved by selecting the biped's sagittal plane as the direction of motion. The frame captures from forward walking simulations are shown in Figure~\ref{fig:fwdsequenceside}. The key challenge is maintaining stability in the off-sagittal plane while the swing foot is raised off the ground during the \textbf{LIFT} state. The $\xcom$ trajectories shown in Figure~\ref{fig:fwdcomtraj} demonstrate the dynamic stability in the off-sagittal plane while forward progress is made along the chosen direction of motion. The gait cycle in the forward walking direction is slow due to the use of a soft contact model to enable simulations at 1 KHz. The softer contact model also requires a longer stabilization period (around 5s) once ground contact is made to ensure that the foot is perfectly stable and aligned with the ground plane before proceeding. The proposed trajectory generation for $\xcom$ illustrated by Figure~\ref{fig:comtraj3d} can be seen at 8s and 22s when the COM is pushed outside the region of support once the swing foot is aligned. 
 
-The alternating foot trajectories on the selected sagittal plane during a complete gait cycle are shown in Figure~\ref{fig:fwdfoottraj}. The first step is taken with the left foot tracking $x_{SWING}$ (between 5-12s). The \textbf{DROP} state is entered around 12s and the left foot tracks the $x_{SWING}$ trajectory given by $FPE + FPE_{offset}$ to ensure over stepping. Once ground contact is made, the contact stabilization state is used to straighten both feet and spread the ground reaction force evenly (around 12-14s). The step cycle begins for the right leg from 15s to complete the gait sequence. 
+The alternating foot trajectories on the selected sagittal plane during a complete gait cycle are shown in Figure~\ref{fig:fwdfoottraj}. The first step is taken with the left foot tracking $\xswing$ (between 5-12s). The \textbf{DROP} state is entered around 12s and the left foot tracks the $\xswing$ trajectory given by $FPE + FPE_{offset}$ to ensure over stepping. Once ground contact is made, the contact stabilization state is used to straighten both feet and spread the ground reaction force evenly (around 12-14s). The step cycle begins for the right leg from 15s to complete the gait sequence. 
 
 \begin{figure}[!h]
 	\begin{center}
