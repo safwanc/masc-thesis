@@ -127,11 +127,11 @@ Where ${d_k} = \tau _k$ is the link side torque treated as a disturbance to the 
 \begin{figure}[!h]
 	\centering
     \includegraphics[scale=0.5]{fig/experiments/pdmotorcontroller.eps} 
-  	\caption{PD Controller implementation for independent joint control with actuator dynamics. \Incomplete \textbf{- Figure needs to be regenerated to fix the $g_r$ gain block}}
+  	\caption{PD controller model for independent joint control with actuator dynamics.}
 	\label{fig:pdmotorcontroller}
 \end{figure}
 
-To improve the estimate of the motor side inertia, $a_{kk}$ is required in (\ref{eq:actdyn6}). The dynamic simulation package used in Section~\ref{sec:simulations_and_results} is based on Mathwork's Simulink environment and uses the SimMechanics toolbox which does not allow the mass matrix $A(\vec{q})$ to be isolated. Algorithm~\ref{alg:massdiag} was used to compute the mass matrix and extract the diagonal terms at each time step. 
+To improve the estimate of the motor side inertia, $a_{kk}$ is required in (\ref{eq:actdyn6}). The dynamic simulation package used in Section~\ref{sec:simulations_and_results} is based on Mathwork's Simulink environment and uses the SimMechanics toolbox which does not allow the mass matrix $A(\vec{q})$ to be isolated. Algorithm~\ref{alg:massdiag} was used to compute the mass matrix and extract the diagonal terms at each time step.  
 
 \begin{algorithm}[H]
  \SetAlgoLined
@@ -162,7 +162,7 @@ The physical bipedal robot in Section~\ref{sub:mechanical_implementation} is tre
 \begin{figure}[!h]
 	\centering
     \includegraphics[scale=0.65]{fig/experiments/hilarchitecture.eps} 
-  	\caption{Hardware architecture used to control the physical 14 DOF bipedal robot.}
+  	\caption{Hardware architecture used to control the physical bipedal robot leg.}
 	\label{fig:hilarch}
 \end{figure}
 
@@ -186,28 +186,28 @@ This is only an estimate of the joint angle since there are drivetrain losses (i
 
 The ability to develop a single controller and target either a simulation environment or the physical hardware is extremely useful. Using the Quanser's QUARC toolbox, a Q8-USB (DAQ) board and a VoltPAQ (voltage amplifier), the control algorithms were redeveloped as parallel models capable of switching target platforms (shown in Figure~\ref{fig:parallelmodels}).
 
-\begin{figure}[!t]
+\begin{figure}[!h]
 	\centering
     \includegraphics[scale=0.6]{fig/experiments/parallelmodels.eps} 
   	\caption{Parallel models designed to target either simulations or physical hardware with the same controller.}
 	\label{fig:parallelmodels}
 \end{figure}
 
-\begin{figure}[!b]
+In the physical environment mode shown in Figure~\ref{fig:hilmodel}, the hardware target subsystem is initialized to interface with the Q8-USB DAQ board. The control algorithm running on the PC communicates with the physical hardware using ``HIL Read'' and ``HIL Write'' blocks which communicate with the DAQ over USB. The PD controller output is an analog signal corresponding to the desired voltage at the motor terminals (amplifier command). The DAQ also reads the raw digital signals from the motor side encoders. The VoltPAQ voltage amplifier also provides the ability to read the current in the armature circuit ($i_a$) of the DC motor. This value is passed back to the controller through the DAQ using an analog channel. Due to the noise in the current sensor, a low pass filter is used to produce a cleaner signal. The quadrature decoding formula (\ref{eq:quadrature}) is used to obtain the joint angle for the closed loop feedback. The link side angle information is also used to determine whether a joint is out of its limits. The controller detects and sends a ``shut down'' command to the amplifier channel if it is. 
+
+\begin{figure}[!h]
 	\centering
-    \includegraphics[scale=0.45]{fig/experiments/hilmodel.eps} 
+    \includegraphics[scale=0.5]{fig/experiments/hilmodel.eps} 
   	\caption{HIL subsystem from Figure~\ref{fig:parallelmodels} used to target physical hardware with voltage control signal.}
 	\label{fig:hilmodel}
 \end{figure}
 
-In the physical environment mode shown in Figure~\ref{fig:hilmodel}, the hardware target subsystem is initialized to interface with the Q8-USB DAQ board. The control algorithm running on the PC communicates with the physical hardware using ``HIL Read'' and ``HIL Write'' blocks which communicate with the DAQ over USB. The PD controller output is an analog signal corresponding to the desired voltage at the motor terminals (amplifier command). The DAQ also reads the raw digital signals from the motor side encoders. The VoltPAQ voltage amplifier also provides the ability to read the current in the armature circuit ($i_a$) of the DC motor. This value is passed back to the controller through the DAQ using an analog channel. Due to the noise in the current sensor, a low pass filter is used to produce a cleaner signal. The quadrature decoding formula (\ref{eq:quadrature}) is used to obtain the joint angle for the closed loop feedback. The link side angle information is also used to determine whether a joint is out of its limits. The controller detects and sends a ``shut down'' command to the amplifier channel if it is. 
-
-In the simulated environment mode, the controllers were reformulated to use the voltage signal as the control input. The actuator dynamics were incorporated into the simulation using the independent joint control formulation presented in (\ref{eq:actdyn7}). The simulation target subsystem shown in Figure~\ref{fig:simmodel} computes the effective motor inertia and damping seen by the joint using Algorithm~\ref{alg:massdiag}. The link side joint angle, velocity and accelerations are used with inverse dynamics to compute the link side torque which is treated as a disturbance to the system. 
+In the simulated environment mode, the controllers were reformulated to use the voltage signal as the control input. The simulation target subsystem shown in Figure~\ref{fig:simmodel} models the actuator dynamics and treats the link side torques as a disturbance input. The VoltPAQ amplifier gain ($3$ V/V) is applied to the voltage control signal to model the effective voltage at the motor terminals. The actuator dynamics are simulated with the motor ($R$, $K_m$, $K_b$, $J_m$ and $B_m$) and gearhead ($g_r$) parameters. The link side variables are obtained by applying the gear ratio to the motor velocity $\dot{\Theta}_m$ to obtain $\dot{q}$. The joint position and accelerations are computed by taking the integral and derivative of $\dot{q}$, respectively. The joint angle, velocity and accelerations ($q$, $\dot{q}$, $\dot{\dot{q}}$) are used with inverse dynamics to compute the effective link side torques, which is fed back as a disturbance input to the simulated motor model. 
 
 \begin{figure}[!h]
 	\centering
-    \includegraphics[scale=0.55]{fig/experiments/simmodel.eps} 
-  	\caption{Subsystem from Figure~\ref{fig:parallelmodels} used to target the simulated environment with voltage control signal. \Incomplete \textbf{- Figure needs to be regenerated to fix the $g_r$ gain block}}
+    \includegraphics[scale=0.5]{fig/experiments/simmodel.eps} 
+  	\caption{Subsystem from Figure~\ref{fig:parallelmodels} used to target the simulated environment with voltage control signal.}
 	\label{fig:simmodel}
 \end{figure}
 
@@ -218,13 +218,13 @@ In the simulated environment mode, the controllers were reformulated to use the 
 
 \section{Single DOF Validation} % (fold)
 \label{sec:1dof_validation}
-This section describes the experiments validating the simulation models for 1 DOF controllers using the HIL environment. 
+This section describes the experiments validating the simulation models for single DOF controllers using the HIL environment. Parallel models developed in Section~\ref{sub:parallel_models} were used to compare the results from simulation to the physical hardware. 
 
 \subsection{Joint Tracking} % (fold)
 \label{sub:joint_tracking}
-The parallel model for targetting the simulation environment and physical hardware was used to tune the PD controller gains for a single joint of the bipedal robot. By using the shared controller architecture, gains were tuned to improve tracking performance in the simulation environment and then immediately verified on the physical hardware. The experimental results presented in this section show the results of the joint tracking a sine wave at 0.5 Hz in hardware and simulation. 
+Local PD controllers are used to track the joint level trajectories. The parallel model shown in Figure~\ref{fig:parallelmodels} was developed to tune the proportional ($K_P$) and derivative ($K_D$) gains for individual joints on the bipedal robot. First, the gains were tuned in the simulation environment to achieve the desired tracking performance. The shared controller architecture was used to target the physical hardware to validate the tracking results. 
 
-%The same controller gains were used on the physical hardware and the tracking performance is almost identical to the simulated case. The tracking results shown in Figure~\ref{fig:hipyawtracking} validate the simulation model for the hip yaw joint. 
+The experimental results presented in this section compare the tracking performance of three joints in simulation and in hardware. Each joint tracks a sinusoidal reference trajectory at $0.5 Hz$. The amplitude and bias of each reference trajectory is selected to maintain the motion within the joint limits. Figures~\ref{fig:hipyawtracking}, \ref{fig:hippitchtracking} and \ref{fig:kneepitchtracking} compare the tracking performance for the hip yaw, hip pitch and knee pitch joints, respectively. 
 
 \begin{figure}[!h]
 	\begin{center}
@@ -282,7 +282,10 @@ The parallel model for targetting the simulation environment and physical hardwa
  
 % subsection joint_tracking (end)
 
-\cleardoublepage
+With the tuned PD gains, the tracking performance on the physical hardware is nearly identical to the simulation environment. Hip yaw joint tracking (Figure~\ref{fig:hipyawtracking}) show that there is a very small but negligible lag on the physical hardware when compared to the simulated system. Hip pitch joint tracking (Figure~\ref{fig:hippitchtracking}) show perfect tracking for the simulated system while there are small disturbances near the peaks of the sinusoidal wave on the physical hardware. This discrepancy is due to the backlash problem discussed briefly in Section~\ref{sub:mechanical_implementation}. The simulated system demonstrates perfect tracking since backlash is not modeled. However, the PD controller gains are sufficiently high for the physical system to overcome the disturbances due to backlash and achieve near perfect tracking. 
+
+% When the hip joint motion changes direction (i.e. at the peaks of the wave) on the physical system, the backlash in the knee   
+
 % section 1dof_results (end)
 
 \section{Motion Control Validation} % (fold)
