@@ -1,11 +1,13 @@
 \chapter{Experimental Results} % (fold)
 \label{cha:experiments}
 
-This chapter presents the experimental work completed to validate the actuator dynamics and motion control framework. It is important to test walking control strategies on physical hardware directly due to the imperfections in a simulation environment. For example, the contact models used to estimate the ground reaction force is only an approximation. There are also other unmodeled effects which can significantly alter the dynamics of the physical system (i.e. vibrations). The simulations used to demonstrate the proposed 3D FPE walking control strategy in the previous section accounted for link side dynamics only. Section~\ref{sec:actuator_model} describes the modifications to account for the actuator dynamics. This modification to the simulations enables a single controller designed in Simulink to target either the simulation environment or the physical hardware using the HIL architecture discussed in Section~\ref{sec:hil_architecture}. The experimental validation for a single actuator and the proposed motion control framework are presented in Sections \ref{sec:1dof_validation} and \ref{sec:motion_control_validation}, respectively. 
+This chapter presents the experimental work completed to validate the actuator dynamics and motion control framework. It is important to test walking control strategies on physical hardware directly due to the imperfections in a simulation environment. For example, the contact models used to estimate the ground reaction force is only an approximation. There are also other unmodeled effects which can significantly alter the dynamics of the physical system (i.e. friction). The hardware platform used for experimental validation is presented in Section~\ref{sec:physical_hardware}. This includes the mechanical implementation of the bipedal robot design and the control electronics used to control the robot. 
+
+The simulations used to demonstrate the proposed 3D FPE walking control strategy in the previous section accounted for link side dynamics only. Section~\ref{sec:actuator_model} describes the modifications to account for the actuator dynamics. This modification to the simulations enables a single controller designed in Simulink to target either the simulation environment or the physical hardware using the HIL architecture discussed in Section~\ref{sec:hil_architecture}. The experimental validation for a single actuator and the proposed motion control framework are presented in Sections \ref{sec:1dof_validation} and \ref{sec:motion_control_validation}, respectively. 
 
 \section{Physical Hardware} % (fold)
 \label{sec:physical_hardware}
-The electromechanical design presented in Chapter~\ref{cha:design} was realized to develop the 14 DOF bipedal robot (single leg shown in Figure~\ref{fig:bipedleg}). The mechanical implementation was derived directly from the revised CAD models. The electronics used for control hardware were developed by an industry collaboration partner, Quanser Consulting Inc. This section presents the realization of the physical hardware used for experimental validation. 
+The electromechanical design presented in Chapter~\ref{cha:design} was realized to develop the 14 DOF bipedal robot. A completely assembled 7 DOF leg of the biped is shown in Figure~\ref{fig:bipedleg}. The mechanical implementation was derived directly from the revised CAD models. The control electronics were developed by an industry partner, Quanser Inc. This section presents the realization of the physical hardware platform used for experimental validation. 
 
 \begin{figure}[!h]
 	\centering
@@ -14,10 +16,10 @@ The electromechanical design presented in Chapter~\ref{cha:design} was realized 
 	\label{fig:bipedleg}
 \end{figure}
 
-\subsubsection{Mechanical Implementation} % (fold)
-\label{ssub:mechanical_implementation}
+\subsection{Mechanical Implementation} % (fold)
+\label{sub:mechanical_implementation}
 
-The final mechanical design was developed on campus at the University of Waterloo. The on-site engineering machine shop developed the mechanical chassis components from the final CAD drawings (shown in Appendix~\ref{app:bipedcad}). The selected DC motors and gearhead combinations were sourced from a motor manufacturer. The drivetrain components (i.e. bearings, shafts, gears) used to relocate the output gearhead shaft from each joint axis were also sourced from a hardware vendor. The complete mechanical assembly was completed by the author of this thesis. The completely assembled joints and links of the bipedal robot leg is shown in more detail in Figure~\ref{fig:bipedcloseup}.
+The final mechanical design of the bipedal robot was developed on campus at the University of Waterloo. The on-site engineering machine shop manufactured the mechanical chassis components from the final CAD drawings (shown in Appendix~\ref{app:bipedcad}). The selected DC motors and gearhead combinations were sourced from a motor manufacturer. The drivetrain components (i.e. bearings, shafts, gears) used to relocate the output gearhead shaft from each joint axis were also sourced from a hardware vendor. The author of this thesis completed the mechanical assembly using the CAD model as a reference. The completely assembled joints and links of the bipedal robot leg is shown in more detail in Figure~\ref{fig:bipedcloseup}.
 
 \begin{figure}[!h]
 	\centering
@@ -30,22 +32,22 @@ The mechanical chassis was composed primarily out of Aluminum 5052 and created u
 
 One of the key challenges in the assembled leg was the use of bevel gears for perpendicular mechanical coupling. It was difficult to position the gear axis with enough accuracy to achieve perfect clearance between mating components. As a result, some of the joints which use this design approach to shift the weight distribution suffer from backlash (or ``joint play''). In the current design, this is particularly evident for the knee joint, where one of the stock gearing components were modified due to fitment issues. 
 
-In addition to developing the bipedal robot, a supporting frame was also designed for fixed base and (tethered) walking experiments (CAD drawings available in Appendix~\ref{app:framecad}). 
+In addition to developing the bipedal robot, a supporting frame was also designed for fixed and walking experiments (CAD drawings available in Appendix~\ref{app:framecad}). In the fixed configuration, the biped's torso is mounted directly to the frame. This provides sufficient ground clearance for the legs to remain suspended in the air. This removes the $n = 6$ unactuated DOF from the floating base but provides an experimental platform for testing basic control strategies (i.e. controlling swing foot motion). The walking configuration was designed to provide sufficient clearance for the biped to be mobile, while using a tether to provide support in case of a fall. 
 % subsubsection mechanical_implementation (end)
 
-\subsubsection{Control Implementation} % (fold)
-\label{ssub:electronics_implementation}
+\subsection{Control Implementation} % (fold)
+\label{sub:control_implementation}
 
-The electronics used for controlling the bipedal robot was developed by an industry collaboration partner. Quanser Consulting Inc developed custom motor controllers and drivers as per the current requirements derived from torque estimates in dynamic simulations. Each joint in the bipedal robot has a (dedicated) local motor controller and driver unit. A control system model developed in Matlab/Simulink using Quanser's QUARC toolbox communicates with the electronics hardware through a serial interface (USB). Quanser's complete system enables hardware-in-the-loop (HIL) experiments with the physical bipedal robot (described further in Section~\ref{sec:hil_architecture}).    
-
-\begin{figure}[!h]
+\begin{figure}[!b]
 	\centering
     \includegraphics[scale=0.39]{fig/hardware/bipedwired.png} 
   	\caption{Electronics and wiring used to interface control loops running in Simulink to the physical hardware.}
 	\label{fig:bipedwired}
 \end{figure}
 
-Unfortunately, the electronics hardware developed by Quanser was not ready in time for experimental validation. Since it is a custom solution, further development was required before it could be used to control the complete 14 DOF bipedal robot. Quanser provided the author with control electronics from their existing product offerings in the interim to complete \emph{some} experimental validation on the physical robot. The general idea is that the HIL experiment models developed to target the interim solution could easily be switched to target the custom solution once it is ready for us. The interim solution is hardware constrained to 7 channels available for control and current output per channel. A single 7 DOF leg shown in Figure~\ref{fig:bipedwired} was wired to these channels for \emph{some} experimental validation. 
+The electronics used for controlling the bipedal robot was developed by an industry collaboration partner. Quanser Inc developed custom motor controllers and drivers as per the current requirements derived from torque estimates in dynamic simulations. Each joint in the bipedal robot has a (dedicated) local motor controller and driver unit. A control system model developed in Matlab/Simulink using Quanser's QUARC toolbox communicates with the electronics hardware through a serial interface (USB). Quanser's complete system enables hardware-in-the-loop (HIL) experiments with the physical bipedal robot (described further in Section~\ref{sec:hil_architecture}).    
+
+Unfortunately, the electronics hardware developed by Quanser was not ready in time for experimental validation. Since it is a custom solution, further development was required before it could be used to control the complete 14 DOF bipedal robot. Quanser provided the author with control electronics from their existing product offerings in the interim to complete \emph{some} experimental validation on the physical robot. The general idea is that the HIL experiment models developed to target the interim solution could easily be switched to target the custom solution once it is ready. The interim solution is hardware constrained to 7 channels available for control and current output per channel. A single 7 DOF leg shown in Figure~\ref{fig:bipedwired} was wired to these channels for \emph{some} experimental validation. 
 
 % subsubsection electronics_implementation (end)
 
@@ -129,7 +131,7 @@ Where ${d_k} = \tau _k$ is the link side torque treated as a disturbance to the 
 	\label{fig:pdmotorcontroller}
 \end{figure}
 
-To improve the estimate of the motor side inertia, $a_{kk}$ is required in (\ref{eq:actdyn6}). The dynamic simulation package used in Section~\ref{sec:simulations_and_results} is based on Mathwork's Simulink environment and uses the SimMechanics toolbox which does not allow the mass matrix $A(\vec{q})$ to be isolated. Therefore, the following algorithm was used to compute the mass matrix and extract the diagonal terms at each time step: 
+To improve the estimate of the motor side inertia, $a_{kk}$ is required in (\ref{eq:actdyn6}). The dynamic simulation package used in Section~\ref{sec:simulations_and_results} is based on Mathwork's Simulink environment and uses the SimMechanics toolbox which does not allow the mass matrix $A(\vec{q})$ to be isolated. Algorithm~\ref{alg:massdiag} was used to compute the mass matrix and extract the diagonal terms at each time step. 
 
 \begin{algorithm}[H]
  \SetAlgoLined
@@ -155,7 +157,7 @@ To improve the estimate of the motor side inertia, $a_{kk}$ is required in (\ref
 \label{sec:hil_architecture}
 The architecture used to control the physical 14 DOF bipedal robot is presented in this section. In general, controlling DC motors requires a controller (to host the control algorithm) and a driver (typically serves as a power amplifier). The controller outputs a low voltage control signal which is amplified by the driver and applied to the terminals of the motor. Encoders are used to sense the rotor position information and passed back to the controller for closed loop  control. 
 
-The physical hardware developed in Chapter~\ref{cha:design} is treated as the plant. Using Quanser's QUARC toolbox, control algorithms developed in the Simulink environment can be compiled for a variety of target platforms ranging from embedded microcontrollers to standard PC. This allows the use of a shared codebase for simulation and for the physical hardware. The control algorithms used for the biped are compiled and executed on a PC which communicates with the physical hardware through a data acquisition (DAQ) board. A separate and dedicated voltage amplifier is used to drive the DC motors from a low voltage analog control signal (labeled ``amplifier command'' on Figure~\ref{fig:hilarch}) from the controller via the DAQ. 
+The physical bipedal robot in Section~\ref{sub:mechanical_implementation} is treated as the plant. Using Quanser's QUARC toolbox, control algorithms developed in the Simulink environment can be compiled for a variety of target platforms ranging from embedded microcontrollers to standard PC. This allows the use of a shared codebase for simulation and for the physical hardware. The control algorithms used for the biped are compiled and executed on a PC which communicates with the physical hardware through a data acquisition (DAQ) board. A separate and dedicated voltage amplifier is used to drive the DC motors from a low voltage analog control signal (labeled ``amplifier command'' on Figure~\ref{fig:hilarch}) from the controller via the DAQ. As an interim solution, Quanser provided the author with a Q8-USB (DAQ board) and a VoltPAQ (voltage amplifier) shown in Figure~\ref{fig:bipedwired}.
 
 \begin{figure}[!h]
 	\centering
