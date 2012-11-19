@@ -1,13 +1,13 @@
 \chapter{Experimental Results} % (fold)
 \label{cha:experiments}
 
-This chapter presents the experimental work completed to validate the actuator dynamics and motion control framework. It is important to test walking control strategies on physical hardware directly due to the imperfections in a simulation environment. For example, the contact models used to estimate the ground reaction force is only an approximation. There are also other unmodeled effects which can significantly alter the dynamics of the physical system (i.e. friction). The hardware platform used for experimental validation is presented in Section~\ref{sec:physical_hardware}. This includes the mechanical implementation of the bipedal robot design and the control electronics used to control the robot. 
+This chapter presents the experimental work completed to validate the actuator dynamics and motion control framework. The hardware platform used for experimental validation is presented in Section~\ref{sec:physical_hardware}. This includes the mechanical implementation of the bipedal robot design and the control electronics used to control the robot. 
 
 The simulations used to demonstrate the proposed 3D FPE walking control strategy in the previous section accounted for link side dynamics only. Section~\ref{sec:actuator_model} describes the modifications to account for the actuator dynamics. This modification to the simulations enables a single controller designed in Simulink to target either the simulation environment or the physical hardware using the HIL architecture discussed in Section~\ref{sec:hil_architecture}. The experimental validation for a single actuator and the proposed motion control framework are presented in Sections \ref{sec:1dof_validation} and \ref{sec:motion_control_validation}, respectively. 
 
 \section{Physical Hardware} % (fold)
 \label{sec:physical_hardware}
-The electromechanical design presented in Chapter~\ref{cha:design} was realized to develop the 14 DOF bipedal robot. A completely assembled 7 DOF leg of the biped is shown in Figure~\ref{fig:bipedleg}. The mechanical implementation was derived directly from the revised CAD models. The control electronics were developed by an industry partner, Quanser Inc. This section presents the realization of the physical hardware platform used for experimental validation. 
+The electromechanical design presented in Chapter~\ref{cha:design} was realized to develop the 14 DOF bipedal robot. The assembled 7 DOF leg of the biped is shown in Figure~\ref{fig:bipedleg}. The mechanical implementation was derived directly from the revised CAD models. The control electronics were developed by an industry partner, Quanser Inc. This section presents the realization of the physical hardware platform used for experimental validation. 
 
 \begin{figure}[!h]
 	\centering
@@ -28,9 +28,9 @@ The final mechanical design of the bipedal robot was developed on campus at the 
 	\label{fig:bipedcloseup}
 \end{figure}
 
-The mechanical chassis was composed primarily out of Aluminum 5052 and created using Computer Numerical-Controlled (CNC) machine tools directly from the CAD files. This enabled repeatable and accurate positioning of mechanical features in the chassis components (i.e. for the separation of holes for gearing components to mesh well). CNC machine tools also facilitated the production since some chassis components (i.e. motor mounts) were used multiple times in the design of each leg. The advantage here was once the machine was setup to produce the first component, the remaining copies could be produced faster using the same setup. 
+The mechanical chassis was composed primarily out of Aluminum 5052 and created using Computer Numerical-Controlled (CNC) machine tools directly from the CAD files. This enabled repeatable and accurate positioning of mechanical features in the chassis components (i.e. for the separation of holes for gearing components to mesh well). CNC machine tools also facilitated the production since some chassis components (i.e. motor mounts) were used multiple times in the design of each leg. The advantage here was that once the machine was setup to produce the first component, the remaining copies could be produced faster using the same setup. 
 
-One of the key challenges in the assembled leg was the use of bevel gears for perpendicular mechanical coupling. It was difficult to position the gear axis with enough accuracy to achieve perfect clearance between mating components. As a result, some of the joints which use this design approach to shift the weight distribution suffer from backlash (or ``joint play''). In the current design, this is particularly evident for the knee joint, where one of the stock gearing components were modified due to fitment issues. 
+One of the key challenges in the assembled leg was the use of bevel gears for perpendicular mechanical coupling. It was difficult to position the gear axis with enough accuracy to achieve perfect clearance between mating components. As a result, some of the joints which use this design approach to shift the weight distribution suffer from backlash (or ``joint play''). In the current design, this is particularly evident for the knee joint, where one of the stock gearing components had to be modified due to fitment issues. 
 
 In addition to developing the bipedal robot, a supporting frame was also designed for fixed and walking experiments (CAD drawings available in Appendix~\ref{app:framecad}). In the fixed configuration, the biped's torso is mounted directly to the frame. This provides sufficient ground clearance for the legs to remain suspended in the air. This removes the $n = 6$ unactuated DOF from the floating base but provides an experimental platform for testing basic control strategies (i.e. controlling swing foot motion). The walking configuration was designed to provide sufficient clearance for the biped to be mobile, while using a tether to provide support in case of a fall. 
 % subsubsection mechanical_implementation (end)
@@ -45,9 +45,9 @@ In addition to developing the bipedal robot, a supporting frame was also designe
 	\label{fig:bipedwired}
 \end{figure}
 
-The electronics used for controlling the bipedal robot were developed by an industry partner. Quanser Inc developed custom motor controllers and drivers for the current requirements derived from torque estimates in dynamic simulations. Each joint in the bipedal robot has a (dedicated) local motor controller and driver unit. A control system model developed in Matlab/Simulink using Quanser's QUARC toolbox communicates with the electronics hardware through a serial interface (USB). Quanser's complete system enables hardware-in-the-loop (HIL) experiments with the physical bipedal robot (described further in Section~\ref{sec:hil_architecture}).    
+The electronics used for controlling the bipedal robot were developed by an industry partner. Quanser Inc developed custom motor controllers and drivers for the current requirements derived from torque estimates in dynamic simulations. Each joint in the bipedal robot has a (dedicated) local motor controller and driver unit. A control system model developed in Matlab/Simulink using Quanser's QUARC toolbox communicates with the electronics hardware through a serial interface (USB). Quanser's system enables hardware-in-the-loop (HIL) experiments with the physical bipedal robot (described further in Section~\ref{sec:hil_architecture}).    
 
-Unfortunately, the electronics hardware developed by Quanser was not ready in time for experimental validation. Since it is a custom solution, further development was required before it could be used to control the complete 14 DOF bipedal robot. Quanser provided the author with control electronics from their existing product offerings in the interim to complete \emph{some} experimental validation on the physical robot. The general idea is that the HIL experiment models developed to target the interim solution could easily be switched to target the custom solution once it is ready. The interim solution is hardware constrained to 7 channels. A single 7 DOF leg shown in Figure~\ref{fig:bipedwired} was wired to these channels for the experimental validation in this chapter. 
+Unfortunately, the electronics hardware developed by Quanser was not ready in time for experimental validation. Since it is a custom solution, further development was required before it could be used to control the complete 14 DOF bipedal robot. Quanser provided the author with control electronics from their existing product offerings in the interim to complete \emph{some} experimental validation on the physical robot. The general idea is that the HIL experiment models developed to target the interim solution could easily be switched to target the custom solution once it is ready. The interim solution is constrained to 7 channels. A single 7 DOF leg shown in Figure~\ref{fig:bipedwired} was wired to these channels for the experimental validation in this chapter. 
 
 % subsubsection electronics_implementation (end)
 
@@ -155,7 +155,7 @@ To improve the estimate of the motor side inertia, $a_{kk}$ is required in (\ref
 
 \section{HIL Architecture} % (fold)
 \label{sec:hil_architecture}
-The architecture used to control the physical 14 DOF bipedal robot is presented in this section. In general, controlling DC motors requires a controller (to host the control algorithm) and a driver (typically serves as a power amplifier). The controller outputs a low voltage control signal which is amplified by the driver and applied to the terminals of the motor. Encoders are used to sense the rotor position information and passed back to the controller for closed loop  control. 
+The architecture used to control the physical 14 DOF bipedal robot is presented in this section. In general, controlling DC motors requires a controller (to host the control algorithm) and a driver (typically serves as a power amplifier). The controller outputs a low voltage control signal which is amplified by the driver and applied to the terminals of the motor. Encoders are used to sense the rotor position used by the controller for closed loop control. 
 
 The physical bipedal robot in Section~\ref{sub:mechanical_implementation} is treated as the plant. Using Quanser's QUARC toolbox, control algorithms developed in the Simulink environment can be compiled for a variety of target platforms ranging from embedded microcontrollers to standard PC. This allows the use of a shared codebase for simulation and for the physical hardware. The control algorithms used for the biped are compiled and executed on a PC which communicates with the physical hardware through a data acquisition (DAQ) board. A separate and dedicated voltage amplifier is used to drive the DC motors from a low voltage analog control signal (labeled ``amplifier command'' on Figure~\ref{fig:hilarch}) from the controller via the DAQ. As an interim solution, Quanser provided the author with a Q8-USB (DAQ board) and a VoltPAQ (voltage amplifier) shown in Figure~\ref{fig:bipedwired}.
 
@@ -166,7 +166,7 @@ The physical bipedal robot in Section~\ref{sub:mechanical_implementation} is tre
 	\label{fig:hilarch}
 \end{figure}
 
-The actuator subassemblies selected in Section~\ref{sub:final_configurations} were preassembled with incremental optical encoders mounted to the motor side. These encoders output digital signals on two channels for an indication and control of the motor shaft position and direction.  These digital signals are passed back to the controller running on the PC via the DAQ. Using quadrature decoding, the motor angle $\Theta _m$ and velocity $\dot{\Theta}_m$ can be retrieved from the encoder output in degrees: 
+The actuator subassemblies selected in Section~\ref{sub:final_configurations} were preassembled with incremental optical encoders mounted to the motor side. These encoders output digital signals on two channels.  These digital signals are passed back to the controller running on the PC via the DAQ. Using quadrature decoding, the motor angle $\Theta _m$ can be retrieved from the encoder output in degrees: 
 
 \begin{equation}
 	{\Theta _m} = \frac{{360}}{{n \cdot l}} \cdot Encoder_{output}
@@ -193,7 +193,7 @@ The ability to develop a single controller and target either a simulation enviro
 	\label{fig:parallelmodels}
 \end{figure}
 
-In the physical environment mode shown in Figure~\ref{fig:hilmodel}, the hardware target subsystem is initialized to interface with the Q8-USB DAQ board. The control algorithm running on the PC communicates with the physical hardware using ``HIL Read'' and ``HIL Write'' blocks which communicate with the DAQ over USB. The PD controller output is an analog signal corresponding to the desired voltage at the motor terminals (amplifier command). The DAQ also reads the raw digital signals from the motor side encoders. The VoltPAQ voltage amplifier also provides the ability to read the current in the armature circuit ($i_a$) of the DC motor. This value is passed back to the controller through the DAQ using an analog channel. Due to the noise in the current sensor, a low pass filter is used to produce a cleaner signal. The quadrature decoding formula (\ref{eq:quadrature}) is used to obtain the joint angle for the closed loop feedback. The link side angle information is also used to determine whether a joint is out of its limits. The controller detects and sends a ``shut down'' command to the amplifier channel if it is. 
+In the physical environment mode shown in Figure~\ref{fig:hilmodel}, the hardware target subsystem is initialized to interface with the Q8-USB DAQ board. The control algorithm running on the PC communicates with the physical hardware using ``HIL Read'' and ``HIL Write'' blocks which communicate with the DAQ over USB. The PD controller output is an analog signal corresponding to the desired voltage at the motor terminals (amplifier command). The DAQ also reads the raw digital signals from the motor side encoders. The VoltPAQ voltage amplifier also provides the ability to read the current in the armature circuit ($i_a$) of the DC motor. This value is passed back to the controller through the DAQ using an analog channel. Due to the noise in the current sensor, a low pass filter is needed. The quadrature decoding formula (\ref{eq:quadrature}) is used to obtain the joint angle for the closed loop feedback. The link side angle information is also used to determine whether a joint is out of its limits. The controller detects and sends a ``shut down'' command to the amplifier channel if it is. 
 
 \begin{figure}[!h]
 	\centering
@@ -202,7 +202,7 @@ In the physical environment mode shown in Figure~\ref{fig:hilmodel}, the hardwar
 	\label{fig:hilmodel}
 \end{figure}
 
-In the simulated environment mode, the controllers were reformulated to use the voltage signal as the control input. The simulation target subsystem shown in Figure~\ref{fig:simmodel} models the actuator dynamics and treats the link side torques as a disturbance input. The VoltPAQ amplifier gain ($3$ V/V) is applied to the voltage control signal to model the effective voltage at the motor terminals. The actuator dynamics are simulated with the motor ($R$, $K_m$, $K_b$, $J_m$ and $B_m$) and gearhead ($g_r$) parameters. The link side variables are obtained by applying the gear ratio to the motor velocity $\dot{\Theta}_m$ to obtain $\dot{q}$. The joint position and accelerations are computed by taking the integral and derivative of $\dot{q}$, respectively. The joint angle, velocity and accelerations ($q$, $\dot{q}$, $\dot{\dot{q}}$) are used with inverse dynamics to compute the effective link side torques, which is fed back as a disturbance input to the simulated motor model. 
+In the simulated environment mode, the controllers were reformulated to use the voltage signal as the control input. The simulation target subsystem shown in Figure~\ref{fig:simmodel} models the actuator dynamics and treats the link side torques as a disturbance input. The VoltPAQ amplifier gain ($3$ V/V) is applied to the voltage control signal to model the effective voltage at the motor terminals. The actuator dynamics are simulated with the motor ($R$, $K_m$, $K_b$, $J_m$ and $B_m$) and gearhead ($g_r$) parameters. The link side variables are obtained by applying the gear ratio to the motor velocity $\dot{\Theta}_m$ to obtain $\dot{q}$. The joint positions and accelerations are computed by taking the integral and derivative of $\dot{q}$, respectively. The joint angles, velocities and accelerations ($q$, $\dot{q}$, $\dot{\dot{q}}$) are used with inverse dynamics to compute the effective link side torques, which is fed back as a disturbance input to the simulated motor model. 
 
 \begin{figure}[!h]
 	\centering
@@ -211,6 +211,7 @@ In the simulated environment mode, the controllers were reformulated to use the 
 	\label{fig:simmodel}
 \end{figure}
 
+Note that the full dynamic model of the 7 DOF leg is used for the plant in the simulation part of the experiments. The simplified dynamics are only used by the controller. 
 
 % subsection parallel_models (end)
 
@@ -290,7 +291,7 @@ With the tuned PD gains, the tracking performance on the physical hardware is ne
 
 \section{Motion Control Validation} % (fold)
 \label{sec:motion_control_validation}
-This section describes the experiments validating the motion control framework in Section~\ref{sub:control_strategy} using the HIL environment. The parallel model concept was extended to develop higher level task space controllers to generate the joint level trajectories for simulation and hardware. The interim control electronics provided by Quanser Inc is limited to controlling 7 DOF simultaneously. Therefore, only a single 7 DOF bipedal robot leg wired to the control electronics was used for the experiments in this section. The biped's torso was rigidly attached to the supporting frame in the fixed configuration, removing the 6 unactuated DOF. The Jacobian matrix used to map the task space and joint space velocities in (\ref{eq:jmap}) is reduced to: 
+This section describes the experiments validating the motion control framework in Section~\ref{sub:control_strategy} using the HIL environment. The parallel model concept was extended to develop higher level task space controllers to generate the joint level trajectories for simulation and hardware. The interim control electronics provided by Quanser Inc are limited to controlling 7 DOF simultaneously. Therefore, only a single 7 DOF bipedal robot leg wired to the control electronics was used for the experiments in this section. The biped's torso was rigidly attached to the supporting frame in the fixed configuration, removing the 6 unactuated DOF. The Jacobian matrix used to map the task space and joint space velocities in (\ref{eq:jmap}) is reduced to: 
 
 \begin{eqnarray}
 	\J{}{} &=& \begin{bmatrix} \partial \qact \\ \end{bmatrix}_{m \times n} \\
@@ -309,7 +310,7 @@ Some motions during the bipedal gait cycle can be simplified to a planar motion 
 	\dqref = \J{}{\#} \dxswing
 \end{equation}
 
-\subsubsection{Knee Bending Motion} % (fold)
+\subsubsection{Raising the Foot} % (fold)
 \label{ssub:knee_bending_motion}
 
 \begin{figure}[!b]
@@ -319,7 +320,7 @@ Some motions during the bipedal gait cycle can be simplified to a planar motion 
 	\label{fig:kneebendframes}
 \end{figure}
 
-A knee bending motion is achieved by holding the swing foot position and adjusting the height only. The frame captures shown in Figure~\ref{fig:kneebendframes} demonstrate this experiment in simulation and on the physical hardware. The first frame represents a slightly angled configuration of the leg joints after $t_{init} = 5$ seconds. The leg is not completely straightened to avoid the singular configuration. 
+In this experiment, the foot position is raised vertically, resulting in a knee bending motion. The frame captures shown in Figure~\ref{fig:kneebendframes} demonstrate this experiment in simulation and on the physical hardware. The first frame represents a slightly angled configuration of the leg joints after $t_{init} = 5$ seconds. The leg is not completely straightened to avoid the singular configuration. 
 
 \begin{figure}[!t]
 	\begin{center}
@@ -337,7 +338,7 @@ PD control was also applied on the task space level to improve performance of th
 \subsubsection{Swing Foot Motion} % (fold)
 \label{ssub:swing_foot_motion}
 
-A natural extension to the knee bending is to track an arc-like trajectory for the foot height while forward progress is made along the plane. The resulting motion is commonly used during the swing phase of the gait cycle for a bipedal robot to take a step. The frame captures shown in Figure~\ref{fig:swingmotionframes} demonstrate this motion in simulation and on hardware. The task space control gains tuned in the previous section were reused for this experiment. 
+In this experiment, the foot is commanded to track an arc-like trajectory while forward progress is made along the plane. The resulting motion is commonly used during the swing phase of the gait cycle for a bipedal robot to take a step. The frame captures shown in Figure~\ref{fig:swingmotionframes} demonstrate this motion in simulation and on hardware. The task space control gains tuned in the previous section were reused for this experiment. 
 
 \begin{figure}[!t]
 	\centering
@@ -366,7 +367,7 @@ The task space tracking results for the swing foot motion is shown in Figure~\re
 	\label{fig:swingfootq}
 \end{figure} 
 
-The joint space tracking of the command signal generated by the motion control framework is shown in Figure~\ref{fig:swingfootq}. The joint level PD controller gains were individually tuned in previous sections to achieve nearly identical performance on the hardware and in simulation. 
+The joint space tracking of the command signal generated by the motion control framework is shown in Figure~\ref{fig:swingfootq}.
 
 % subsubsection swing_foot_motion (end)
 \cleardoublepage
@@ -393,7 +394,7 @@ A circular trajectory is generated for $\xcom$ on the $xy$-plane at a fixed heig
 	\label{eq:jcomcirc}
 \end{equation}
 
-The tracking results of the $\xcom$ following the circular trajectory is shown in Figure~\ref{fig:comcirctracking}. The initial task space control gains used in Section~\ref{sub:planar_motion_control} required retuning to achieve nearly identical performance on hardware and software. 
+The tracking results of the $\xcom$ following the circular trajectory are shown in Figure~\ref{fig:comcirctracking}. The initial task space control gains used in Section~\ref{sub:planar_motion_control} required retuning. The tuned gain values $K_P = 14$ and $K_D = 0.5$ achieved nearly identical performance on hardware and software. 
 
 \begin{figure}[!h]
 	\begin{center}
@@ -416,7 +417,7 @@ The tracking results of the $\xcom$ following the circular trajectory is shown i
 	\label{fig:prioritizedframes}
 \end{figure}
 
-The prioritized control scheme is used to project a low priority task ($\J{L}{}$, $\dxl$) onto the null space of a higher priority task ($\J{H}{}$, $\dxh$). This approach is notably used in Section~\ref{sub:control_strategy} to maintain the $\xcom$ position at the center of the support foot ($\xstand$) while the swing foot is lifted from the ground. A side stepping motion is generated for $\xswing$ to follow an arc-like trajectory along the biped's frontal ($yz$) plane as the high priority task for this experiment. The low priority task is selected to constrain the $\xcom$ motion parallel to the frontal plane. That is, $\xcom_x$ remains constant while ($\xcom_y, \xcom_z$) move freely during the side stepping motion. Frame captures taken during this experiment are shown in Figure~\ref{fig:prioritizedframes}. The joint level commands  consistent with the prioritization in (\ref{eq:taskprioritization}) are computed using (\ref{eq:priori}).
+The prioritized control scheme is used to project a low priority task ($\J{L}{}$, $\dxl$) onto the null space of a higher priority task ($\J{H}{}$, $\dxh$). This approach was used in Section~\ref{sub:control_strategy} to maintain the $\xcom$ position at the center of the support foot ($\xstand$) while the swing foot is lifted from the ground. A side stepping motion is generated for $\xswing$ to follow an arc-like trajectory along the biped's frontal ($yz$) plane as the high priority task for this experiment. The low priority task is selected to constrain the $\xcom$ motion parallel to the frontal plane. That is, $\xcom_x$ remains constant while ($\xcom_y, \xcom_z$) move freely during the side stepping motion. Frame captures taken during this experiment are shown in Figure~\ref{fig:prioritizedframes}. The joint level commands  consistent with the prioritization in (\ref{eq:taskprioritization}) are computed using (\ref{eq:priori}).
 
 \begin{IEEEeqnarray}{rClrCl}
 	\J{H}{} & = &
@@ -463,7 +464,7 @@ For the physical hardware, DC motors are controlled by a voltage signal $v_m$. A
 
 The HIL architecture was developed using Quanser's QUARC toolbox, DAQ board and a voltage amplifier. The controller code developed in Simulink was targetted to execute on the PC. The DAQ board allowed the PC-based controller to communicate with the physical hardware through analog and digital I/O. Quadrature decoding was on the encoder output to obtain the link side joint angles on physical hardware for closed loop feedback control. Parallel simulation models were developed for experimental validation to target the physical hardware or the simulated actuator dynamics. 
 
-The parallel models were used to demonstrate key components of the control approach developed in this thesis on physical hardware. The single DOF validation was used to individually tune the PD controller gains at the joint level. Once the desired tracking performance was achieved, the motion control framework used to generate the joint level commands was validated. Starting with a simple planar motion control problem, the foot position was controlled in the task space to achieve knee bending and an arc-like swing foot motion. Joint level command signals were generated for the local PD controllers using the simplified motion control framework. PD control was also applied at the task space level to improve tracking performance of the motion controller. Finally, the complete motion control framework was demonstrated in simulation and on the physical hardware through the COM tracking experiment. By using all (7) actuated DOF in the leg, the controller was able to sufficiently track a task space trajectory for the COM position. The prioritized task space control scheme was also demonstrated by maintaining a certain ground clearance for the foot position in the null space of the higher priority constraint of tracking the COM trajectory. 
+The parallel models were used to demonstrate key components of the control approach developed in this thesis on physical hardware. Single DOF validation was used to individually tune the PD controller gains at the joint level. Once the desired tracking performance was achieved, the task space motion control framework used to generate the joint level commands was validated. Starting with a simple planar motion control problem, the foot position was controlled in the task space to achieve knee bending and an arc-like swing foot motion. Joint level command signals were generated for the local PD controllers using the simplified motion control framework. PD control was also applied at the task space level to improve tracking performance of the motion controller. Finally, the complete motion control framework was demonstrated in simulation and on the physical hardware through the COM tracking experiment. By using all (7) actuated DOF in the leg, the controller was able to sufficiently track a task space trajectory for the COM position. The prioritized task space control scheme was also demonstrated by restricting the $\xcom$ motion to a plane in the null space of the higher priority constraint of tracking an arc-like trajectory for side-to-side stepping. 
 
 % section discussion (end)
 
