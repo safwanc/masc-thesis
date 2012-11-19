@@ -115,7 +115,7 @@ Using independent joint control \cite{Sciavicco2001}, each joint $k$ of the syst
 	\label{eq:actdyn6}
 \end{equation}
 
-Where ${J_{eff}}$ and ${B_{eff}}$ are the effective motor inertia and damping \emph{seen} by the joint. The ${a_{kk}}$ in (\ref{eq:actdyn6}) compensates for the inertia of link $k$ by adding the $k$-th diagonal term from the inertia matrix $A(\vec{q})$ in (\ref{eq:eom1}). Substituting back into (\ref{eq:actdyn5}) yields: 
+Where ${J_{eff}}$ and ${B_{eff}}$ are the effective motor inertia and damping \emph{seen} by the joint. The ${a_{kk}}$ in (\ref{eq:actdyn6}) compensates for the inertia of link $k$ by adding the $k$-th diagonal term from the inertia matrix $\inertia$ in (\ref{eq:eom1}). Substituting back into (\ref{eq:actdyn5}) yields: 
 
 \begin{equation}
 	{J_{eff}}{\ddot q_k} + {B_{eff}}{\dot q_k} = g_r^{}\left( {\frac{{{k_m}}}{{{r_a}}}} \right){v_k} - {d_k}
@@ -131,7 +131,7 @@ Where ${d_k} = \tau _k$ is the link side torque treated as a disturbance to the 
 	\label{fig:pdmotorcontroller}
 \end{figure}
 
-To improve the estimate of the motor side inertia, $a_{kk}$ is required in (\ref{eq:actdyn6}). The dynamic simulation package used in Section~\ref{sec:simulations_and_results} is based on the Matlab/Simulink environment and uses the SimMechanics toolbox which does not allow the mass matrix $A(\vec{q})$ to be isolated. Algorithm~\ref{alg:massdiag} was used to compute the mass matrix and extract the diagonal terms at each time step. \\
+To improve the estimate of the motor side inertia, $a_{kk}$ is required in (\ref{eq:actdyn6}). The dynamic simulation package used in Section~\ref{sec:simulations_and_results} is based on the Matlab/Simulink environment and uses the SimMechanics toolbox which does not allow the mass matrix $\inertia$ to be isolated. Algorithm~\ref{alg:massdiag} was used to compute the mass matrix and extract the diagonal terms at each time step. \\
 
 \begin{algorithm}[H]
  \SetAlgoLined
@@ -142,10 +142,10 @@ To improve the estimate of the motor side inertia, $a_{kk}$ is required in (\ref
   \For{$i = 1$ to $n$}{
   Set $\tilde{\vec{g}} = \vec{0}$, $\mathbf{\tilde{\dot{q}}} = \vec{0}$, $\mathbf{\tilde{\ddot{q_i}}} = 1$, $\mathbf{\tilde{\ddot{q_j}}} = 0$ $[j \ne i]$\;
   Compute $\tilde{\vtau}$ using RNE\;
-  Form $i$-th column: $A(\vec{q})_{i} = \tilde{\vtau} - \hat{\vtau}$
+  Form $i$-th column: $\inertia_{i} = \tilde{\vtau} - \hat{\vtau}$
   }
-  Combine columns to form $A(\vec{q})$\;
-  Select diagonal elements of $A(\vec{q})$\;
+  Combine columns to form $\inertia$\;
+  Select diagonal elements of $\inertia$\;
  }
  \caption{Computing mass matrix diagonal terms with RNE algorithm}
  \label{alg:massdiag}

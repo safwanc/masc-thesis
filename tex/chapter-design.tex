@@ -30,13 +30,13 @@ The initial design specification was obtained by modeling the system dynamics du
 \section{Dynamic Modeling} % (fold)
 \label{sec:designspec}
 
-A dynamic model of the proposed system must be developed and analyzed under normal operating conditions to determine the forces acting on the system and torques experienced at each of the joints. The forward or direct dynamic model provides a transformation from the joint torques ($\vtau$) to the resulting joint positions ($\vec{q}$), velocities ($\vec{\dot{q}}$) and accelerations ($\vec{\ddot{q}}$).
+A dynamic model of the proposed system must be developed and analyzed under normal operating conditions to determine the forces acting on the system and torques experienced at each of the joints. The forward or direct dynamic model provides a transformation from the joint torques ($\vtau$) to the resulting joint positions ($\q$), velocities ($\vec{\dot{q}}$) and accelerations ($\vec{\ddot{q}}$).
 
 \begin{equation}
-	\ddot{\vec{q}} = f(\vtau, \vec{q}, \dot{\vec{q}}, \vec{F}_{\mathbf{C}})
+	\ddq = f(\vtau, \q, \dq, \F{C})
 \end{equation}
 
-Where $\vec{F}_{\mathbf{C}}$ represents the contact force(s) felt at the feet. Given this model, a dynamic simulation environment can be designed to estimate the torque loading at different joints on the bipedal robot during the gait cycle. This estimate can form the basis of the initial design specifications from which motors and gearing can be selected. An important consideration in this model is the inclusion of contact forces during the stance phase of the gait cycle. The ground reaction forces exerted on the robots feet have a significant impact on the dynamic requirements of each joint.
+Where $\F{C}$ represents the contact force(s) felt at the feet. Given this model, a dynamic simulation environment can be designed to estimate the torque loading at different joints on the bipedal robot during the gait cycle. This estimate can form the basis of the initial design specifications from which motors and gearing can be selected. An important consideration in this model is the inclusion of contact forces during the stance phase of the gait cycle. The ground reaction forces exerted on the robots feet have a significant impact on the dynamic requirements of each joint.
 % section overview (end)
 
 \subsection{Equations of Motion} % (fold)
@@ -46,10 +46,10 @@ The general form of the equation of motion describing a $n$-DOF humanoid robot (
 
 \begin{equation}
 	\label{eq:eom1}
-	A(\vec{q})\ddot{\vec{q}} + C(\vec{q},\dot{\vec{q}})\dot{\vec{q}} + g(\vec{q}) = \vtau + J^{T} \vec{F}_{\mathbf{C}}
+	\inertia \ddq + \coriolis \dq + \gravity = \vtau + \Jt{} \F{C}
 \end{equation}
 
-Where $A(\vec{q})$ is the $(n+6) \times (n+6)$ inertia matrix, $C(\vec{q},\dot{\vec{q}})$ are the centripetal/Coriolis terms, $g(\vec{q})$ is the gravity vector and $J$ is the Jacobian matrix which provides the mapping between the joint and work space variables. The $(n+6) \times 1$ generalized force vector $\vtau$ is segmented as follows:
+Where $\inertia$ is the $(n+6) \times (n+6)$ inertia matrix, $\coriolis$ are the centripetal/Coriolis terms, $\gravity$ is the gravity vector and $\J{}{}$ is the Jacobian matrix which provides the mapping between the joint and work space variables. The $(n+6) \times 1$ generalized force vector $\vtau$ is segmented as follows:
 
 \begin{equation}
 	\label{eq:gentau}
@@ -60,14 +60,14 @@ Where ${\vtau}_{\mathbf{act}}$ represents the $n$ actuated DOF and ${\vtau}_{\ma
 
 \begin{equation}
 	\label{eq:eom2}
-	\begin{bmatrix} A_{11} & A_{12} \\ A_{21} & A_{22} \end{bmatrix} 
-	\begin{bmatrix} \ddot{\vec{q}}_{\mathbf{act}} \\ \ddot{\vec{q}}_{\mathbf{base}} \end{bmatrix} + 
+	\begin{bmatrix} \mathbf{A_{11}} & \mathbf{A_{12}} \\ \mathbf{A_{21}} & \mathbf{A_{22}} \end{bmatrix} 
+	\begin{bmatrix} \ddq_{\mathbf{act}} \\ \ddq_{\mathbf{base}} \end{bmatrix} + 
 	\begin{bmatrix} \vec{b}_{\mathbf 1} \\ \vec{b}_{\mathbf 2} \end{bmatrix} = 
-	\begin{bmatrix} {\vtau}_{\mathbf{act}} \\ 0 \end{bmatrix} + 
-    J^{T}_{left}\vec{F}_{\mathbf{left}} + J^{T}_{right}\vec{F}_{\mathbf{right}}
+	\begin{bmatrix} {\vtau}_{\mathbf{act}} \\ \mathbf{0} \end{bmatrix} + 
+    \Jt{L}\F{L} + \Jt{R}\F{R}
 \end{equation}
 
-Where the generalized acceleration vector $\ddot{\vec{q}}_{\mathbf{act}}$ represents the $n$-DOF joint motion and $\ddot{\vec{q}}_{\mathbf{base}}$ is for the 6 DOF base motion. The gravitational and Coriolis terms are combined into the $\vec{b}$ vector. The $J_{left}$ and $J_{right}$ are 6 x $n$ Jacobian matrices for the left and right legs, respectively. The force vectors $\vec{F}_{\mathbf{left}}$ and $\vec{F}_{\mathbf{right}}$ represent the contact force felt at the left and right foot, respectively. With this modification of the equation of motion, the external forces felt during the stance phase can be incorporated into the dynamic model of the overall system. The method of calculating the magnitude of the force itself depends on the contact model used for the system. Equation (\ref{eq:eom2}) represents the complete dynamics of the 14 DOF bipedal robot with $n = 14 + 6 = 20$ generalized coordinates.
+Where the generalized acceleration vector $\ddq_{\mathbf{act}}$ represents the $n$-DOF joint motion and $\ddq_{\mathbf{base}}$ is for the 6 DOF base motion. The gravitational and Coriolis terms are combined into the $\vec{b}$ vector. The $\J{L}{}$ and $\J{R}{}$ are 6 x $n$ Jacobian matrices for the left and right legs, respectively. The force vectors $\F{L}$ and $\F{R}$ represent the contact force felt at the left and right foot, respectively. With this modification of the equation of motion, the external forces felt during the stance phase can be incorporated into the dynamic model of the overall system. The method of calculating the magnitude of the force itself depends on the contact model used for the system. Equation (\ref{eq:eom2}) represents the complete dynamics of the 14 DOF bipedal robot with $n = 14 + 6 = 20$ generalized coordinates.
 % section forward_dynamics (end)
 
 \subsection{Recursive Newton-Euler} % (fold)
@@ -154,7 +154,7 @@ In order to use kinematic parameters from human gait, data published from the 20
   \label{fig:ulinkframes}
 \end{figure}
 
-A simulation was implemented in the MATLAB environment which used a combination of the BodyMech toolbox and Kajita's toolbox. The BodyMech toolbox was used to extract the frame-by-frame 3D kinematic parameters as a human executed the gait cycle. These parameters were processed and stored in order to be played back on the robot model defined by the \texttt{uLINK} structure. To compensate for the differences in size between humans and the small biped, the joint velocities and accelerations were scaled by selecting a different reference gait speed from the published data set. Once the parameters were applied, the RNE-based inverse dynamics algorithm was used to determine the torques at each joint in the structure during the estimated gait. This process was repeated for each frame (illustrated in Figure~\ref{fig:ulinkframes}) in the captured dataset and the results of robot's kinematics/dynamics ($\vec{q}$, $\vec{\dot{q}}$, $\vec{\ddot{q}}$ and $\vtau$) were tabulated for post processing. 
+A simulation was implemented in the MATLAB environment which used a combination of the BodyMech toolbox and Kajita's toolbox. The BodyMech toolbox was used to extract the frame-by-frame 3D kinematic parameters as a human executed the gait cycle. These parameters were processed and stored in order to be played back on the robot model defined by the \texttt{uLINK} structure. To compensate for the differences in size between humans and the small biped, the joint velocities and accelerations were scaled by selecting a different reference gait speed from the published data set. Once the parameters were applied, the RNE-based inverse dynamics algorithm was used to determine the torques at each joint in the structure during the estimated gait. This process was repeated for each frame (illustrated in Figure~\ref{fig:ulinkframes}) in the captured dataset and the results of robot's kinematics/dynamics ($\q$, $\vec{\dot{q}}$, $\vec{\ddot{q}}$ and $\vtau$) were tabulated for post processing. 
 % section gait_estimation (end)
 
 
@@ -445,7 +445,7 @@ The complete mechanical CAD drawings of the 14-DOF bipedal robot can be found in
 \label{sec:design_summary}
 The electromechanical design of the 14 DOF bipedal robot had two primary design objectives. The first was to produce enough mechanical power for the biped to achieve walking. The secondary design objective to keep the overall weight low and raise the COM improves the controllability of the final design. The initial design process started with basic dynamic modeling of the lower body. The forward and inverse dynamic models computed with the RNE algorithm provided a mathematical framework for estimating the torque requirements at each joint. 
 
-Since the end goal is to develop a biped capable of human-like walking, a published dataset of motion captured human gait was used for the initial dynamic simulation. Using MATLAB toolboxes, the kinematic constraints on each joint ($\vec{q}$, $\vec{\dot{q}}$, $\vec{\ddot{q}}$) were imposed on the dynamic model of the biped. A spring-damper contact model was used to generate an approximate ground reaction force experienced by the biped while walking. Finally, the initial joint torque and velocity demands under the estimated gait cycle were obtained through the dynamic simulations. 
+Since the end goal is to develop a biped capable of human-like walking, a published dataset of motion captured human gait was used for the initial dynamic simulation. Using MATLAB toolboxes, the kinematic constraints on each joint ($\q$, $\vec{\dot{q}}$, $\vec{\ddot{q}}$) were imposed on the dynamic model of the biped. A spring-damper contact model was used to generate an approximate ground reaction force experienced by the biped while walking. Finally, the initial joint torque and velocity demands under the estimated gait cycle were obtained through the dynamic simulations. 
 
 These initial design specifications formed the basis for drivetrain selection. The primary design goal of producing enough mechanical power for bipedal locomotion was addressed by appropriately sizing motors to the specifications. A combination of DC motors and precision gearheads were evaluated by analyzing the torque-speed, power, efficiency and thermal characteristics. The selection process revealed that a set of high and low power configuration of drivetrain components would meet the specifications while minimizing the overall weight of the system. 
 
