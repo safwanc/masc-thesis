@@ -124,7 +124,7 @@ Where ${J_{eff}}$ and ${B_{eff}}$ are the effective motor inertia and damping \e
 
 Where ${d_k} = \tau _k / g _r$ is the link side torque treated as a disturbance to the system. Taking the control input $u _k$ (\ref{eq:pdcontrollaw}) to be the voltage signal $v _m$ in (\ref{eq:actdyn7}) yields a closed loop controller for independent joint control with actuator dynamics (implemented in Figure~\ref{fig:pdmotorcontroller}).
 
-\begin{figure}[!h]
+\begin{figure}[!b]
 	\centering
     \includegraphics[scale=0.5]{fig/experiments/pdmotorcontroller.eps} 
   	\caption{PD controller model for independent joint control with actuator dynamics.}
@@ -186,7 +186,7 @@ This is only an estimate of the joint angle since there are drivetrain losses (i
 
 The ability to develop a single controller and target either a simulation environment or the physical hardware is extremely useful. Using the Quanser's QUARC toolbox, a Q8-USB (DAQ) board and a VoltPAQ (voltage amplifier), the control algorithms were redeveloped as parallel models capable of switching target platforms (shown in Figure~\ref{fig:parallelmodels}).
 
-\begin{figure}[!h]
+\begin{figure}[!t]
 	\centering
     \includegraphics[scale=0.6]{fig/experiments/parallelmodels.eps} 
   	\caption{Parallel models designed to target either simulations or physical hardware with the same controller.}
@@ -195,16 +195,16 @@ The ability to develop a single controller and target either a simulation enviro
 
 In the physical environment mode shown in Figure~\ref{fig:hilmodel}, the hardware target subsystem is initialized to interface with the Q8-USB DAQ board. The control algorithm running on the PC communicates with the physical hardware using ``HIL Read'' and ``HIL Write'' blocks which communicate with the DAQ over USB. The PD controller output is an analog signal corresponding to the desired voltage at the motor terminals (amplifier command). The DAQ also reads the raw digital signals from the motor side encoders. The VoltPAQ voltage amplifier also provides the ability to read the current in the armature circuit ($i_a$) of the DC motor. This value is passed back to the controller through the DAQ using an analog channel. Due to the noise in the current sensor, a low pass filter is needed. The quadrature decoding formula (\ref{eq:quadrature}) is used to obtain the joint angle for the closed loop feedback. The link side angle information is also used to determine whether a joint is out of its limits. The controller detects and sends a ``shut down'' command to the amplifier channel if it is. 
 
-\begin{figure}[!h]
+\begin{figure}[!t]
 	\centering
     \includegraphics[scale=0.5]{fig/experiments/hilmodel.eps} 
   	\caption{HIL subsystem from Figure~\ref{fig:parallelmodels} used to target physical hardware with voltage control signal.}
 	\label{fig:hilmodel}
 \end{figure}
 
-In the simulated environment mode, the controllers were reformulated to use the voltage signal as the control input. The simulation target subsystem shown in Figure~\ref{fig:simmodel} models the actuator dynamics and treats the link side torques as a disturbance input. The VoltPAQ amplifier gain ($3$ V/V) is applied to the voltage control signal to model the effective voltage at the motor terminals. The actuator dynamics are simulated with the motor ($R$, $K_m$, $K_b$, $J_m$ and $B_m$) and gearhead ($g_r$) parameters. The link side variables are obtained by applying the gear ratio to the motor velocity $\dot{\Theta}_m$ to obtain $\dot{q}$. The joint positions and accelerations are computed by taking the integral and derivative of $\dot{q}$, respectively. The joint angles, velocities and accelerations ($q$, $\dot{q}$, $\dot{\dot{q}}$) are used with inverse dynamics to compute the effective link side torques, which is fed back as a disturbance input to the simulated motor model. 
+In the simulated environment mode, the controllers were reformulated to use the voltage signal as the control input. The simulation target subsystem shown in Figure~\ref{fig:simmodel} models the actuator dynamics and treats the link side torques as a disturbance input. The VoltPAQ amplifier gain ($3$ V/V) is applied to the voltage control signal to model the effective voltage at the motor terminals. The actuator dynamics are simulated with the motor ($r_a$, $k_m$, $k_b$, $J_m$ and $B_m$) and gearhead ($g_r$) parameters. The link side variables are obtained by applying the gear ratio to the motor velocity $\dot{\Theta}_m$ to obtain $\dot{q}$. The joint positions and accelerations are computed by taking the integral and derivative of $\dot{q}$, respectively. The joint angles, velocities and accelerations ($q$, $\dot{q}$, $\dot{\dot{q}}$) are used with inverse dynamics to compute the effective link side torques, which is fed back as a disturbance input to the simulated motor model. 
 
-\begin{figure}[!h]
+\begin{figure}[!b]
 	\centering
     \includegraphics[scale=0.5]{fig/experiments/simmodel.eps} 
   	\caption{Subsystem from Figure~\ref{fig:parallelmodels} used to target the simulated environment with voltage control signal.}
@@ -306,23 +306,23 @@ The fixed configuration of the supporting frame causes the 7 DOF leg to naturall
 \label{sub:planar_motion_control}
 Some motions during the bipedal gait cycle can be simplified to a planar motion control problem. Common motions during the swing phase include bending of the knee joint and tracking an arc-like trajectory for the swing foot position. For these cases, the 3 pitch joints in the 7 DOF leg are primarily used to carry out the desired motion. A simplified version of the motion control framework (\ref{eq:calcqref}) can be used to control the swing foot position in the biped's sagittal plane.
 
-\begin{equation}
-	\dqref = \J{}{\#} \dxswing
-\end{equation}
-
-\begin{figure}[!h]
+\begin{figure}[!b]
 	\centering
-    \includegraphics[scale=0.37]{fig/experiments/kneebendframes.png} 
+    \includegraphics[scale=0.35]{fig/experiments/kneebendframes.png} 
   	\caption{Captured frames while raising the foot in simulation and physical hardware.}
 	\label{fig:kneebendframes}
 \end{figure}
+
+\begin{equation}
+	\dqref = \J{}{\#} \dxswing
+\end{equation}
 
 \subsubsection{Raising the Foot} % (fold)
 \label{ssub:knee_bending_motion}
 
 In this experiment, the foot position is raised vertically, resulting in a knee bending motion. The frame captures shown in Figure~\ref{fig:kneebendframes} demonstrate this experiment in simulation and on the physical hardware. The first frame in the sequence is the home configuration of the 7 DOF leg at start of each experiment (i.e. at $t = 0$). The second frame represents a slightly angled configuration of the leg joints after $t_{init} = 5$ seconds. The remaining frames demonstrate the foot raising motion for this experiment. 
 
-\begin{figure}[!t]
+\begin{figure}[!b]
 	\begin{center}
 	\subfigure{\includegraphics[scale=0.45]{fig/experiments/simkneebendp.eps}}
 	\subfigure{\includegraphics[scale=0.45]{fig/experiments/hilkneebendp.eps}}
@@ -331,7 +331,11 @@ In this experiment, the foot position is raised vertically, resulting in a knee 
 	\label{fig:kneebendp}
 \end{figure} 
 
-PD control was also applied on the task space level to improve performance of the motion controller. The gains were tuned in simulation to achieve the desired tracking performance before attempting the experiment on the physical hardware. The foot position tracking using $K_P = 10$ and $K_D = 0.1$ is shown in Figure~\ref{fig:kneebendp} in simulation and on hardware. The experimental  results demonstrate the simplified version of the motion control framework with $n = 3$ DOF. The pitch joint trajectories are automatically generated from the desired swing foot height and the resulting motion bends the knee joint as the foot is raised. The joint level trajectories were tracked by the local PD controllers with individual gains tuned from Section~\ref{sec:1dof_validation}. 
+PD control was also applied on the task space level to improve performance of the motion controller. The gains were tuned in simulation to achieve the desired tracking performance before attempting the experiment on the physical hardware. The foot position tracking using $K_P = 10$ and $K_D = 0.1$ is shown in Figure~\ref{fig:kneebendp} in simulation and on hardware. 
+
+The trajectory on the physical hardware along the $x$ direction is not as smooth as its simulated counterpart. Unmodeled backlash in the pitch joints (i.e. the knee) is the cause behind this difference. However, the PD control gains in the task space and joint space controllers are high enough to achieve the desired tracking performance. 
+
+The experimental results demonstrate the simplified version of the motion control framework with $n = 3$ DOF. The pitch joint trajectories are automatically generated from the desired swing foot height and the resulting motion bends the knee joint as the foot is raised. The joint level trajectories were tracked by the local PD controllers with individual gains tuned from Section~\ref{sec:1dof_validation}. 
 
 % subsubsection knee_bending_motion (end)
 
@@ -340,7 +344,7 @@ PD control was also applied on the task space level to improve performance of th
 
 In this experiment, the foot is commanded to track an arc-like trajectory while forward progress is made along the plane. The resulting motion is commonly used during the swing phase of the gait cycle for a bipedal robot to take a step. The frame captures shown in Figure~\ref{fig:swingmotionframes} demonstrate this motion in simulation and on hardware. The task space control gains tuned in the previous section were reused for this experiment. 
 
-\begin{figure}[!t]
+\begin{figure}[!b]
 	\centering
     \includegraphics[scale=0.38]{fig/experiments/swingmotionframes.png} 
   	\caption{Captured frames during swing foot motion experiment in simulation and physical hardware.}
@@ -356,7 +360,7 @@ In this experiment, the foot is commanded to track an arc-like trajectory while 
 	\label{fig:swingfootp}
 \end{figure} 
 
-The task space tracking results for the swing foot motion is shown in Figure~\ref{fig:swingfootp}. Similar to the previous planar motion experiment, the hardware closely matches the simulated system with the tuned gain parameters. The swing foot trajectory on the physical hardware along the $x$ direction is not as smooth as its simulated counterpart. Unmodeled backlash in the pitch joints (i.e. the knee) is the cause behind this difference. However, the PD control gains in the task space and joint space controllers are high enough to achieve the desired tracking performance. 
+The task space tracking results for the swing foot motion is shown in Figure~\ref{fig:swingfootp}. Similar to the previous planar motion experiment, the hardware closely matches the simulated system with the tuned gain parameters. 
 
 \begin{figure}[!t]
 	\begin{center}
@@ -396,7 +400,7 @@ A circular trajectory is generated for $\xcom$ on the $xy$-plane at a fixed heig
 
 $\dxcom$ represents the cartesian position of the foot in the world frame. The tracking results of the $\xcom$ following the circular trajectory are shown in Figure~\ref{fig:comcirctracking}. The initial task space control gains used in Section~\ref{sub:planar_motion_control} required retuning. The tuned gain values $K_P = 14$ and $K_D = 0.5$ achieved nearly identical performance on hardware and software. 
 
-\begin{figure}[!h]
+\begin{figure}[!t]
 	\begin{center}
 	\subfigure{\includegraphics[scale=0.45]{fig/experiments/simcomcirctracking.eps}}
 	\subfigure{\includegraphics[scale=0.45]{fig/experiments/hilcomcirctracking.eps}}
