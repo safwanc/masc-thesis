@@ -310,17 +310,17 @@ Some motions during the bipedal gait cycle can be simplified to a planar motion 
 	\dqref = \J{}{\#} \dxswing
 \end{equation}
 
-\subsubsection{Raising the Foot} % (fold)
-\label{ssub:knee_bending_motion}
-
-\begin{figure}[!b]
+\begin{figure}[!h]
 	\centering
-    \includegraphics[scale=0.22]{fig/experiments/kneebendframes.png} 
+    \includegraphics[scale=0.37]{fig/experiments/kneebendframes.png} 
   	\caption{Captured frames while raising the foot in simulation and physical hardware.}
 	\label{fig:kneebendframes}
 \end{figure}
 
-In this experiment, the foot position is raised vertically, resulting in a knee bending motion. The frame captures shown in Figure~\ref{fig:kneebendframes} demonstrate this experiment in simulation and on the physical hardware. The first frame represents a slightly angled configuration of the leg joints after $t_{init} = 5$ seconds. The leg is not completely straightened to avoid the singular configuration. 
+\subsubsection{Raising the Foot} % (fold)
+\label{ssub:knee_bending_motion}
+
+In this experiment, the foot position is raised vertically, resulting in a knee bending motion. The frame captures shown in Figure~\ref{fig:kneebendframes} demonstrate this experiment in simulation and on the physical hardware. The first frame in the sequence is the home configuration of the 7 DOF leg at start of each experiment (i.e. at $t = 0$). The second frame represents a slightly angled configuration of the leg joints after $t_{init} = 5$ seconds. The remaining frames demonstrate the foot raising motion for this experiment. 
 
 \begin{figure}[!t]
 	\begin{center}
@@ -342,7 +342,7 @@ In this experiment, the foot is commanded to track an arc-like trajectory while 
 
 \begin{figure}[!t]
 	\centering
-    \includegraphics[scale=0.145]{fig/experiments/swingmotionframes.png} 
+    \includegraphics[scale=0.38]{fig/experiments/swingmotionframes.png} 
   	\caption{Captured frames during swing foot motion experiment in simulation and physical hardware.}
 	\label{fig:swingmotionframes}
 \end{figure}
