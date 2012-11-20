@@ -93,7 +93,7 @@ With the \texttt{uLINK} structure generated, any of the preprogrammed routines i
 
 One challenging aspect of dynamic simulations is to accurately model the effects of external forces on the system during the stance phase. To emulate the ground reaction forces during this period of the gait cycle, a contact model is used to generate an approximate contact force. For the initial design specifications, a spring-damper contact model is used (shown in Figure~\ref{fig:springdamper}). Both feet are modelled as point contacts which experience a normal force proportional to the output of the spring-damper system when in contact with the ground. A more complex version of (\ref{eq:contactf}) is used for full dynamic simulations in later chapters (Section~\ref{sub:full_contact_modeling}).
 
-\begin{figure}[!h]
+\begin{figure}[!b]
 	\begin{center}
     \includegraphics[width=100mm]{fig/design/springdamper.eps}
 	\end{center}
@@ -105,7 +105,7 @@ To incorporate the effects of ground contact into the existing dynamic model, th
 
 \begin{equation}
 	\label{eq:contactf}
-	\vec{F}_{\mathbf{contact}} = B\vec{\dot{x}} + K\vec{x}
+	F_{normal} = B{\dot{x}} + Kx
 \end{equation}
 
 The contact force proportional to the output of the spring-damper system (\ref{eq:contactf}) was used to initialize the backwards pass as shown in Listing~\ref{contactcode}:
