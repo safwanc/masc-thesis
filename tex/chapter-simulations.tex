@@ -86,19 +86,19 @@ During the initial states of the step cycle, whole body motion control is used t
 
 \begin{IEEEeqnarray}{rCl}
 	\label{eq:jmap}
-	J & = & \begin{bmatrix} \partial q_{act} & \partial x_{base} \\ \end{bmatrix}_{m \times (n+6)}
+	\J{}{} & = & \begin{bmatrix} \partial \mathbf{q_{act}} & \partial \mathbf{x_{base}} \\ \end{bmatrix}_{m \times (n+6)}
 \end{IEEEeqnarray}
 
 A prioritized task space control scheme is used to generate joint level trajectories which simultaneously achieve state goals while satisfying the highest priority constraint (i.e. holding the $\xcom$ position). The state-dependent joint level trajectories can be computed by projecting the lower priority task space goals onto the null space of higher priorities:
 
 \begin{eqnarray}
 	\label{eq:priori}
-	\dot{q}_{ref} = S(J_{H}^{\#} \dot{x}_{H} + N_{H} J_{L}^{\#} \dot{x}_{L})
+	\dqref = \mathbf{S} (\J{H}{\#} \dxh + \mathbf{N_{H}} \J{L}{\#} \dxl)
 \end{eqnarray}
 
-Where, $S = \begin{bmatrix} I_{n \times n} & 0_{n \times 6} \\ \end{bmatrix}$ is the actuator selection matrix for (\ref{eq:gentau}), $J^{\#}$ is the psuedoinverse of the Jacobian $J$, $\dot{q}_{ref}$ is the reference joint velocity, and $\dot{x}_H$ and $dot{x}_L$ are the high and low priority task space velocities, respectively. $J_{H}$ are $J_{L}$ are the corresponding high and low priority Jacobians, and $N_{H} = I - J_{H}^{\#} J_{H}$ is the null space projection matrix. The reference joint velocities are integrated to obtain the reference command signal to be tracked by high gain local Proportional-Derivative (PD) controllers. The specific prioritization of each state is discussed in Section~\ref{sub:joint_level_control}.
+Where, $\mathbf{S} = \begin{bmatrix} \mathbf{I}_{n \times n} & \mathbf{0}_{n \times 6} \\ \end{bmatrix}$ is the actuator selection matrix for (\ref{eq:gentau}), $\J{}{\#}$ is the psuedoinverse of the Jacobian $\J{}{}$, $\dqref$ is the reference joint velocity, and $\dxh$ and $\dxl$ are the high and low priority task space velocities, respectively. $\J{H}{}$ are $\J{L}{}$ are the corresponding high and low priority Jacobians, and $\mathbf{N_{H}} = \mathbf{I} - \J{H}{\#} \J{H}{}$ is the null space projection matrix. The reference joint velocities are integrated to obtain the reference command signal to be tracked by high gain local Proportional-Derivative (PD) controllers.
 
-When the biped enters the terminal state, the hybrid control strategy switches to directly computing the joint level commands using inverse kinematics. The PD controller gains of the stance foot ankle are set to $K_{P} = K_{D} = 0$ to allow the biped to pivot and fall forward. Simultaneously, the inverse kinematics for the swing leg is solved directly to track the FPE point along the selected sagittal plane.
+% When the biped enters the terminal state, the hybrid control strategy switches to directly computing the joint level commands using inverse kinematics. The PD controller gains of the stance foot ankle are set to $K_{P} = K_{D} = 0$ to allow the biped to pivot and fall forward. Simultaneously, the inverse kinematics for the swing leg is solved directly to track the FPE point along the selected sagittal plane.
 % subsection control_strategy (end)
 
 \subsection{State Dependent Controllers} % (fold)
@@ -110,25 +110,25 @@ This section presents the specific controller formulation used during each state
 The goal during this state is to maintain the COM position at the geometric centroid of both feet. In order to remain stable under small disturbances, the Jacobian under double support phase is used to compensate for the error $\Delta \xcom$ in the $x$ and $y$ directions.
 
 \begin{IEEEeqnarray}{rClrCl}
-	J_{H} & = &
+	\J{H}{} & = &
 	\begin{bmatrix}
-		J_{Stand} \\
-		J_{Swing} \\
-		J_{COM} \\
+		\Jstand \\
+		\Jswing \\
+		\Jcom \\
 	\end{bmatrix}  &
-	\dot{x}_{H} & = &
+	\dxh & = &
 	\begin{bmatrix}
-		0 \\
-		0 \\
-		\dot{x}_{COM} \\
+		\mathbf{0} \\
+		\mathbf{0} \\
+		\dxcom \\
 	\end{bmatrix} \nonumber \\
-	J_{L} & = &
+	\J{L}{} & = &
 	\begin{bmatrix}
-		0 \\
+		\mathbf{0} \\
 	\end{bmatrix}  &
-	\dot{x}_{L} & = &
+	\dxl & = &
 	\begin{bmatrix}
-		0 \\
+		\mathbf{0} \\
 	\end{bmatrix} \nonumber \\
 \end{IEEEeqnarray}
 
@@ -139,25 +139,25 @@ The goal during this state is to maintain the COM position at the geometric cent
 The goal during this state is to track the trajectory generated for $\xcom$ to move to the stance foot support region while remaining in the double support phase. An augmented Jacobian matrix is used to track the trajectory while simultaneously maintaining the foothold constraints.
 
 \begin{IEEEeqnarray}{rClrCl}
-	J_{H} & = &
+	\J{H}{} & = &
 	\begin{bmatrix}
-		J_{Stand} \\
-		J_{Swing} \\
-		J_{COM} \\
+		\Jstand \\
+		\Jswing \\
+		\Jcom \\
 	\end{bmatrix}  &
-	\dot{x}_{H} & = &
+	\dxh & = &
 	\begin{bmatrix}
-		0 \\
-		0 \\
-		\dot{x}_{COM} \\
+		\mathbf{0} \\
+		\mathbf{0} \\
+		\dxcom \\
 	\end{bmatrix} \nonumber \\
-	J_{L} & = &
+	\J{L}{} & = &
 	\begin{bmatrix}
-		0 \\
+		\mathbf{0} \\
 	\end{bmatrix}  &
-	\dot{x}_{L} & = &
+	\dxl & = &
 	\begin{bmatrix}
-		0 \\
+		\mathbf{0} \\
 	\end{bmatrix} \nonumber \\
 \end{IEEEeqnarray}
 
@@ -170,23 +170,23 @@ The joint level reference velocities are calculated from (\ref{eq:priori}) and i
 In the lift stage, the highest priority task is maintaining the foothold of the stance foot, holding the $\xcom$ directly above it and simultaneously raising the swing foot from the ground. The key challenge in this state is that lifting the swing foot can potentially cause the centre of pressure to leave the support region formed by the contact points of the stance foot. The prioritized task space control scheme is used to generate joint level commands to track the $\xswing$ trajectory while satisfying the higher priority goal of maintaining the foothold and balance.
 
 \begin{IEEEeqnarray}{rClrCl}
-	J_{H} & = &
+	\J{H}{} & = &
 	\begin{bmatrix}
-		J_{Stance} \\
-		J_{COM} \\
+		\Jstand \\
+		\Jcom \\
 	\end{bmatrix} &
-	\dot{x}_{H} & = &
+	\dxh & = &
 	\begin{bmatrix}
-		0 \\
-		\dot{x}_{COM} \\
+		\mathbf{0} \\
+		\dxcom \\
 	\end{bmatrix} \nonumber \\
-	J_{L} & = &
+	\J{L}{} & = &
 	\begin{bmatrix}
-		J_{Swing} \\
+		\Jswing \\
 	\end{bmatrix}  &
-	\dot{x}_{L} & = &
+	\dxl & = &
 	\begin{bmatrix}
-		\dot{x}_{Swing} \\
+		\dxswing \\
 	\end{bmatrix} \nonumber \\
 \end{IEEEeqnarray}
 
@@ -201,23 +201,23 @@ The joint level reference velocities are calculated from (\ref{eq:priori}) and i
 At this point, the goal of the control approach is to generate a forward moving momentum along the selected sagittal plane. This deliberately destabilizes the biped by pushing $\xcom$ outside the region of support in the chosen direction of motion. The task space prioritization in this state remains consistent with the previous state until the biped is unstable, at which point the control strategy enters the terminal \textbf{DROP} state.
 
 \begin{IEEEeqnarray}{rClrCl}
-	J_{H} & = &
+	\J{H}{} & = &
 	\begin{bmatrix}
-		J_{Stance} \\
-		J_{Swing} \\
+		\Jstand \\
+		\Jswing \\
 	\end{bmatrix} &
-	\dot{x}_{H} & = &
+	\dxh & = &
 	\begin{bmatrix}
-		0 \\
-		\dot{x}_{Swing} \\
+		\mathbf{0} \\
+		\dxswing \\
 	\end{bmatrix} \nonumber \\
-	J_{L} & = &
+	\J{L}{} & = &
 	\begin{bmatrix}
-		J_{COM} \\
+		\Jcom \\
 	\end{bmatrix}  &
-	\dot{x}_{L} & = &
+	\dxl & = &
 	\begin{bmatrix}
-		\dot{x}_{COM} \\
+		\dxcom \\
 	\end{bmatrix} \nonumber \\
 \end{IEEEeqnarray}
 
@@ -229,23 +229,23 @@ The joint level reference velocities are calculated from (\ref{eq:priori}) and i
 In this terminal state, the Jacobian is used to track the fixed stance foot position and the generated swing foot trajectory to track the FPE point on the ground. Since the ZMP is outside of the region of foot support during this state, the torso is treated as a fixed base link and compute the Jacobian matrix of each foot.
 
 \begin{IEEEeqnarray}{rClrCl}
-	J_{H} & = &
+	\J{H}{} & = &
 	\begin{bmatrix}
-		J_{Stance} \\
-		J_{Swing} \\
+		\Jstand \\
+		\Jswing \\
 	\end{bmatrix} &
-	\dot{x}_{H} & = &
+	\dxh & = &
 	\begin{bmatrix}
-		\dot{x}_{Stand} \\
-		\dot{x}_{Swing} \\
+		\dxstand \\
+		\dxswing \\
 	\end{bmatrix} \nonumber \\
-	J_{L} & = &
+	\J{L}{} & = &
 	\begin{bmatrix}
-		0 \\
+		\mathbf{0} \\
 	\end{bmatrix}  &
-	\dot{x}_{L} & = &
+	\dxl & = &
 	\begin{bmatrix}
-		0 \\
+		\mathbf{0} \\
 	\end{bmatrix} \nonumber \\
 \end{IEEEeqnarray}
 
@@ -273,7 +273,7 @@ The 2D FPE equation (\ref{eq:fpe}) requires the total inertia about the COM ($I_
 
 \begin{equation}
 	\begin{aligned}
-		{I_k} = \left[ {\begin{array}{*{20}{c}}
+		\mathbf{I_k} = \left[ {\begin{array}{*{20}{c}}
 {{I_{xx}}}&{{I_{xy}}}&{{I_{xz}}}\\
 {{I_{yx}}}&{{I_{yy}}}&{{I_{yz}}}\\
 {{I_{zx}}}&{{I_{zy}}}&{{I_{zz}}}
@@ -281,11 +281,11 @@ The 2D FPE equation (\ref{eq:fpe}) requires the total inertia about the COM ($I_
 	\end{aligned}
 \end{equation}
 
-The inertia tensor of each link is taken at the COM aligned with the local coordinate system. If the $xz$-plane is selected as the sagittal plane in 3D space, the moment of inertia of link $k$ is the $I_{yy}$ term. However, in the 3D case the motion of the biped is no longer fixed to a single plane of rotation. By attaching a fixed coordinate frame to the selected sagittal plane at the start of each step, the orientation of the sagittal plane can be expressed as a $3\times3$ rotation matrix $R$. The local inertia tensor can be rotated into the selected sagittal plane's coordinate frame by: 
+The inertia tensor of each link is taken at the COM aligned with the local coordinate system. If the $xz$-plane is selected as the sagittal plane in 3D space, the moment of inertia of link $k$ is the $I_{yy}$ term. However, in the 3D case the motion of the biped is no longer fixed to a single plane of rotation. By attaching a fixed coordinate frame to the selected sagittal plane at the start of each step, the orientation of the sagittal plane can be expressed as a $3\times3$ rotation matrix $\mathbf{R}$. The local inertia tensor can be rotated into the selected sagittal plane's coordinate frame by: 
 
 \begin{equation}
 	\begin{aligned}
-		{I_{k,sagittal}} = R \cdot {I_k} \cdot {R^T}
+		\mathbf{I_{k,sagittal}} = \mathbf{R} \cdot \mathbf{I_k} \cdot {\mathbf{R^T}}
 	\end{aligned}
 	\label{eq:isagittal}
 \end{equation}
@@ -419,7 +419,7 @@ The resulting $\xcom$ trajectories from simulating the side-to-side stepping mot
 \begin{figure}[!h]
 	\centering
     \includegraphics[scale=0.7]{fig/simulations/sidefpetrack.eps}
-  	\caption{Swing foot tracks the a point on the ground given by $FPE + FPE_{offset}$ to ensure overstepping.}
+  	\caption{Swing foot tracks the a point on the ground given by $\mathbf{FPE} + \mathbf{FPE_{offset}}$ to ensure overstepping.}
 	\label{fig:sidefpetrack}
 \end{figure}
 
@@ -445,7 +445,7 @@ In the terminal \textbf{DROP} state, the swing foot trajectory tracks the FPE po
 
 Forward walking is achieved by selecting the biped's sagittal plane as the direction of motion. The frame captures from forward walking simulations are shown in Figure~\ref{fig:fwdsequenceside}. The key challenge is maintaining stability in the off-sagittal plane while the swing foot is raised off the ground during the \textbf{LIFT} state. The $\xcom$ trajectories shown in Figure~\ref{fig:fwdcomtraj} demonstrate the dynamic stability in the off-sagittal plane while forward progress is made along the chosen direction of motion. The gait cycle in the forward walking direction is slow due to the use of a soft contact model to enable simulations at 1 KHz. The softer contact model also requires a longer stabilization period (around 5s) once ground contact is made to ensure that the foot is perfectly stable and aligned with the ground plane before proceeding. The proposed trajectory generation for $\xcom$ illustrated by Figure~\ref{fig:comtraj3d} can be seen at 8s and 22s when the COM is pushed outside the region of support once the swing foot is aligned. 
 
-The alternating foot trajectories on the selected sagittal plane during a complete gait cycle are shown in Figure~\ref{fig:fwdfoottraj}. The first step is taken with the left foot tracking $\xswing$ (between 5-12s). The \textbf{DROP} state is entered around 12s and the left foot tracks the $\xswing$ trajectory given by $FPE + FPE_{offset}$ to ensure over stepping. Once ground contact is made, the contact stabilization state is used to straighten both feet and spread the ground reaction force evenly (around 12-14s). The step cycle begins for the right leg from 15s to complete the gait sequence. 
+The alternating foot trajectories on the selected sagittal plane during a complete gait cycle are shown in Figure~\ref{fig:fwdfoottraj}. The first step is taken with the left foot tracking $\xswing$ (between 5-12s). The \textbf{DROP} state is entered around 12s and the left foot tracks the $\xswing$ trajectory given by $\mathbf{FPE} + \mathbf{FPE_{offset}}$ to ensure over stepping. Once ground contact is made, the contact stabilization state is used to straighten both feet and spread the ground reaction force evenly (around 12-14s). The step cycle begins for the right leg from 15s to complete the gait sequence. 
 
 \begin{figure}[!h]
 	\begin{center}
