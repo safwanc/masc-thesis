@@ -398,7 +398,7 @@ It was found that stiffening the ground contact by raising the model constants w
 \subsection{Side-to-Side Stepping} % (fold)
 \label{sub:3d_simulations}
 
-\begin{figure}[!h]
+\begin{figure}[!b]
 	\centering
     \includegraphics[scale=0.095]{fig/simulations/sidesequence.png}
   	\caption{Frame captures from the realtime 3D visualization while side-to-side stepping.}
@@ -407,7 +407,7 @@ It was found that stiffening the ground contact by raising the model constants w
 
 To demonstrate the dynamic stability of a 3D biped under this approach, the frontal plane was selected as the sagittal plane. Forward motion along this sagittal plane results in a side-to-side stepping sequence for the biped (as shown in Figure \ref{fig:sidesequence}). The gray plane in the frame captures moves along the $y$-direction (biped's frontal plane). The intersection of the gray plane and the ground indicates the FPE point tracked during \textbf{DROP}. 
 
-\begin{figure}[!h]
+\begin{figure}[!b]
 	\centering
     \includegraphics[scale=0.7]{fig/simulations/sidecomtraj.eps}
   	\caption{COM trajectory being tracked during the complete gait sequence of side stepping.}
@@ -426,7 +426,7 @@ The resulting $\xcom$ trajectories from simulating the side-to-side stepping mot
 
 In the terminal \textbf{DROP} state, the swing foot trajectory tracks the FPE point on the ground (shown in Figure \ref{fig:sidefpetrack}) with an added offset to ensure that the biped oversteps to guarantee stability (as per the 2D FPE theory). Once ground contact is made (around 11.6s), the stabilization substate is entered and the swing foot trajectory is controlled directly to align the foot with the ground. This causes the biped to rock back and forth (similar to the 2D case) until stability is reached.
 
-\begin{figure}[!h]
+\begin{figure}[!b]
 	\centering
     \includegraphics[scale=0.1]{fig/simulations/fwdsequenceside.png}
   	\caption{Frame captures from the realtime 3D visualization with forward walking gait.}
