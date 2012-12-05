@@ -1,6 +1,6 @@
 \chapter{Related Work} % (fold) ===============================================
 \label{cha:background}
-Robotic systems capable of locomotion have existed for decades, with some of the earliest designs dating back to the late nineteenth century. Using a series of mechanical drivetrain components, Rygg developed a mechanical horse capable of generating fixed gait in 1893 \cite{rygg1893mechanical}. Several years later in 1988, Fallis developed the first \emph{passive} bipedal walking toy capable of stable gait \cite{pallis1888fallis}. The term \emph{passive} denotes the lack of any active power input to the system. Fallis's toy produced \emph{statically} stable walking, whereby the center-of-mass (COM) always remains within the base of support throughout the gait cycle. In contrast, the COM leaves the base of support during \emph{dynamically} stable gait. 
+Robotic systems capable of locomotion have existed for decades, with some of the earliest designs dating back to the late nineteenth century. Using a series of mechanical drivetrain components, Rygg developed a mechanical horse capable of generating fixed gait in 1893 \cite{rygg1893mechanical}. Several years earlier in 1888, Fallis developed the first \emph{passive} bipedal walking toy capable of stable gait \cite{pallis1888fallis}. The term \emph{passive} denotes the lack of any active power input to the system. Fallis's toy produced \emph{statically} stable walking, whereby the center-of-mass (COM) always remains within the base of support throughout the gait cycle. In contrast, the COM leaves the base of support during \emph{dynamically} stable gait. 
 
 McGeer's seminal research \cite{McGeer:1990uk} nearly a century later produced \emph{passive} bipeds capable of dynamically stable gait without any control effort. This work led to a new class of passivity-based designs for bipedal robots. Starting in the late 60's, pivotal research by Vukobratovic \cite{vukobratovic1969} introduced the Zero-Moment Point (ZMP), a dynamic measure of balance widely used in walking control strategies today. This sparked the rapid growth of actively-powered bipedal robot designs. The electromechanical design and gait synthesis method used to achieve bipedal locomotion are closely related. Bipedal robots are often designed to target a specific control strategy. This chapter presents a literature review of the related work in this research area. 
 
@@ -18,11 +18,11 @@ The first \emph{active} bipedal robot, WL-5 was developed in the 1972 by Kato et
 
 \subsection{Degrees of Freedom} % (fold) ======================================
 \label{sub:related_degrees_of_freedom}
-A bipedal robot achieves locomotion by articulating the limbs connected by joints in the lower body. Therefore, the number and configuration of the degrees-of-freedom (DOF) in the lower body of the robot play an important role in bipedal locomotion. The human body is an obvious design inspiration for bipedal systems. While a few designs have aimed to model the large DOF formed by muscles and tendons \cite{Mizuuchi:2007em,Osada:2010cj}, the more common approach has been to select a reduced number of DOF, modeled on the skeletal system, to achieve walking. 
+A bipedal robot achieves locomotion by articulating the limbs connected by joints in the lower body. Therefore, the number and configuration of the degrees-of-freedom (DOF) in the lower body of the robot play an important role in bipedal locomotion. The human body is an obvious design inspiration for bipedal systems. While a few designs have aimed to model the large number of DOF formed by muscles and tendons \cite{Mizuuchi:2007em,Osada:2010cj}, the more common approach has been to select a reduced number of DOF, modeled on the skeletal system, to achieve walking. 
 
-The primary DOFs used to articulate the lower body limbs are the hip, knee and ankle joints. A simpler design widely used in robotics research is the 2-dimensional (2D) planar biped. This approach typically uses a 1 DOF hip and 1 DOF knee joint in conjunction with point feet \cite{tzafestas1996robust}. Physical implementations of these planar bipeds constrain its motion to the sagittal plane by using a boom \cite{chevallereau2000design,pratt2001virtual,Wight:2008vt}. 
+The primary DOF used to articulate the lower body limbs are the hip, knee and ankle joints. A simpler design widely used in robotics research is the 2-dimensional (2D) planar biped. This approach typically uses a 1 DOF hip and 1 DOF knee joint in conjunction with point feet \cite{tzafestas1996robust}. Physical implementations of these planar bipeds constrain its motion to the sagittal plane by using a boom \cite{chevallereau2000design,pratt2001virtual,Wight:2008vt}. 
 
-The most common examples of \emph{active} 3-dimensional (3D) lower body designs use 3 DOF for the hip joint, 1 DOF at the knee and 2/3 DOF for the ankle joint \cite{Hirai1998,IllWooPark:2005et,Kaneko:2004wq,Ogura:2006bm,yamaguchi1999}. The hip joint is arguably the most complex joint to design as it must provide a wide range of motion and be capable of carrying the weight of each leg. Several bipedal robots use innovative hip joint designs to improve mobility and/or reduce the DOF. Aldebaraan's Nao robot strategically places the hip motors to reduce 1 DOF while maintaining a similar range of motion \cite{Gouaillier:2008ug}. The bipedal robot from the AIST's Humanoid Robot Project, HRP-2 utilizes a unique cantilever hip structure to enable cross-legged walking (i.e. on a tight rope) \cite{Kaneko:2004wq}. 
+The most common examples of \emph{active} 3-dimensional (3D) lower body designs use 3 DOF for the hip joint, 1 DOF at the knee and 2/3 DOF for the ankle joint \cite{Hirai1998,IllWooPark:2005et,Kaneko:2004wq,Ogura:2006bm,yamaguchi1999}. The hip joint is arguably the most complex joint to design as it must provide a wide range of motion and be capable of carrying the weight of each leg. Several bipedal robots use innovative hip joint designs to improve mobility and/or reduce the DOF. Aldebaraan's Nao robot strategically places the hip motors to eliminate 1 DOF while maintaining a similar range of motion \cite{Gouaillier:2008ug}. The bipedal robot from the AIST's Humanoid Robot Project, HRP-2 utilizes a unique cantilever hip structure to enable cross-legged walking (e.g. on a tight rope) \cite{Kaneko:2004wq}. 
 
 More recent research has been aimed at mimicking the large number of DOF present in humans through complex electromechanical designs. Musculoskeletal robots \cite{Mizuuchi:2007em,Osada:2010cj} generate a high (variable) number of DOF using complex actuation mechanisms to emulate muscles. The additional complexity and large DOF drastically increase the complexity of the control strategy. 
 
@@ -35,7 +35,7 @@ The mechanical design of linkages used in robotics largely fall into two categor
 
 The primary motivation for investigating serial vs. parallel mechanism design for lower body humanoid robots is to improve the performance of the system. The majority of the mass of a robot joint-link assembly comes from the actuator. It is often useful to manipulate the overall weight distribution to improve the system behaviour under control. For example, a common approach is to approximate the dynamics during the single support phase as an inverted pendulum \cite{Kajita1992}. In this approach, the swinging leg is assumed to be massless. Having larger motors further down along the swing leg changes the inertia and location of the COM, consequently influencing the stability during walking \cite{Morisawa2000}. Therefore, it is common to manipulate the weight distribution in the lower body to raise the COM and improve the system performance. 
 
-Serial link manipulators have the benefit of simpler design and kinematics, making it easier identify singular configurations in the joint space. Some of the most famous humanoid robots use serial mechanisms, including the Honda ASIMO \cite{Sakagami:2002cf} and Waseda University's WABIAN-2 \cite{Ogura:2006bm}. The serial arrangement of actuator-driven joints also makes it difficult to relocate actuators from each joint axis for better weight distribution. Mechanical transmission components (i.e. belts, pulleys, gears) are often used to disconnect the actuator output from the joints \cite{Ogura:2006bm}. However, this also introduces additional complexity which is difficult to model (i.e. slop introduced by a belt-pulley system) and often requires tuning \cite{IllWooPark:2005et}. 
+Serial link manipulators have the benefit of simpler design and kinematics, making it easier to identify singular configurations in the joint space. Some of the most famous humanoid robots use serial mechanisms, including the Honda ASIMO \cite{Sakagami:2002cf} and Waseda University's WABIAN-2 \cite{Ogura:2006bm}. The serial arrangement of actuator-driven joints also makes it difficult to relocate actuators from each joint axis for better weight distribution. Mechanical transmission components (e.g. belts, pulleys, gears) are often used to decouple the actuator output from the joints \cite{Ogura:2006bm}. However, this also introduces additional complexity which is difficult to model (i.e. slop introduced by a belt-pulley system) and often requires tuning \cite{IllWooPark:2005et}. 
 
 On the other hand, the parallel link manipulators \cite{Merlet2006} enable easier relocation of actuators. Parallel joints also distribute the torque requirements equally across all actuators, which reduces the individual actuator size and improves the power-to-weight ratio \cite{Konno2002}. Due to these reasons, it was found that the energy consumption of parallel linked structures is significantly lower than that of its serially linked counter part \cite{Morisawa2000}. Parallel joints also provide the benefit of high stiffness and accuracy \cite{Sellaouti2005}. However, there are several drawbacks to designing parallel link manipulators. It is more difficult to determine the singular configurations of the parallel structure without kinematic analysis \cite{Sellaouti2005}. They also increase the design complexity and have a reduced range of motion, making the realization more difficult for 3D bipedal robots \cite{Lohmeier2006}. Parallel mechanisms also suffer from greater friction, which is difficult to model and compensate \cite{Yiu2001,Shang2008}.
 
@@ -44,7 +44,7 @@ On the other hand, the parallel link manipulators \cite{Merlet2006} enable easie
 
 \subsection{Passive Walkers} % (fold) =================================
 \label{sub:related_passive_designs}
-The most simple bipedal robot designs are purely mechanical devices which are capable of walking without any active power, relying on the natural dynamics of the system for gait generation. McGeer first demonstrated this concept on a simple mechanical system consisting of two straight legs connected by a hinge at the hip \cite{McGeer:1990uk}, introducing a class of bipedal robots known as ``passive walkers''. This initial design was revised by adding knees for more anthropomorphic gait and to solve the foot clearance issue during the recovery phase \cite{McGeer:1990hh}. Nearly a decade later, Garcia et al. performed an indepth analysis of the speed, efficiency and mechanism design of 2D passive dynamic walkers \cite{Garcia:2000kv}. Several design options were investigated for passive 2D bipeds, including kneed and straight-legged models with round and point feet. A four legged lower body design (inner and outter pairs) was adopted for physical implementations to constrain the problem to 2D and prevent falling sideways. Collins et al. built the first 3D passive bipedal robot which used swinging arms to counteract the sideways instability \cite{Collins:2001jq}. This passive design was capable of producing remarkably human-like gait without any active power input. 
+The most simple bipedal robot designs are purely mechanical devices which are capable of walking without any active power, relying on the natural dynamics of the system for gait generation. McGeer first demonstrated this concept on a simple mechanical system consisting of two straight legs connected by a hinge at the hip \cite{McGeer:1990uk}, introducing a class of bipedal robots known as ``passive walkers''. This initial design was revised by adding knees for more anthropomorphic gait and to solve the foot clearance issue during the recovery phase \cite{McGeer:1990hh}. Nearly a decade later, Garcia et al. performed an indepth analysis of the speed, efficiency and mechanism design of 2D passive dynamic walkers \cite{Garcia:2000kv}. Several design options were investigated for passive 2D bipeds, including kneed and straight-legged models with round and point feet. A four legged lower body design (inner and outer pairs) was adopted for physical implementations to constrain the problem to 2D and prevent falling sideways. Collins et al. built the first 3D passive bipedal robot which used swinging arms to counteract the sideways instability \cite{Collins:2001jq}. This passive design was capable of producing remarkably human-like gait without any active power input. 
 
 
 % subsection passivity_based_designs (end) ====================================
@@ -57,11 +57,11 @@ The purely passive mechanical designs relied on gravitational power and sloped i
 \subsubsection{Actuation Type} % (fold)
 \label{ssub:actuation_type}
 
-Electric motors are most commonly used to power active walkers. Electromechanical designs based on this type of actuation use AC motors, DC motors or servomotors. Some humanoid robots have custom built electric motors designed specifically to improve the performance for the intended application (i.e. the Honda humanoid robots \cite{Sakagami:2002cf,Hirai1998}). Electric motors drive the link motion through either direct or geared drive mechanisms. In direct drive, the motor shaft is mounted to drive the joint directly producing low torques and high speed. Geared drives are often used to increase the motor torques and lower the shaft speed through a gear reduction ratio. Standard gearing mechanisms (i.e. planetary, spur gears) suffer from the backlash problem while other high end (expensive) options like harmonic drives do not. Waseda University's WABIAN-2 robot combines a DC motor with harmonic drive \cite{Ogura:2006bm}. Alternatively, KAIST's HUBO robot selectively uses harmonic drives only in the lower body since backlash in these joints can affect the overall stability of the system \cite{IllWooPark:2005et}. The major drawback of using electric motors is their high mechanical impedence (no compliance) and drivetrain losses when coupled with geared drive mechanisms.  
+Electric motors are most commonly used to power active walkers. Electromechanical designs based on this type of actuation use AC motors, DC motors or servomotors. Some humanoid robots have custom built electric motors designed specifically to improve the performance for the intended application (i.e. the Honda humanoid robots \cite{Sakagami:2002cf,Hirai1998}). Electric motors drive the link motion through either direct or geared drive mechanisms. In direct drive, the motor shaft is mounted to drive the joint directly producing low torques and high speed. Geared drives are often used to increase the motor torques and lower the shaft speed through a gear reduction ratio. Standard gearing mechanisms (e.g. planetary, spur gears) suffer from the backlash problem while other high end (expensive) options like harmonic drives do not. Waseda University's WABIAN-2 robot combines a DC motor with harmonic drive \cite{Ogura:2006bm}. Alternatively, KAIST's HUBO robot selectively uses harmonic drives only in the lower body since backlash in these joints can affect the overall stability of the system \cite{IllWooPark:2005et}. The major drawback of using electric motors is their high mechanical impedence (no compliance) and drivetrain losses when coupled with geared drive mechanisms.  
 
-Pneumatics is used to generate mechanical power through pressure manipulation within a tube by an air compressor. The main advantage of this actuation strategy is its high power-to-weight ratio and inherent compliance \cite{Wisse2007}. Electromechanical designs based on this type of actuation use variations of Pneumatic Artificial Muscles (PAM) to control joint motion. The most common variation used in lower body joints is the McKibben muscle (braided PAM). Delft University has produced several robots (Mike \cite{Wisse2003}, Max \cite{Hobbelen2005} and Denise \cite{Hobbelen2008,Wisse:2007wh}) which use McKibben muscles. VUB's planar biped Lucy based on pleated PAM actuators was used to explore energetically efficient walking with adaptable compliance \cite{Vanderborght:2005kq}. The major drawback of pneumatic actuators is its low position accuracy and non-linear response. 
+Pneumatics is used to generate mechanical power through pressure manipulation within a tube by an air compressor. The main advantage of this actuation strategy is its high power-to-weight ratio and inherent compliance \cite{Wisse2007}. Electromechanical designs based on this type of actuation use variations of Pneumatic Artificial Muscles (PAM) to control joint motion. The most common variation used in lower body joints is the McKibben muscle (braided PAM). Delft University has produced several robots (Mike \cite{Wisse2003}, Max \cite{Hobbelen2005} and Denise \cite{Hobbelen2008,Wisse:2007wh}) which use McKibben muscles. VUB's planar biped Lucy based on pleated PAM actuators was used to explore energetically efficient walking with adaptable compliance \cite{Vanderborght:2005kq}. The major drawback of pneumatic actuators is their low position accuracy and non-linear response. 
 
-Hydraulics is used to generate mechanical power through pressure manipulation of oil from a hydraulic pump. Flow control valves are used to regulate the hydraulic pressure in a hollow cylinder, which in turn manipulates a linear force applied through a piston. The linear force is applied to a moment arm producing a torque at the joint. The main advantage of this actuation strategy is its high power density and inherent compliance. The non-linear properties of hydraulic actuators make joint level control a challenging task. Impedance control schemes are used to reduce the non-linear effects and compensate for unmodeled dynamics \cite{Bilodeau1998}. In addition to the modeling complexities, the major drawbacks of using hydraulic actuators are the cost and the pump required supply the high pressure oil through hydraulic hoses to each joint. This increases the design complexity and introduces additional points of failure.
+Hydraulics is used to generate mechanical power through pressure manipulation of oil from a hydraulic pump. Flow control valves are used to regulate the hydraulic pressure in a hollow cylinder, which in turn manipulates a linear force applied through a piston. The linear force is applied to a moment arm producing a torque at the joint. The main advantage of this actuation strategy is its high power density and inherent compliance. The non-linear properties of hydraulic actuators make joint level control a challenging task. Impedance control schemes are used to reduce the non-linear effects and compensate for unmodeled dynamics \cite{Bilodeau1998}. In addition to the modeling complexities, the major drawbacks of using hydraulic actuators are the cost and the pump required to supply the high pressure oil through hydraulic hoses to each joint. This increases the design complexity and introduces additional points of failure.
 % subsubsection actuation_type (end)
 
 \subsubsection{Actuation Strategy} % (fold)
@@ -72,7 +72,7 @@ A more recent actuation strategy extends passive dynamics principles to produce 
 
 Delft University's pneumatic biped Denise was designed with cylindrically shaped feet and a mechanical link to couple the forward motion of one leg to the reverse motion of the other \cite{Anderson:2005cw}. Minimal actuation is provided at the hip joint to achieve walking on level ground. Flame, the most recent energetically efficient 3D bipedal robot from Delft University, was designed specifically to take advantage of the natural dynamics of the system \cite{Hobbelen2008} using series elastic actuators (SEA) for compliance \cite{Pratt1995}. 
 
-Another approach to designing minimally actuated walkers is to use actuation at the ankle joints \cite{Collins:2005vp,Kuo:2002wk,Hobbelen2008Ankle,Hobbelen2008Controlling}, often in addition to the hip joint. Meta, another energetically efficient walker from Delft University, uses two motors at the ankle in addition to the two motors at the hip joint \cite{Hobbelen2008Ankle}. Ankle actuation has been shown to improve the versatility of some walkers by enabling variable walking speeds \cite{Hobbelen2008Controlling}. When both hip and ankle actuation is used, the key difference from fully actuated systems to the minimally actuated ones is that the joints are not actuated through the full gait cycle, but only at certain key phases (i.e., push off).
+Another approach to designing minimally actuated walkers is to use actuation at the ankle joints \cite{Collins:2005vp,Kuo:2002wk,Hobbelen2008Ankle,Hobbelen2008Controlling}, often in addition to the hip joint. Meta, another energetically efficient walker from Delft University, uses two motors at the ankle in addition to the two motors at the hip joint \cite{Hobbelen2008Ankle}. Ankle actuation has been shown to improve the versatility of some walkers by enabling variable walking speeds \cite{Hobbelen2008Controlling}. When both hip and ankle actuation is used, the key difference from fully actuated systems to the minimally actuated ones is that the joints are not actuated through the full gait cycle, but only at certain key phases (i.e. push off).
 
 % subsubsection actuation_strategy (end)
 
@@ -146,7 +146,7 @@ CPGs are neural circuits which produce high dimensional locomotion patterns from
 
 \subsection{Foot Placement} % (fold) ==========================================
 \label{sub:related_foot_placement}
-Recently, an alternative problem formulation focusing on restoring balance has been proposed. The Foot Placement Estimator (FPE), introduced by Dwight et al. \cite{Wight:2008ii} formulates an approach to restore balance by controlling swing foot position during the gait cycle. Using the conservation of angular momentum, the FPE equation determines the location on the ground where the total energy of an unstable biped after swing foot impact is equal to the peak potential energy. If a step is taken before the FPE location, the post impact energy of the system causes the biped to fall over. Conversely, stepping beyond the FPE location on the ground causes the biped to fall back onto the hind leg.
+Recently, an alternative problem formulation focusing on restoring balance has been proposed. The Foot Placement Estimator (FPE), introduced by Wight et al. \cite{Wight:2008ii} formulates an approach to restore balance by controlling swing foot position during the gait cycle. Using the conservation of angular momentum, the FPE equation determines the location on the ground where the total energy of an unstable biped after swing foot impact is equal to the peak potential energy. If a step is taken before the FPE location, the post impact energy of the system causes the biped to fall over. Conversely, stepping beyond the FPE location on the ground causes the biped to fall back onto the hind leg.
 
 The solution to the FPE equation itself can be used as a recovery mechanism (i.e. in the face of a destabilizing disturbance) with existing ZMP-based strategies. As shown in \cite{Wight:2008ii,Wight:2008vt}, FPE can also be extended to form complete gait cycles to achieve dynamically stable walking. However, there are several key assumptions which are violated when attempting to implement this approach on a physical 3D robot. Namely, the theory assumes that the legs are massless and it only deals with the 2D dynamics in the sagittal plane.
 
@@ -154,7 +154,7 @@ The capture point (CP) concept, developed by Pratt et al. \cite{Pratt:2006vy}, i
 
 Englsberger et al. built on top of Pratt's CP concept \cite{Englsberger:2011jx} by developing two robust controllers based on LIPM dynamics. The CP end-of-step controller (CPS) responds to perturbations in real-time and adjusts the ZMP of the biped to shift the CP and regain stability. A second CP tracking (CPT) controller was also developed to realign the CP to its ideal trajectory if the biped experiences perturbations while walking. Both controllers were demonstrated in simulation and on the physical DLR biped. A similar approach was also developed by \cite{Krause:2012vo} which integrates the CP concept with Model Predictive Control (MPC). The MPC control scheme was developed to improve ZMP preview control for robustness to strong perturbations \cite{Wieber2006}. The CP-MPC control scheme was also demonstrated on the DLR biped.
 
-Recently, a more comprehensive approach using CP for foot placement and gait synthesis has been proposed. De Boer et al. \cite{DeBoer:2012wp,Koolen2012} focused on the ground/foot interaction to develop a robust and energetically efficient walking control strategy. Pratt demonstrated this strategy on the force-controlled compliant lower-body biped M2V2 \cite{Pratt2008,Pratt2012}. While this approach is philosophically similar to the idea behind FPE, there are several key differences. The approach presented in this thesis uses simple local controllers to form complete gait cycles and can be used on position-controlled joints without any complex actuation systems. The capturability framework demonstrated in \cite{Koolen2012,Pratt2012} used separate controllers for the swing and stance legs whereas this approach uses a single global differential kinematic resolution for whole body motion control.
+Recently, a more comprehensive approach using CP for foot placement and gait synthesis has been proposed. De Boer et al. \cite{DeBoer:2012wp,Koolen2012} focused on the ground/foot interaction to develop a robust and energetically efficient walking control strategy known as the capturability framework. Pratt demonstrated this strategy on the force-controlled compliant lower-body biped M2V2 \cite{Pratt2008,Pratt2012}. While the capturability framework is philosophically similar to the idea behind FPE, there are several key differences. The FPE approach uses simple local controllers to form complete gait cycles and can be used on position-controlled joints without any complex actuation systems. The capturability framework demonstrated in \cite{Koolen2012,Pratt2012} used separate controllers for the swing and stance legs whereas this approach uses a single global differential kinematic resolution for whole body motion control.
 % subsection foot_placement_strategies (end) ==================================
 
 
@@ -188,7 +188,7 @@ Now consider this system at the moment when the swing leg comes into contact wit
 \end{assumption}
 
 \begin{assumption}
-	The impact when the swing leg hits the ground at point $B$ is assumed to plastic. 
+	The impact when the swing leg hits the ground at point $B$ is assumed to be plastic (i.e. momentum is conserved but not kinetic energy). 
 \end{assumption}
 
 \begin{assumption}
@@ -209,7 +209,8 @@ Now consider this system at the moment when the swing leg comes into contact wit
 
 \hrulefill
 
-Note that assumption \ref{assump:betafix} implies that if both feet were to remain on the ground (i.e. double support phase), then by geometric symmetry about the normal, $\theta _A = \beta/2$. Equivalently, when leg $A$ is completely vertical, $\theta _A = 0$.
+Note that assumption \ref{assump:betafix} implies that if both feet were to remain on the ground (i.e. double support phase), then by geometric symmetry about the normal, $\theta _A = \beta/2$. 
+% Equivalently, when leg $A$ is completely vertical, $\theta _A = 0$.
 
 \begin{figure}[!h]
 	\centering
@@ -284,7 +285,7 @@ The system defined by \eqref{eq:unifiedeom} is used to investigate stability and
 \begin{figure}[!b]
 	\centering
     \includegraphics[scale=0.8]{fig/fpe/unifiedstate.eps} 
-  	\caption{Unified variable $\theta$ used to simplify the analysis. It is easily observed that $\theta_A = \theta  + \beta /2$ and $\theta_B = \theta  - \beta /2$}.
+  	\caption{Unified variable $\theta$ used to simplify the analysis. It is easily observed that $\theta_A = \theta  + \beta /2$ and $\theta_B = \theta  - \beta /2$.}
 	\label{fig:unified}
 \end{figure}
 
@@ -320,17 +321,7 @@ The notion of stability is explicitly defined by \cite{Wight:2008vt} as follows:
 
 \hrulefill
 
-\begin{figure*}[!t]
-	\begin{equation} \label{eq:fpe}
-	\begin{aligned}
-		\frac{{{{\left[ {mh({v_x}\cos \phi  + {v_y}\sin \phi )\cos \phi  + {I_{COM}}{{\dot \theta }_1}{{\cos }^2}\phi } \right]}^2}}}{{m{h^2} + {I_{COM}}{{\cos }^2}\phi }} + 2mgh\cos \phi (\cos \phi  - 1) = 0
-	\end{aligned}
-	\end{equation}
-	\\ 
-	\hrulefill
-\end{figure*}
-
-The only physical configuration that can be achieved by definition \ref{def:balanced} is if the biped is in the double support phase. This implies that being balanced is mathematically equivalent to the system $\dot{\Theta}$ remaining at its stable equilibrium at the origin. The second part of definition \ref{def:stable} implies that stability in the physical sense is equivalent to the origin of system $\dot{\Theta}$ being asymptotically stable (since the biped should return to the same balanced position after small enough perturbations.
+The only physical configuration that can be achieved by definition \ref{def:balanced} is if the biped is in the double support phase. This implies that being balanced is mathematically equivalent to the system $\dot{\Theta}$ remaining at its stable equilibrium at the origin. The second part of definition \ref{def:stable} implies that stability in the physical sense is equivalent to the origin of system $\dot{\Theta}$ being asymptotically stable, since the biped should return to the same balanced position after small enough perturbations.
 
 Thus, it is possible to determine the conditions for which the biped is stable if it can be shown that the origin of \eqref{ss} is asymptotically stable. To this end, a Lyapunov function candidate based on the energy of the system ($U = T + V$) with an offset in potential energy is chosen to show asymptotic stability. For example, for the first equation of motion represented by \eqref{eq:unifiedeom} for $\theta < 0$: 
 
@@ -354,9 +345,21 @@ Thus, by the Barbashin-Krasovskii-LaSalle principle it is shown that the origin 
 
 \subsection{Computing the FPE Angle} % (fold)
 \label{sub:computing_the_fpe_angle}
+
 Given that the system is asymptotically stable and the exact boundaries of the local stability are defined, it is possible to determine whether a specific location in the state space is stable in the sense of definition \ref{def:stable}. However, the goal for FPE is to determine where the foot must be placed in order to restore stability, so the knowledge of the local stability is used to reformulate the problem. 
 
-To this end, the approach described in \cite{Wight:2008vt} introduces a parameter known as the FPE angle ($\phi$). The projection from the COM at an this angle $\phi$ to the ground surface provides the location of where the foot would need to be placed in order to restore stability to the unbalanced system. The actual solution to \eqref{eq:fpe} yields the FPE angle $\phi$, which can be obtained by using numerical techniques for solving non-linear equations. In essence, the FPE angle $\phi$ specifies the configuration to enter/remain inside the locally stable region of $\dot{\Theta}$ if it were to step in the \textit{next} instant. By continuously tracking this angle while the biped is about to land the swing foot, the angle $\phi$ eventually converges to $\beta/2$ prior to impact.
+To this end, the approach described in \cite{Wight:2008vt} introduces a parameter known as the FPE angle ($\phi$). The projection from the COM at an angle $\phi$ to the ground surface provides the location of where the foot would need to be placed in order to restore stability to the unbalanced system. The actual solution to \eqref{eq:fpe} yields the FPE angle $\phi$, which can be obtained by using numerical techniques for solving non-linear equations. In essence, the FPE angle $\phi$ specifies the configuration to enter/remain inside the locally stable region of $\dot{\Theta}$ if it were to step in the \textit{next} instant. By continuously tracking this angle while the biped is about to land the swing foot, the angle $\phi$ eventually converges to $\beta/2$ prior to impact.
+
+\begin{figure*}[!t]
+	\begin{equation} \label{eq:fpe}
+	\begin{aligned}
+		\frac{{{{\left[ {mh({v_x}\cos \phi  + {v_y}\sin \phi )\cos \phi  + {I_{COM}}{{\dot \theta }_1}{{\cos }^2}\phi } \right]}^2}}}{{m{h^2} + {I_{COM}}{{\cos }^2}\phi }} + 2mgh\cos \phi (\cos \phi  - 1) = 0
+	\end{aligned}
+	\end{equation}
+	\\ 
+	\hrulefill
+\end{figure*}
+
 
 \begin{figure}[!b]
 	\centering
@@ -365,7 +368,7 @@ To this end, the approach described in \cite{Wight:2008vt} introduces a paramete
 	\label{fig:phi}
 \end{figure}
 
-The simple compass biped model used made several assumptions which are now lifted. The leg separation angle $\beta$ is no longer a fixed value throughout the whole gait cycle. Instead, by assumption \ref{assump:massless} that the legs are massless (and therefore they do not alter the dynamics of the system), the value of $\beta$ can vary while the swing leg is being brought over to the contact point for the subsequent step. The solution to the FPE equation requires only that the leg length $L$ and angle $\beta$ are fixed at the instant of impact. Simply put, the compass biped model used in the derivation thus far only represents how a real biped looks when an impact occurs. During the swing phase, an arbitrary and more realistic model of the biped looks like as shown in Figure \ref{fig:phi}, where the angle $\phi$, projection from the COM and the FPE location on the ground plane are visualized. 
+The simple compass biped model made several assumptions which are now lifted. The leg separation angle $\beta$ is no longer a fixed value throughout the whole gait cycle. Instead, by assumption \ref{assump:massless} that the legs are massless (and therefore they do not alter the dynamics of the system), the value of $\beta$ can vary while the swing leg is being brought over to the contact point for the subsequent step. The solution to the FPE equation requires only that the leg length $L$ and angle $\beta$ are fixed at the instant of impact. Simply put, the compass biped model used in the derivation thus far only represents how a real biped looks when an impact occurs. During the swing phase, an arbitrary and more realistic model of the biped looks like that shown in Figure \ref{fig:phi}, where the angle $\phi$, projection from the COM and the FPE location on the ground plane are visualized. 
 
 % subsection computing_the_fpe_angle (end)
 
@@ -373,6 +376,8 @@ The simple compass biped model used made several assumptions which are now lifte
 \label{sub:overstepping_understepping_simulation}
 
 In order to show that stepping on the FPE point can restore stability to an unbalanced system, the unified state space model was implemented in simulation along with a numerical solver for the nonlinear FPE equation \eqref{eq:fpe}. Three experiments were devised to analyze the behaviour of the system when the swing foot steps exactly on, behind and ahead of the FPE location obtained from the solver. These three cases are labelled perfect, under and over stepping, respectively. The simulations assume arbitrary physical parameters for $m$, $I_{COM}$, etc. The compass biped model with the single state variable is simulated to illustrate the effects of overstepping and under stepping. The leg separation angle $\beta$ is held constant and no energy is lost upon impact. 
+
+The results of the perfect stepping case shown in Figure \ref{sim:perfect} validate the efficacy of the FPE point on the ground. Starting from an unstable configuration, the simple biped model exhibits stability (i.e. rocking back and forth) due to no energy loss in the system by assumption. For a real physical biped, the energy losses experienced during impact would produce a decaying orbit towards the origin due to the asymptotic stability of the system within this local region. 
 
 \begin{figure}[!b]
 	\begin{center}
@@ -383,6 +388,8 @@ In order to show that stepping on the FPE point can restore stability to an unba
 	\label{sim:perfect}
 \end{figure}
 
+In the under stepping case, the swing foot lands short of the FPE location on the ground. This behaviour results in an excessive energy and momentum which causes the biped to eventually fall over. Starting from the same initial conditions presented in the perfect stepping case, the results of understepping are shown in Figure \ref{sim:under}. The time evolution and state trajectories exhibit unstable behaviour,  validating the results presented in \cite{Wight:2008ii}. 
+
 \begin{figure}[!t]
 	\begin{center}
 	\subfigure{\includegraphics[scale=0.43]{fig/simulations/understeppingtime.eps}}
@@ -392,6 +399,8 @@ In order to show that stepping on the FPE point can restore stability to an unba
 	\label{sim:under}
 \end{figure}
 
+Lastly, the results of overstepping with the same initial conditions are presented in Figure \ref{sim:over}. As expected, if the swing foot lands ahead of the FPE location, the system enters a stable orbit where the biped rocks back and forth. As mentioned previously, the energy losses experienced during impact for a real biped would cause this closed orbit to decay and eventually reach the equilibrium due to local asymptotic stability. 
+
 \begin{figure}[!b]
 	\begin{center}
 	\subfigure{\includegraphics[scale=0.43]{fig/simulations/oversteppingtime.eps}}
@@ -400,12 +409,6 @@ In order to show that stepping on the FPE point can restore stability to an unba
   	\caption{Time evolution and state trajectories for over stepping (i.e. foot lands in front of FPE point)}
 	\label{sim:over}
 \end{figure}
-
-The results of the perfect stepping case shown in Figure \ref{sim:perfect} validate the efficacy of the FPE point on the ground. Starting from an unstable configuration, the simple biped model exhibits stability (i.e. rocking back and forth) due to no energy loss in the system by assumption. For a real physical biped, the energy losses experienced during impact would produce a decaying orbit towards the origin due to the asymptotic stability of the system within this local region. 
-
-In the under stepping case, the swing foot lands short of the FPE location on the ground. This behaviour results in an excessive energy and momentum which causes the biped to eventually fall over. Starting from the same initial conditions presented in the perfect stepping case, the results of understepping are shown in Figure \ref{sim:under}. The time evolution and state trajectories exhibit unstable behaviour,  validating the results presented in \cite{Wight:2008ii}. 
-
-Lastly, the results of overstepping with the same initial conditions are presented in Figure \ref{sim:over}. As expected, if the swing foot lands ahead of the FPE location, the system enters a stable orbit where the biped rocks back and forth. As mentioned previously, the energy losses experienced during impact for a real biped would cause this closed orbit to decay and eventually reach the equilibrium due to local asymptotic stability. 
 
 % subsection overstepping_understepping_simulation (end)
 

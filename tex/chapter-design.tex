@@ -36,7 +36,7 @@ A dynamic model of the proposed system must be developed and analyzed under norm
 	\ddq = f(\vtau, \q, \dq, \F{C})
 \end{equation}
 
-$\F{C}$ represents the contact force(s) felt at the feet. Given this model, a dynamic simulation environment can be designed to estimate the torque loading at different joints on the bipedal robot during the gait cycle. This estimate can form the basis of the initial design specifications from which motors and gearing can be selected. An important consideration in this model is the inclusion of contact forces during the stance phase of the gait cycle. The ground reaction forces exerted on the robots feet have a significant impact on the dynamic requirements of each joint.
+$\F{C}$ represents the contact force(s) felt at the feet. Given this model, a dynamic simulation environment can be designed to estimate the torque loading at different joints on the bipedal robot during the gait cycle. This estimate can form the basis of the initial design specifications from which motors and gearing can be selected. An important consideration in this model is the inclusion of contact forces during the stance phase of the gait cycle. The ground reaction forces exerted on the robot's feet have a significant impact on the dynamic requirements of each joint.
 % section overview (end)
 
 \subsection{Equations of Motion} % (fold)
@@ -114,7 +114,6 @@ The contact force proportional to the output of the spring-damper system (\ref{e
 if uLINK(RCONTACT).p(3) < 0.0
 	Kr = K;	 % Spring Constant
 	Br = B;  % Damper Constant
-	u = 0.4; % Coefficient of Static Friction
 	
 	% Velocity of the Contact Point in World Frame:
 	vr = uLINK(RCONTACT).vo + cross(uLINK(RCONTACT).w, uLINK(RCONTACT).p); 
@@ -160,7 +159,7 @@ A simulation was implemented in the Matlab environment using a combination of th
 
 \subsection{Initial Design Specifications} % (fold)
 \label{sec:initial_design_requirements}
-The results of the dynamic simulations under human-gait analysis form the basis for the initial electromechanical components selection process. As expected, it was observed that the largest demands in torque loading on each of the joints occurred during the stance phase immediately after the heel strike. The torque demands at that instant spike immediately to almost 3x the steady state torque loading on the joints. 
+The results of the dynamic simulations under human-gait analysis form the basis for the initial electromechanical components selection process. As expected, it was observed that the largest demands in torque loading on each of the joints occurred during the stance phase immediately after the heel strike. The torque demands at that instant spike immediately to almost three times the steady state torque loading on the joints. 
 
 % \begin{figure}[!h]
 % 	\begin{center}
@@ -194,7 +193,7 @@ Motor manufacturers specify rated conditions for \emph{continuous} operation, wh
   \label{jointtable}%
 \end{table}%
 
-While the torque demands vary for each joint (see Table \ref{jointtable}), the results from the analysis are concatenated to obtain a single set of design specifications. This reduces the number of different models selected from the manufacturer and it also simplifies the electromechanical design process. The combined initial design specifications for the drivetrain components are summarized in Table \ref{tab:spectable}. For the initial design, the normal torque specification is obtained by taking an average of joint torque values during the swing phase. Since the ground reaction forces experienced during the stance phase produce large torques in a short period of time, the peak torque specification is obtained by selecting the highest torque value from all frames. 
+While the torque demands vary for each joint (see Table \ref{jointtable}), the results from the analysis are concatenated to obtain a single set of design specifications. This reduces the number of different models selected from the manufacturer and it also simplifies the electromechanical design process. For the initial design, the normal torque specification is obtained by taking an average of joint torque values during the swing phase. Since the ground reaction forces experienced during the stance phase produce large torques in a short period of time, the peak torque specification is obtained by selecting the highest torque value from all frames. The combined initial design specifications for the drivetrain components are summarized in Table \ref{tab:spectable}.
 
 \begin{table}[!h]
   \centering
@@ -238,7 +237,7 @@ The initial specifications for the drivetrain components listed in Table \ref{ta
 	P = \tau \times \omega = 14Nm \times 65RPM \times 0.1047 = 95.28W
 \end{equation}
 
-Note that due to the assumptions placed in calculating this value, 95.28W represents an upper bound on the amount of power the design should be capable of providing. Therefore the potential solution candidates should be rated for the nominal power around the region of this value. The analysis tools presented in the following sections were used to evaluate motor and gearhead combinations from the remaining pool of candidates. Note that only the plots for the final selection are presented as a reference.
+Note that due to the assumptions made in calculating this value, 95.28W represents an upper bound on the amount of power the design should be capable of providing. Therefore the potential solution candidates should be rated for the nominal power around the region of this value. The analysis tools presented in the following sections were used to evaluate motor and gearhead combinations from the remaining pool of candidates. Note that only the plots for the final selection are presented as a reference.
 % subsection mechanical_power_requirements (end)
 
 \subsection{Torque-Speed Analysis} % (fold)
@@ -281,7 +280,7 @@ As mentioned previously, out of the initial design specifications the motor sele
 	T_{total} = T_{ambient} + T_{inc}
 \end{equation}
 
-Where the temperature increase inside the motor core is provided by the following relationship: 
+Where the temperature increase inside the motor core is provided by the following relationship\footnote{The thermal characteristic equations were obtained from the manufacturer's technical documents on motor calculations available at \url{http://www.micromo.com/motor-calculations.aspx}}: 
 
 \begin{equation}
 	T_{inc} = I^{2}R \times (R_{th1} + R_{th2})
@@ -310,7 +309,7 @@ Aside from the torque-speed, power, efficiency and thermal analyses, there are s
   \label{fig:micromo38a}
 \end{figure}
 
-Given these considerations and the analysis in the previous sections, a coreless DC motor from the Micromo Solutions catalog was selected. This motor achieved all of the primary design considerations (average torque requirements, operating within a stable thermal region). Coupled with the motor is a precision gearhead which is capable of producing torques slightly above the initial design specification requirements. The torque-speed characteristics at the gearhead shaft (as shown in Figure~\ref{fig:micromo38a}) are used to verify that the mechanical power output meets the design specification for normal operation. 
+Given these considerations and the analysis in the previous sections, a coreless DC motor from the Micromo Solutions catalog was selected  (Model \#: 3257CR). This motor achieved all of the primary design considerations (average torque requirements, operating within a stable thermal region). Coupled with the motor is a precision gearhead which is capable of producing torques slightly above the initial design specification requirements. The torque-speed characteristics at the gearhead shaft (as shown in Figure~\ref{fig:micromo38a}) are used to verify that the mechanical power output meets the design specification for normal operation. 
 
 While it is desirable to limit the number of different motor and gearhead combinations, it was determined that this combination of drivetrain components was vastly overpowered for the very last joint on the leg (ankle roll). A second combination of motor and gearhead was selected specifically for this joint to reduce the overall mass and raise the COM while meeting the lower joint requirements. This approach improves the controllability of the final system while limiting the total number of different design configurations. The final higher and lower power configurations are defined in Tables \ref{tab:higherconfig} and \ref{tab:lowerconfig}, respectively. 
 
@@ -425,7 +424,7 @@ Shafts are frequently used to enable rotation between two link segments in the m
 \label{fig:ballb}
 \end{figure}
 
-For yaw joints which actuate along the vertical axis, the impact forces experienced during the gait cycle exert an axial load which is typically not supported by traditional ball bearings (would cause the inner ring to ``pop out''). Furthermore, these joints experience axial loads in one direction while the robot is standing on the ground but the load reverses direction if the robot is picked up by the torso. Therefore, bidirectional support for axial loads is required for the hip and ankle yaw joints. For these sections of the lower body, a combination of thrust and ball baerings are used to support radial and axial loads (as shown in Figure~\ref{fig:yawbearing}. 
+For yaw joints which actuate along the vertical axis, the impact forces experienced during the gait cycle exert an axial load which is typically not supported by traditional ball bearings (would cause the inner ring to ``pop out''). Furthermore, these joints experience axial loads in one direction while the robot is standing on the ground but the load reverses direction if the robot is picked up by the torso. Therefore, bidirectional support for axial loads is required for the hip and ankle yaw joints. For these sections of the lower body, a combination of thrust and ball bearings are used to support radial and axial loads (as shown in Figure~\ref{fig:yawbearing}). 
 
 \begin{figure}[!ht]
 	\begin{center}
