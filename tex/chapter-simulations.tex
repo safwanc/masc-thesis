@@ -22,15 +22,20 @@ To extend the 2D algorithm to the general 3D case, we begin by selecting a suita
 
 \subsection{Sagittal Plane} % (fold)
 \label{sub:sagittal_plane}
-To select an appropriate sagittal plane for a 3D bipedal robot, a vertical plane which lies between the current position of the stance foot and the desired direction of motion is chosen. For a 3D biped walking in a forward motion, this plane is chosen as the vertical plane passing through the midpoint between the hips and parallel to the direction of forward progress. For side-stepping motion, the frontal plane through the stance foot in the direction of the side step is chosen as the sagittal plane. The selection of the sagittal plane for 3D bipedal robots is illustrated in Figure~\ref{fig:sagittal_plane} for these two situations. 
+To select an appropriate sagittal plane for a 3D bipedal robot, a vertical plane which lies between the current position of the stance foot and the desired direction of motion is chosen. For a 3D biped walking in a forward motion, this plane is chosen as the vertical plane passing through the midpoint between the hips and parallel to the direction of forward progress (as shown in Figure~\ref{fig:forwardplane}). For side-stepping motion, the frontal plane through the stance foot in the direction of the side step is chosen as the sagittal plane (as shown in Figure~\ref{fig:sideplane}). 
 
-\begin{figure}[!h]
-	\begin{center}
-	\subfigure{\includegraphics[scale=0.52]{fig/fpe/fpeplanesidestep.png}} 
-	\subfigure{\includegraphics[scale=0.52]{fig/fpe/fpeplaneforwardwalk.png}}
-	\end{center}
-  	\caption{Sagittal plane selection shown as translucent gray for side-stepping (left) and forward walking (right).}
-	\label{fig:sagittal_plane}
+\begin{figure}[!b]
+	\centering
+    \includegraphics[scale=0.4]{fig/fpe/fpeplaneforwardwalk.png} 
+  	\caption{Sagittal plane selection (shown as translucent gray) for forward walking.}
+	\label{fig:forwardplane}
+\end{figure}
+
+\begin{figure}[!t]
+	\centering
+    \includegraphics[scale=0.4]{fig/fpe/fpeplanesidestep.png} 
+  	\caption{Sagittal plane selection (shown as translucent gray) for side-stepping.}
+	\label{fig:sideplane}
 \end{figure}
 
 The motion of the biped is controlled based on the selected plane for the duration of the step cycle. During gait initiation, the lines from the COM to the contact points are of length $L$, and the leg separation angle is $\beta$ (similar to the planar case). If the motion of the biped is constrained along this plane, the FPE angle $\phi$ can be used to determine foot placement to regain stability. The parameters required to solve the FPE equation are projected onto the selected plane (additional details are provided in Section~\ref{sub:computing_fpe_parameters}).
@@ -43,7 +48,7 @@ Upon impact, the angle $\phi$ converges to $\beta/2$ and a new sagittal plane ca
 \label{sub:trajectory_generation}
 Once the sagittal plane has been identified at the beginning of each step cycle, appropriate task space trajectories must be generated for the COM ($\xcom$) and the swing foot ($\xswing$). In the 2D case, the main goal of the initial states \textbf{PUSH}, \textbf{LIFT} and \textbf{SWING} was to achieve enough forward motion to destabilize the biped. In the 3D case, the robot must also remain stable in the off-sagittal plane while achieving the desired sagittal plane motion. If the ZMP leaves the region of support formed by the stance foot as the swing foot is lifted, the biped begins to fall in the off-sagittal plane and the solution to the 2D FPE equation is insufficient to maintain stable gait. To ensure both forward progress and off-sagittal plane stability, the generated trajectories for $\xcom$ are shown in Figure~\ref{fig:comtraj3d}. \\
 
-\begin{figure}[!b]
+\begin{figure}[!t]
 	\centering
     \includegraphics[scale=0.8]{fig/fpe/comtraj3d.eps} 
   	\caption{Trajectory for $\xcom$ to ensure forward progress and off-sagittal stability.}
