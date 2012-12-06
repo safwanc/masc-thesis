@@ -19,7 +19,7 @@ This chapter presents the electromechanical design of a bipedal robot for experi
   \label{tab:doftable}
 \end{table}
 
-There are several other key design considerations which impact the performance of the finished product. The complete design process consisted of selecting the appropriate drivetrain components and designing the mechanical chassis. The primary design objective was to produce enough mechanical power for the robot to achieve walking. The secondary design objective was to keep the overall weight low and raise center of mass (COM) position as high as possible. 
+There are several other key design considerations which impact the performance of the finished product. The complete design process consisted of selecting the appropriate drivetrain components and designing the mechanical chassis. The primary design objective was to produce enough mechanical power for the robot to achieve walking. The secondary design objective was to keep the overall weight low and raise center-of-mass (COM) position as high as possible. 
 
 The initial design specification was obtained by modeling the system dynamics during an estimated gait cycle (Section~\ref{sec:designspec}). The selection of electromechanical components comprising the drivetrain system was used to address the primary design objective (Section~\ref{sec:drivetrain}). These drivetrain components include DC motors and appropriate gearing to provide the reduction ratio required to meet the initial design specifications. After the primary objective was addressed and the drivetrain components were selected, the secondary design objectives were satisfied by adjusting the mechanical structure and manipulating placement of components (Section~\ref{sec:chassis}).
 
@@ -131,7 +131,7 @@ end
 The variables \texttt{Kr} and \texttt{Br} represent the spring and damper coefficients in the spring-damper contact model. \texttt{RCONTACT} is a constant link number representing the point contact foot. The velocity due to the point foot coming in contact with the ground (\texttt{vr}) is recomputed by considering the original velocity (\texttt{vo}) and the cross product between the position of the foot (\texttt{uLINK.p}) and angular velocity (\texttt{uLINK.w}). The resulting normal force is computed and injected into the backwards pass if the foot position is below the ground level (condition shown in line 1). With this modification included, the complete direct dynamics can be used to obtain the joint torques during an estimated gait cycle for the initial design specification.   
 % subsection modifications (end)
 
-% section contact_modelling (end)
+% section contact_modeling (end)
 
 % section kajita_s_matlab_toolbox (end)
 
@@ -210,9 +210,8 @@ While the torque demands vary for each joint (see Table \ref{jointtable}), the r
   \label{tab:spectable}%
 \end{table}%
 
-The contact model parameters (spring and damping coefficients) were observed to have a noticeable effect on the peak design specifications. Since the contact model only provides a crude approximation of the ground reaction forces that the real robot will experience, the final selected value was chosen to provide a peak torque which averages between the largest and smallest values. The final spring and damping coefficients used in deriving the design specifications were $K = 10000$ and $B = 100$, respectively.
+The contact model parameters (spring and damping coefficients) were observed to have a noticeable effect on the peak design specifications. Since the contact model only provides a crude approximation of the ground reaction forces that the real robot will experience, the final selected value was chosen to provide a peak torque which averages between the largest and smallest values. The final hand-tuned spring and damping coefficients used in deriving the design specifications were $K = 10000$ and $B = 100$, respectively. These contact model parameters result in a steady-state ground penetration depth of $0.25cm$. The foot characteristics can be modified to match this behaviour by adding a rubber sole. 
 % section chassis (end)
-
 
 %======================================================================
 %   D R I V E T R A I N  S E L E C T I O N
@@ -221,7 +220,7 @@ The contact model parameters (spring and damping coefficients) were observed to 
 
 \section{Drivetrain Selection} % (fold)
 \label{sec:drivetrain}
-The drivetrain selection process includes selecting the appropriate components to transmit the required torque (as per the initial design specifications) to each joint. The electric machines used to generate mechanical power for the purposes of this project are coreless DC motors. The motors used for the 14 DOF bipedal robot were supplied by Micromo Solutions (part of the Faulhaber Group) \cite{sw:micromo}. The online product catalog was used as a reference tool for the drivetrain selection process. The majority of the weight contribution of the complete system is attributed to the motors. Therefore, the design objective was to select a combination of motors and appropriately sized gearheads to meet the design specifications while keeping the overall mass of the system as low as possible. The remainder of this section presents the selection of appropriate motor and gearhead combinations to meet the design objectives. 
+The drivetrain selection process includes selecting the appropriate components to transmit the required torque (as per the initial design specifications) to each joint. The electric machines used to generate mechanical power for the purposes of this project are coreless DC motors. The motors used for the 14 DOF bipedal robot were supplied by Micromo Solutions (part of the Faulhaber Group) \cite{sw:micromo}. The online product catalogue was used as a reference tool for the drivetrain selection process. The majority of the weight contribution of the complete system is attributed to the motors. Therefore, the design objective was to select a combination of motors and appropriately sized gearheads to meet the design specifications while keeping the overall mass of the system as low as possible. The remainder of this section presents the selection of appropriate motor and gearhead combinations to meet the design objectives. 
 
 \subsection{Mechanical Power Requirements} % (fold)
 \label{sub:mechanical_power_requirements}
@@ -237,37 +236,41 @@ The initial specifications for the drivetrain components listed in Table \ref{ta
 	P = \tau \times \omega = 14Nm \times 65RPM \times 0.1047 = 95.28W
 \end{equation}
 
-Note that due to the assumptions made in calculating this value, 95.28W represents an upper bound on the amount of power the design should be capable of providing. Therefore the potential solution candidates should be rated for the nominal power around the region of this value. The analysis tools presented in the following sections were used to evaluate motor and gearhead combinations from the remaining pool of candidates. Note that only the plots for the final selection are presented as a reference.
+Note that due to the assumptions made in calculating this value, 95.28W represents an upper bound on the amount of power the design should be capable of providing. Therefore the potential solution candidates should be rated for the nominal power around the region of this value. The analysis tools presented in the following sections were used to evaluate the remaining actuation solution candidates. 
+
+First, DC motors were analyzed based on their torque-speed (Section~\ref{sub:torque_speed_analysis}), power and efficiency (Section~\ref{sub:power_and_efficiency_analysis}) and thermal (Section~\ref{sub:thermal_analysis}) characteristics. Full DC motor plots are shown for the final selection since the selection of gear ratio was treated as a separate design decision. With the appropriate motor selected, compatible gearhead solutions were analyzed to select the reduction ratio which met the design specifications (Section~\ref{sub:final_configurations}). 
 % subsection mechanical_power_requirements (end)
 
 \subsection{Torque-Speed Analysis} % (fold)
 \label{sub:torque_speed_analysis}
-The primary tool used to analyze and compare alternative solutions is the torque-speed graph. Given the structure of the motor specifications provided by Micromo Solutions, a spreadsheet was constructed to automatically generate the torque-speed characteristics from the motor constants. These constants were prepopulated from the manufacturer specification sheets and the torque-speed graphs were automatically generated. 
+The primary tool used to analyze and compare alternative solutions is the torque-speed graph. Analysis of this graph is used to address the peak requirements. Given the structure of the motor specifications provided by Micromo Solutions, a spreadsheet was constructed to automatically generate the torque-speed characteristics from the motor constants. These constants were pre-populated from the manufacturer specification sheets and the torque-speed graphs were automatically generated. 
 
 \begin{equation}
 	\omega = \omega_{no-load} - k\tau
 \end{equation}
 
-The relationship between the torque of the motor and the speed of the revolving shaft is approximately linear so it is typically specified by a slope constant for the curve. While the constant $k$ is usually provided as a positive value, the slope of the torque-speed curve is negative (i.e. as the torque increases the speed decreases). 
+The relationship between the torque of the motor and the speed of the revolving shaft is approximately linear so it is typically specified by a slope constant for the curve. While the constant $k$ is usually provided as a positive value, the slope of the torque-speed curve is negative (i.e. as the torque increases the speed decreases). The full torque-speed profile of the final motor selection is shown in Figure~\ref{fig:torquespeed}. 
 
-\begin{figure}[!ht]
+\begin{figure}[!t]
 	\begin{center}
     \includegraphics[trim = 20mm 30mm 20mm 30mm,clip,width=15cm]{fig/design/motor1.pdf}
 	\end{center}
   \caption{Micromo 3257CR Coreless DC Motor: Speed and Current vs Torque}
+  \label{fig:torquespeed}
 \end{figure}
 
 % subsection torque_speed_analysis (end)
 
 \subsection{Power and Efficiency Analysis} % (fold)
 \label{sub:power_and_efficiency_analysis}
-Another key factor in comparing drivetrain components is the relationship between the power produced and the overall efficiency of the motor as a function of its torque. The efficiency curve compares the ratio of electrical power input to mechanical power output. While it is typically desirable to operate the motor at its peak efficiency, the torque demands flactuate throughout the gait cycle making it difficult to base the motor selection process on this basis alone. However, it is desirable to ensure that the motor is reasonably efficient around the intended region of operation. 
+Another key factor in comparing drivetrain components is the relationship between the power produced and the overall efficiency of the motor as a function of its torque. The efficiency curve compares the ratio of electrical power input to mechanical power output. While it is typically desirable to operate the motor at its peak efficiency, the torque demands fluctuate throughout the gait cycle making it difficult to base the motor selection process on this basis alone. However, it is desirable to ensure that the motor is reasonably efficient around the bounds of operation. The power and efficiency profile of the final motor selection is shown in Figure~\ref{fig:powerefficiency}. 
 
-\begin{figure}[!ht]
+\begin{figure}[!t]
 	\begin{center}
     \includegraphics[trim = 20mm 30mm 20mm 30mm,clip,width=15cm]{fig/design/motor2.pdf}
 	\end{center}
   \caption{Micromo 3257CR Coreless DC Motor: Power and Efficiency vs Torque}
+  \label{fig:powerefficiency}
 \end{figure}
 
 % subsection power_and_efficiency_analysis (end)
@@ -286,14 +289,15 @@ Where the temperature increase inside the motor core is provided by the followin
 	T_{inc} = I^{2}R \times (R_{th1} + R_{th2})
 \end{equation}
 
-$I$ and $R$ are the current through and the resistance of the motor windings, respectively. Constants $R_{th1}$ and $R_{th2}$ are specified by the motor manufacturer. 
+$I$ and $R$ are the current through and the resistance of the motor windings, respectively. Constants $R_{th1}$ and $R_{th2}$ are specified by the motor manufacturer. The thermal characteristics of the final motor selection is shown in Figure~\ref{fig:thermal}.
 
 
-\begin{figure}[!ht]
+\begin{figure}[!t]
 	\begin{center}
     \includegraphics[trim = 20mm 30mm 20mm 30mm,clip,width=15cm]{fig/design/motor3.pdf}
 	\end{center}
   \caption{Micromo 3257CR Coreless DC Motor: Speed and Temperature vs Torque}
+  \label{fig:thermal}
 \end{figure}
 % subsection thermal_analysis (end)
 
@@ -301,9 +305,9 @@ $I$ and $R$ are the current through and the resistance of the motor windings, re
 \label{sub:final_configurations}
 Aside from the torque-speed, power, efficiency and thermal analyses, there are several other considerations which factor into the design  while selecting drivetrain components. These considerations pertain to the secondary objective to minimize the overall weight of the system while simultaneously shifting the COM higher. Between the motor and the gearhead, the majority of the weight comes from the actual coreless DC motor so it is desirable to select a smaller (lighter) motor and meet the specified torque requirements by increasing the gear reduction ratio. Another consideration is the physical size of the motor itself, as the diameter and length of each motor vary significantly between different offerings. Since gearheads are coupled directly onto the motor shaft, the complete drivetrain assembly is usually long. 
 
-\begin{figure}[!h]
+\begin{figure}[!t]
 	\begin{center}
-    \includegraphics[trim = 20mm 30mm 20mm 30mm,clip,width=15cm]{fig/design/gearhead1.pdf}
+    \includegraphics[trim = 33mm 25mm 20mm 25mm,clip,width=15cm]{fig/design/gearhead1.pdf}
 	\end{center}
   \caption{Micromo 38A Precision Gearhead: Speed and Current vs Torque}
   \label{fig:micromo38a}

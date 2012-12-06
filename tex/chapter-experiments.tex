@@ -193,7 +193,7 @@ The ability to develop a single controller and target either a simulation enviro
 	\label{fig:parallelmodels}
 \end{figure}
 
-In the physical environment model shown in Figure~\ref{fig:hilmodel}, the hardware target subsystem is initialized to interface with the Q8-USB DAQ board. The control algorithm running on the PC communicates with the physical hardware using ``HIL Read'' and ``HIL Write'' blocks which communicate with the DAQ over USB. The PD controller output is an analog signal corresponding to the desired voltage at the motor terminals (amplifier command). The DAQ also reads the raw digital signals from the motor side encoders. The VoltPAQ voltage amplifier also provides the ability to read the current in the armature circuit ($i_a$) of the DC motor. This value is passed back to the controller through the DAQ using an analog channel. Due to the noise in the current sensor, a low pass filter is needed. The quadrature decoding formula (\ref{eq:quadrature}) is used to obtain the joint angle for the closed loop feedback. The link-side angle information is also used to determine whether a joint is out of its limits. The controller detects and sends a ``shut down'' command to the amplifier channel if it is. 
+In the physical environment model shown in Figure~\ref{fig:hilmodel}, the hardware target subsystem is initialized to interface with the Q8-USB DAQ board. The control algorithm running on the PC communicates with the physical hardware using ``HIL Read'' and ``HIL Write'' blocks which communicate with the DAQ over USB. The PD controller output is an analog signal corresponding to the desired voltage at the motor terminals (amplifier command). The DAQ also reads the raw digital signals from the motor side encoders. The VoltPAQ voltage amplifier also provides the ability to read the current in the armature circuit ($i_a$) of the DC motor. This value is passed back to the controller through the DAQ using an analog channel. Due to the noise in the current sensor, a low pass filter is needed. The filter parameters were provided by Quanser. The quadrature decoding formula (\ref{eq:quadrature}) is used to obtain the joint angle for the closed loop feedback. The link-side angle information is also used to determine whether a joint is out of its limits. The controller detects and sends a ``shut down'' command to the amplifier channel if it is. 
 
 \begin{figure}[!t]
 	\centering
@@ -300,7 +300,7 @@ This section describes the experiments validating the motion control framework i
 
 Where $n = 7$ is the actuated and controllable DOF supported by the control electronics. The joint level commands are generated from the task space trajectories ($\dxref$) using (\ref{eq:calcqref}). Alternatively, the prioritized task space control scheme in Section~\ref{sub:control_strategy} can be used to simultaneously satisfy high priority constraints. The mapping provided by (\ref{eq:priori}) is simplified by removing the actuator selection matrix $\mathbf{S}$, since there are no unactuated DOF. 
 
-The fixed configuration of the supporting frame causes the 7 DOF leg to naturally hang straight at the start of each experiment (i.e. $\q = \mathbf{0_{7 \times 1}}$). This represents a singular configuration of the leg. In Section~\ref{sec:1dof_validation}, the joint level commands were provided directly to the local PD controller. Computing the joint level commands with (\ref{eq:calcqref}) requires inverting the Jacobian matrix, which is problematic for singular configurations. To address this issue, each experiment starts by directly controlling the joint level trajectories for $t_{init} = 5$ seconds to manually move the leg into a non-singular configuration. 
+The fixed configuration of the supporting frame and high gearing ratio of each joint causes the 7 DOF leg to naturally hang straight at the start of each experiment (i.e. $\q = \mathbf{0_{7 \times 1}}$). This represents a singular configuration of the leg. In Section~\ref{sec:1dof_validation}, the joint level commands were provided directly to the local PD controller. Computing the joint level commands with (\ref{eq:calcqref}) requires inverting the Jacobian matrix, which is problematic for singular configurations. To address this issue, each experiment starts by directly controlling the joint level trajectories for $t_{init} = 5$ seconds to manually move the leg into a non-singular configuration. 
 
 \subsection{Planar Motion Control} % (fold)
 \label{sub:planar_motion_control}
@@ -320,7 +320,7 @@ Some motions during the bipedal gait cycle can be simplified to a planar motion 
 \subsubsection{Raising the Foot} % (fold)
 \label{ssub:knee_bending_motion}
 
-In this experiment, the foot position is raised vertically, resulting in a knee bending motion. The frame captures shown in Figure~\ref{fig:kneebendframes} demonstrate this experiment in simulation and on the physical hardware. The first frame in the sequence is the home configuration of the 7 DOF leg at start of each experiment (i.e. at $t = 0$). The second frame represents a slightly angled configuration of the leg joints after $t_{init} = 5$ seconds. The remaining frames demonstrate the foot raising motion for this experiment. 
+In this experiment, the foot position is raised vertically, resulting in a knee bending motion. The frame captures shown in Figure~\ref{fig:kneebendframes} demonstrate this experiment in simulation and on the physical hardware. The first frame in the sequence is the home configuration of the 7 DOF leg at start of each experiment (i.e. at $t = 0$). The second frame represents a slightly angled configuration of the leg joints after $t_{init} = 5$ seconds. The remaining frames demonstrate the foot raising motion for this experiment. The differences in ankle pitch between the simulation and hardware are due to the discrepancies in the robots \emph{home} position at the start of each experiment. In the simulation environment, the ankle pitch joint angle is perfectly at $q = 0$ at $t = 0$s. However, the physical robot is manually adjusted by hand to some joint angle $q = q_{init}$ which only approximates the home position. The discrepancies arise since the rotary encoders only provide the relative angular displacement of the joint from the initial joint angle $q_{init}$ and the joint level command is obtained using the Jacobian in (\ref{eq:calcqref}) which produces least-effort solution. 
 
 \begin{figure}[!b]
 	\begin{center}
@@ -342,8 +342,6 @@ The experimental results demonstrate the simplified version of the motion contro
 \subsubsection{Swing Foot Motion} % (fold)
 \label{ssub:swing_foot_motion}
 
-In this experiment, the foot is commanded to track an arc-like trajectory while forward progress is made along the plane. The resulting motion is commonly used during the swing phase of the gait cycle for a bipedal robot to take a step. The frame captures shown in Figure~\ref{fig:swingmotionframes} demonstrate this motion in simulation and on hardware. The task space control gains tuned in the previous section were reused for this experiment. 
-
 \begin{figure}[!b]
 	\centering
     \includegraphics[scale=0.38]{fig/experiments/swingmotionframes.png} 
@@ -351,7 +349,9 @@ In this experiment, the foot is commanded to track an arc-like trajectory while 
 	\label{fig:swingmotionframes}
 \end{figure}
 
-\begin{figure}[!b]
+In this experiment, the foot is commanded to track an arc-like trajectory while forward progress is made along the plane. The resulting motion is commonly used during the swing phase of the gait cycle for a bipedal robot to take a step. The frame captures shown in Figure~\ref{fig:swingmotionframes} demonstrate this motion in simulation and on hardware. The task space control gains tuned in the previous section were reused for this experiment. 
+
+\begin{figure}[!h]
 	\begin{center}
 	\subfigure{\includegraphics[scale=0.45]{fig/experiments/simswingfootp.eps}}
 	\subfigure{\includegraphics[scale=0.45]{fig/experiments/hilswingfootp.eps}}
@@ -360,9 +360,7 @@ In this experiment, the foot is commanded to track an arc-like trajectory while 
 	\label{fig:swingfootp}
 \end{figure} 
 
-The task space tracking results for the swing foot motion is shown in Figure~\ref{fig:swingfootp}. Similar to the previous planar motion experiment, the hardware closely matches the simulated system with the tuned gain parameters. 
-
-\begin{figure}[!t]
+\begin{figure}[!h]
 	\begin{center}
 	\subfigure{\includegraphics[scale=0.45]{fig/experiments/simswingfootq.eps}}
 	\subfigure{\includegraphics[scale=0.45]{fig/experiments/hilswingfootq.eps}}
@@ -371,10 +369,12 @@ The task space tracking results for the swing foot motion is shown in Figure~\re
 	\label{fig:swingfootq}
 \end{figure} 
 
-The joint space tracking of the command signal generated by the motion control framework is shown in Figure~\ref{fig:swingfootq}.
+The task space tracking results for the swing foot motion is shown in Figure~\ref{fig:swingfootp}. Similar to the previous planar motion experiment, the hardware closely matches the simulated system with the tuned gain parameters. The joint space tracking of the command signal generated by the motion control framework is shown in Figure~\ref{fig:swingfootq}.
+
+
 
 % subsubsection swing_foot_motion (end)
-\cleardoublepage
+% \cleardoublepage
 % subsection planar_motion_control (end)
 
 \subsection{Whole Body Motion Control} % (fold)
@@ -466,7 +466,7 @@ Validating control algorithms on physical hardware is important due to modeling 
 
 For the physical hardware, DC motors are controlled by a voltage signal $v_m$. A second order system was used to model the actuator dynamics and reformulate the existing controllers which controlled the link-side torques $\tau _k$. Independent joint control decouples each joint for individual control. Since this approach does not account for the coupled dynamics of the overall system, the link-side torques are treated as a disturbance to the actuator dynamics model. The effective motor inertia is reformulated to include the link inertia seen by the joint. A generic RNE-based algorithm was used to extract the mass matrix of the system at every time step to compute the effective motor inertia.
 
-The HIL architecture was developed using Quanser's QUARC toolbox, DAQ board and a voltage amplifier. The controller code developed in Simulink was targetted to execute on the PC. The DAQ board allowed the PC-based controller to communicate with the physical hardware through analog and digital I/O. Quadrature decoding was on the encoder output to obtain the link-side joint angles on physical hardware for closed loop feedback control. Parallel simulation models were developed for experimental validation to target the physical hardware or the simulated actuator dynamics. 
+The HIL architecture was developed using Quanser's QUARC toolbox, DAQ board and a voltage amplifier. The controller code developed in Simulink was targeted to execute on the PC. The DAQ board allowed the PC-based controller to communicate with the physical hardware through analog and digital I/O. Quadrature decoding was on the encoder output to obtain the link-side joint angles on physical hardware for closed loop feedback control. Parallel simulation models were developed for experimental validation to target the physical hardware or the simulated actuator dynamics. 
 
 The parallel models were used to demonstrate key components of the control approach developed in this thesis on physical hardware. Single DOF validation was used to individually tune the PD controller gains at the joint level. Once the desired tracking performance was achieved, the task space motion control framework used to generate the joint level commands was validated. Starting with a simple planar motion control problem, the foot position was controlled in the task space to achieve knee bending and an arc-like swing foot motion. Joint level command signals were generated for the local PD controllers using the simplified motion control framework. PD control was also applied at the task space level to improve tracking performance of the motion controller. Finally, the complete motion control framework was demonstrated in simulation and on the physical hardware through the COM tracking experiment. By using all (7) actuated DOF in the leg, the controller was able to sufficiently track a task space trajectory for the COM position. The prioritized task space control scheme was also demonstrated by restricting the $\xcom$ motion to a plane in the null space of the higher priority constraint of tracking an arc-like trajectory for side-to-side stepping. 
 

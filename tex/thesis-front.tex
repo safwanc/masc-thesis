@@ -79,7 +79,7 @@ The first part of the thesis presents the development of a 14 degrees-of-freedom
 
 Refining the design of a complex multibody robotic system like the biped is an iterative process. The mechanical model of the system is transferred from Computer-Aided-Design (CAD) software to a dynamic simulator for analysis and the design is revised to improve performance. This iterative approach is necessary as small changes in the mechanical model can have significant impact on the overall dynamics of the system as well as implications for control design. A streamlined prototyping toolchain is developed in this thesis to extract the relevant kinematic/dynamic parameters of a mechanical system in CAD and automatically generate the equivalent system in a dynamic simulator. This toolchain is used to revise the electromechanical design and generate forward dynamics simulations. 
 
-The second portion of this thesis develops a novel walking control strategy for on-line gait synthesis for 3D bipedal robots based on the Foot Placement Estimator (FPE) algorithm. This algorithm is used to determine the desired swing foot position on the ground to \emph{restore} balance for a 2D bipedal robot. The FPE algorithm is extended to the general 3D case by selecting a suitable plane in the desired direction of motion. Complete gait cycles are formed by combining a finite state machine with the 2D FPE solution along the selected plane. Gait initiation is accomplished by computing state-dependent task space trajectories on-line to produce a forward momentum along the selected plane. A whole-body motion control framework (Jacobian-based prioritized task space control scheme) tracks the task space trajectories and generates the appropriate joint level command for each state. The joint level commands are tracked by local high gain PD controllers. This framework produces the desired whole-body motion during each state while satisfying higher priority constraints. Gait termination is accomplished by controlling the swing foot position to track the FPE point on the ground along the selected plane. 
+The second portion of this thesis develops a novel walking control strategy for on-line gait synthesis for 3D bipedal robots based on Wight's Foot Placement Estimator (FPE) algorithm. This algorithm is used to determine the desired swing foot position on the ground to \emph{restore} balance for a 2D bipedal robot. The FPE algorithm is extended to the general 3D case by selecting a suitable plane in the desired direction of motion. Complete gait cycles are formed by combining a finite state machine with the 2D FPE solution along the selected plane. Gait initiation is accomplished by computing state-dependent task space trajectories on-line to produce a forward momentum along the selected plane. A whole-body motion control framework (Jacobian-based prioritized task space control scheme) tracks the task space trajectories and generates the appropriate joint level command for each state. The joint level commands are tracked by local high gain PD controllers. This framework produces the desired whole-body motion during each state while satisfying higher priority constraints. Gait termination is accomplished by controlling the swing foot position to track the FPE point on the ground along the selected plane. 
 
 The proposed control strategy is verified in simulation and experiments. A parallel hardware-in-the-loop (HIL) testing environment is developed for the physical lower body humanoid robot. The motion control framework and joint dynamics used in the proposed walking control strategy are verified through HIL experiments.
 
@@ -100,7 +100,7 @@ I would also like to thank the following people for their assistance during the 
 \begin{itemize}
     \item Derek Wight for his advice on electromechanical design, developing models with QUARC and help with the HIL experiments. I am also grateful for the opportunity to work at Quanser Inc under the NSERC Industrial Postgraduate Scholarship. The experience was extremely valuable to the development of our streamlined toolchain during the design process. \\
 
-    \item Christopher Kirby from Christie Digital Systems for taking the time to to provide guidance on the mechanical design. As an electrical engineering undergraduate with minimal experience and knowledge of mechanical engineering, his advice on best  practices, designing the mechanical power transmission system for the biped and generating CAD drawings was invaluable. \\
+    \item Christopher Kirby from Christie Digital Systems for taking the time to to provide guidance on the mechanical design. As an electrical engineering undergraduate with minimal experience and knowledge of mechanical engineering, his advice on best practises, designing the mechanical power transmission system for the biped and generating CAD drawings was invaluable. \\
 
     \item Matt Millard of the Real Motion Group in Systems Design Engineering for his expertise in the field of gait analysis and for help with a wide range of topics pertaining to walking robots and contact modeling.  \\
 
@@ -111,17 +111,6 @@ I would also like to thank the following people for their assistance during the 
 Lastly, I would like to thank my parents, sister and my wife for their endless love, support and encouragement throughout my academic career at the University of Waterloo. 
 
 \cleardoublepage
-%\newpage
-
-
-% D E D I C A T I O N
-% -------------------
-% \begin{center}
-%     \textbf{Dedication}
-% \end{center}
-
-% This is dedicated to the one I love.
-% \cleardoublepage
 %\newpage
 
 

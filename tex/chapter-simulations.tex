@@ -1,13 +1,13 @@
 \chapter[3D Foot Placement Estimator and Gait Generation]{3D Foot Placement Estimator and Gait Generation\footnote{A version of this chapter has been submitted to the 2013 IEEE International Conference on Robotics and Automation}} % (fold)
 \label{cha:simulations}
 
-This chapter extends the Foot Placement Estimator (FPE) algorithm for 3D bipedal robots. Section~\ref{sec:extension_to_3d} presents the method of extending the existing 2D theory (reviewed in Section~\ref{sub:related_foot_placement}) to 3D movement. The proposed algorithm selects a 2D plane in the chosen direction of motion and generates trajectories to produce a forward momentum along the plane. A whole-body motion control framework coupled with a finite state machine is used to track the generated trajectories and form complete gait cycles. The toolchain described in the preivous chapter is used to generate dynamic simulations for the 14 DOF bipedal robot and the proposed extension to 3D is validated (Section~\ref{sec:simulations_and_results}).
+This chapter extends the Foot Placement Estimator (FPE) algorithm for 3D bipedal robots. Section~\ref{sec:extension_to_3d} presents the method of extending the existing 2D theory (reviewed in Section~\ref{sub:related_foot_placement}) to 3D movement. The proposed algorithm selects a 2D plane in the chosen direction of motion and generates trajectories to produce a forward momentum along the plane. A whole-body motion control framework coupled with a finite state machine is used to track the generated trajectories and form complete gait cycles. The toolchain described in the previous chapter is used to generate dynamic simulations for the 14 DOF bipedal robot and the proposed extension to 3D is validated (Section~\ref{sec:simulations_and_results}).
 
 The remainder of this thesis assumes a 3D bipedal robot with $n$ actuated degrees of freedom (DOF) and $n+6$ generalized coordinates defined by (\ref{eq:eom1}). The biped's local coordinate system $oxyz$ rigidly attached to the floating base is shown in Figure~\ref{fig:bipedcoord}. The $xz$ and $yz$ planes form the biped's \emph{local} sagittal and frontal planes, respectively. 
 
 \begin{figure}[!h]
 	\centering
-    \includegraphics[trim = 0mm 13mm 0mm 0mm,clip,scale=0.7]{fig/fpe/aslbiped.eps} 
+    \includegraphics[trim = 0mm 13mm 0mm 0mm,clip,scale=0.69]{fig/fpe/aslbiped.eps} 
   	\caption{Local coordinate system for the 3D 14 DOF bipedal robot.}
 	\label{fig:bipedcoord}
 \end{figure}
@@ -16,9 +16,9 @@ The remainder of this thesis assumes a 3D bipedal robot with $n$ actuated degree
 \section{FPE Extension to 3D} % (fold)
 \label{sec:extension_to_3d}
 
-In order to extend the FPE approach to the 3D case, the concept of generating complete gait cycles described in Section~\ref{sub:gait_cycles} is revisted. The primary goal of the first three states in each step cycle (\textbf{PUSH}, \textbf{LIFT} and \textbf{SWING}) is to force the biped into an unstable configuration so that the FPE algorithm can be used to regain stability in the terminal state (\textbf{DROP}).
+In order to extend the FPE approach to the 3D case, the concept of generating complete gait cycles described in Section~\ref{sub:gait_cycles} is revisited. The primary goal of the first three states in each step cycle (\textbf{PUSH}, \textbf{LIFT} and \textbf{SWING}) is to force the biped into an unstable configuration so that the FPE algorithm can be used to regain stability in the terminal state (\textbf{DROP}).
 
-To extend the 2D algorithm to the general 3D case, we begin by selecting a suitable plane in 3D space as the sagittal plane for motion. The off-sagittal plane is perpendicular to the sagittal plane and the ground.  In the proposed approach, the goal of each step cycle is to control the motion of a 3D bipedal robot to generate a forward moving momentum \emph{along} the selected sagittal plane. Upon entering the terminal state, the FPE equation (\ref{eq:fpe}) is solved on the selected plane to determine the swing foot placement and ultimately regain stability. Unlike the 2D case, consider a 3D bipedal robot with finite foot length and width rather than a biped with point feet as demonstrated in \cite{Wight:2008vt}. The larger size of the region of support increases robustness to these approximation errors. 
+To extend the 2D algorithm to the general 3D case, we begin by selecting a suitable plane in 3D space as the sagittal plane for motion. The frontal plane is perpendicular to the sagittal plane and the ground.  In the proposed approach, the goal of each step cycle is to control the motion of a 3D bipedal robot to generate a forward moving momentum \emph{along} the selected sagittal plane. Upon entering the terminal state, the FPE equation (\ref{eq:fpe}) is solved on the selected plane to determine the swing foot placement and ultimately regain stability. Unlike the 2D case, consider a 3D bipedal robot with finite foot length and width rather than a biped with point feet as demonstrated in \cite{Wight:2008vt}. The larger size of the region of support increases robustness to the approximation errors of simplifying the 3D dynamics to a 2D plane. 
 
 \subsection{Sagittal Plane} % (fold)
 \label{sub:sagittal_plane}
@@ -251,7 +251,7 @@ In this terminal state, the Jacobian is used to track the fixed stance foot posi
 
 \subsubsection{\textbf{CONTACT STABILIZATION}} 
 
-With an arbitrary 3D biped with finite sized feet, it is possible for the biped to land on the edge of the foot instead of landing perfectly above the FPE point on the ground. Once ground contact is made, the solution to the FPE equation is no longer valid (since a real biped will not have instantaneous transfer of balance). To handle this behaviour, a stabilization substate is used where the joint level control is computed directly. At this point, trajectories are generated for the ankles to align the surface of the foot with the ground and switch to high gain PD control for tracking. This ensures that both feet are in full contact with the ground prior to executing the opposite leg's gait sequence. The biped-ground contact interface is shown before and after the stabilization substate in Figure~\ref{fig:contact_stabilization}. 
+With an arbitrary 3D biped with finite sized (non-point) feet, it is possible for the biped to land on the edge of the foot instead of landing perfectly above the FPE point on the ground. Once ground contact is made, the solution to the FPE equation is no longer valid (since a real biped will not have instantaneous transfer of balance). To handle this behaviour, a stabilization substate is used where the joint level control is computed directly. At this point, trajectories are generated for the ankles to align the surface of the foot with the ground and switch to high gain PD control for tracking. This ensures that both feet are in full contact with the ground prior to executing the opposite leg's gait sequence. The biped-ground contact interface is shown before and after the stabilization substate in Figure~\ref{fig:contact_stabilization}. 
 
 \begin{figure}[!h]
 	\begin{center}
@@ -329,7 +329,7 @@ The proposed control strategy to extend the FPE theory to 3D was implemented in 
 
 \begin{enumerate}
 	\item \textbf{State Machine} \\ 
-	Finite state machine logic was implemented in Stateflow as shown in Figure~\ref{fig:stateflow}. The state names follow the same convention as the 2D FPE case (shown in Figure~\ref{fig:statemachine}) while the transition logic is updated for the 3D case described in Section~\ref{sub:joint_level_control}.  \\
+	Finite state machine logic was implemented in StateFlow as shown in Figure~\ref{fig:stateflow}. The state names follow the same convention as the 2D FPE case (shown in Figure~\ref{fig:statemachine}) while the transition logic is updated for the 3D case described in Section~\ref{sub:joint_level_control}.  \\
 
 	\item \textbf{Trajectory Generator} \\ 
 	Generates the task space COM ($\xcom$) and the swing foot ($\xswing$) trajectories detailed in Section~\ref{sub:trajectory_generation} based on the current state of the controller. Also uses the higher level supervisory control mode (i.e. \textbf{WALK} or \textbf{STAND}) to adjust the trajectory generation for understepping/overstepping the FPE point. \\
@@ -345,10 +345,10 @@ The proposed control strategy to extend the FPE theory to 3D was implemented in 
 
 \end{enumerate}
 
-\begin{figure}[!h]
+\begin{figure}[!b]
 	\centering
     \includegraphics[trim = 30mm 60mm 25mm 53mm,clip,width=17cm]{fig/simulations/statemachine.pdf} 
-  	\caption{Finite state machine implemented in Stateflow for 3D FPE-based walking control strategy.}
+  	\caption{Finite state machine implemented in StateFlow for 3D FPE-based walking control strategy.}
 	\label{fig:stateflow}
 \end{figure}
 
@@ -363,7 +363,7 @@ The initial spring-damper contact model discussed in Section~\ref{sub:initial_co
 	{F_{normal}} = b{z^p}{\dot z^q} + k{z^n}
 \end{equation}
 
-Where $z$, $\dot{z}$ are the penetration depth position and velocity, respectively. The constants $k$, $b$ are the spring-damper coefficients and $n$, $p$, $q$ are tunable constants. Equation (\ref{eq:contacthc}) provides the ground reaction force in the normal direction only. The tangential (frictional) contact forces were modeled by: 
+Where $z$, $\dot{z}$ are the penetration depth position and velocity, respectively. The constants $k$, $b$ are the spring-damper coefficients and $n$, $p$, $q$ are tunable constants. Equation (\ref{eq:contacthc}) provides the ground reaction force in the normal direction only. The tangential (frictional) contact forces were modelled by: 
 
 
 \begin{equation}
@@ -371,7 +371,7 @@ Where $z$, $\dot{z}$ are the penetration depth position and velocity, respective
 	{F_{tangential}} = f{\dot x}
 \end{equation}
 
-Where $\dot x$ is the tangential velocity of the contact point (in the $x$ and $y$ directions) and $f$ is a tunable constant. The forces generated by (\ref{eq:contacthc}) and (\ref{eq:contactfr}) ensure that there are no discontinuities when ground contact is made. A seperate dynamic simulation model was generated to hand-tune the contact model constants to emulate a stiff ground. The final (tuned) parameters used for dynamic simulations are provided in Table~\ref{tab:contactk}.
+Where $\dot x$ is the tangential velocity of the contact point (in the $x$ and $y$ directions) and $f$ is a tunable constant. The forces generated by (\ref{eq:contacthc}) and (\ref{eq:contactfr}) ensure that there are no discontinuities when ground contact is made. Note that these are only mathematical equations chosen to model reality and they may not be analogous to the real contact forces. A separate dynamic simulation model was generated to hand-tune the contact model constants to emulate a stiff ground. The final (tuned) parameters used for dynamic simulations are provided in Table~\ref{tab:contactk}.
 
 \begin{table}[!h]
   \centering
@@ -395,17 +395,17 @@ Where $\dot x$ is the tangential velocity of the contact point (in the $x$ and $
 It was found that stiffening the ground contact by raising the model constants would produce singularities with fixed time step simulations at 1 KHz. Reducing the time step helped avoid singularities but the simulation runtime drastically increased. 
 % subsection contact_modeling (end)
 
-\subsection{Side-to-Side Stepping} % (fold)
-\label{sub:3d_simulations}
-
 \begin{figure}[!b]
 	\centering
     \includegraphics[scale=0.095]{fig/simulations/sidesequence.png}
-  	\caption{Frame captures from the realtime 3D visualization while side-to-side stepping.}
+  	\caption{Frame captures from the real-time 3D visualization while side-to-side stepping.}
 	\label{fig:sidesequence}
 \end{figure}
 
-To demonstrate the dynamic stability of a 3D biped under this approach, the frontal plane was selected as the sagittal plane. Forward motion along this sagittal plane results in a side-to-side stepping sequence for the biped (as shown in Figure \ref{fig:sidesequence}). The gray plane in the frame captures moves along the $y$-direction (biped's frontal plane). The intersection of the gray plane and the ground indicates the FPE point tracked during \textbf{DROP}. 
+\subsection{Side-to-Side Stepping} % (fold)
+\label{sub:3d_simulations}
+
+To demonstrate the dynamic stability of a 3D biped under this approach, the frontal plane was selected as the plane for motion. Forward motion along this selected plane results in a side-to-side stepping sequence for the biped (as shown in Figure \ref{fig:sidesequence}). The gray plane in the frame captures moves along the $y$-direction (biped's frontal plane). The intersection of the gray plane and the ground indicates the FPE point tracked during \textbf{DROP}. 
 
 \begin{figure}[!b]
 	\centering
@@ -414,9 +414,11 @@ To demonstrate the dynamic stability of a 3D biped under this approach, the fron
 	\label{fig:sidecomtraj}
 \end{figure}
 
-The resulting $\xcom$ trajectories from simulating the side-to-side stepping motion (shown in Figure \ref{fig:sidecomtraj}) demonstrate the stability of the biped through a complete gait sequence. The prioritized motion control framework handles the dynamic switching of constraints (from double support to single support) while generating the appropriate joint level commands for swinging the COM over. The colour coded dotted lines on Figure \ref{fig:sidecomtraj} indicate the boundaries of each foot on the ground. Note that during the \textbf{SWING} state, the COM is pushed outside the region of support (around 11s). This in turn initiates the \textbf{DROP} state where the FPE point is tracked to regain stability.
+The resulting $\xcom$ trajectories from simulating the side-to-side stepping motion (shown in Figure \ref{fig:sidecomtraj}) demonstrate the stability of the biped through a complete gait sequence. Note that in side-to-side stepping, the biped simply rocks back and forth (i.e. there is no forward progress along the plane of motion). The oscillations at 12s and 25s are due to the contact stabilization substate (as shown in Figure~\ref{fig:contact_stabilization}) attempting to evenly distribute the ground reaction force over soles of both feet against a soft contact model. 
 
-\begin{figure}[!h]
+The prioritized motion control framework handles the dynamic switching of constraints (from double support to single support) while generating the appropriate joint level commands for swinging the COM over. The colour coded dotted lines on Figure \ref{fig:sidecomtraj} indicate the boundaries of each foot on the ground. Note that during the \textbf{SWING} state, the COM is pushed outside the region of support (around 11s). This in turn initiates the \textbf{DROP} state where the FPE point is tracked to regain stability.
+
+\begin{figure}[!b]
 	\centering
     \includegraphics[scale=0.7]{fig/simulations/sidefpetrack.eps}
   	\caption{Swing foot tracks a point on the ground given by $\mathbf{FPE} + \mathbf{FPE_{offset}}$ to ensure overstepping.}
@@ -426,10 +428,10 @@ The resulting $\xcom$ trajectories from simulating the side-to-side stepping mot
 
 In the terminal \textbf{DROP} state, the swing foot trajectory tracks the FPE point on the ground (shown in Figure \ref{fig:sidefpetrack}) with an added offset to ensure that the biped oversteps to guarantee stability (as per the 2D FPE theory). Once ground contact is made (around 11.6s), the stabilization substate is entered and the swing foot trajectory is controlled directly to align the foot with the ground. This causes the biped to rock back and forth (similar to the 2D case) until stability is reached.
 
-\begin{figure}[!b]
+\begin{figure}[!h]
 	\centering
     \includegraphics[scale=0.1]{fig/simulations/fwdsequenceside.png}
-  	\caption{Frame captures from the realtime 3D visualization with forward walking gait.}
+  	\caption{Frame captures from the real-time 3D visualization with forward walking gait.}
 	\label{fig:fwdsequenceside}
 \end{figure}
 
@@ -445,9 +447,9 @@ In the terminal \textbf{DROP} state, the swing foot trajectory tracks the FPE po
 
 Forward walking is achieved by selecting the biped's sagittal plane as the direction of motion. The frame captures from forward walking simulations are shown in Figure~\ref{fig:fwdsequenceside}. The key challenge is maintaining stability in the off-sagittal plane while the swing foot is raised off the ground during the \textbf{LIFT} state. The $\xcom$ trajectories shown in Figure~\ref{fig:fwdcomtraj} demonstrate the dynamic stability in the off-sagittal plane while forward progress is made along the chosen direction of motion. The gait cycle in the forward walking direction is slow due to the use of a soft contact model to enable simulations at 1 KHz. The softer contact model also requires a longer stabilization period (around 5s) once ground contact is made to ensure that the foot is perfectly stable and aligned with the ground plane before proceeding. The proposed trajectory generation for $\xcom$ illustrated by Figure~\ref{fig:comtraj3d} can be seen at 8s and 22s when the COM is pushed outside the region of support once the swing foot is aligned. 
 
-The alternating foot trajectories on the selected sagittal plane during a complete gait cycle are shown in Figure~\ref{fig:fwdfoottraj}. The first step is taken with the left foot tracking $\xswing$ (between 5-12s). The \textbf{DROP} state is entered around 12s and the left foot tracks the $\xswing$ trajectory given by $\mathbf{FPE} + \mathbf{FPE_{offset}}$ to ensure over stepping. Once ground contact is made, the contact stabilization state is used to straighten both feet and spread the ground reaction force evenly (around 12-14s). The step cycle begins for the right leg from 15s to complete the gait sequence. 
+The alternating foot trajectories on the selected sagittal plane during a complete gait cycle are shown in Figure~\ref{fig:fwdfoottraj}. The first step is taken with the left foot tracking $\xswing$ (between 5-12s). The \textbf{DROP} state is entered around 12s and the left foot tracks the $\xswing$ trajectory given by $\mathbf{FPE} + \mathbf{FPE_{offset}}$ to ensure over stepping. Once ground contact is made, the contact stabilization substate is used to straighten both feet and spread the ground reaction force evenly (around 12-14s). The step cycle begins for the right leg from 15s to complete the gait sequence. 
 
-\begin{figure}[!h]
+\begin{figure}[!b]
 	\begin{center}
 	\subfigure{\includegraphics[scale=0.45]{fig/simulations/fwdlfoottraj.eps}}
 	\subfigure{\includegraphics[scale=0.45]{fig/simulations/fwdrfoottraj.eps}}
@@ -459,7 +461,7 @@ The alternating foot trajectories on the selected sagittal plane during a comple
 The FPE trajectory along the forward walking direction is shown in Figure~\ref{fig:fwdfpetraj}. The FPE location on the ground is tracked (with an offset) to regain stability around 12s by the swinging left foot and again around 25s by the swinging right foot. The FPE location also remains safely between the feet during the double support phase after each step is made (approximately 13-15s). 
 
 
-\begin{figure}[!h]
+\begin{figure}[!t]
 	\centering
     \includegraphics[scale=0.7]{fig/simulations/fwdfpetraj.eps}
   	\caption{FPE and foot trajectories in the direction of forward progress during a complete gait cycle.}
