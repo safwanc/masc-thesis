@@ -1,7 +1,9 @@
 \chapter[Electromechanical Design]{Electromechanical Design\footnote{Part of the electromechanical design work in this chapter was completed as part of the ECE 499 project course at the University of Waterloo.}} % (fold)
 \label{cha:design}
 
-This chapter presents the electromechanical design of a bipedal robot for experimental validation. Each leg is selected to have 7 DOF (breakdown provided in Table~\ref{tab:doftable}) to enable a wide range of motion for balancing and walking. This provides a total of 14 actuated DOF for the bipedal robot. A serial link mechanism approach is used for its simplicity in design and kinematics. The bipedal robot is a fully powered active walker (i.e. every joint is actively controlled) with an electric motor drivetrain. DC motors with geared drives are selected because it is easy to model the actuator dynamics and achieve accurate joint level position control. 
+This chapter presents the electromechanical design of a bipedal robot for experimental validation. The goal was to design a lower body humanoid robot which would be easy to model, manufacture and be capable of performing a wide variety of gait cycles. A reduced set of DOF is selected for each leg for walking, balancing and to achieve full mobility in the ankle (breakdown provided in Table~\ref{tab:doftable}). The bipedal robot is also designed to be fully actuated with overpowered electric motors to physically support the wide range of gait styles for experimentation. 
+
+As shown in Table~\ref{tab:doftable}, each leg is selected to have 7 DOF which  provides a total of 14 actuated DOF for the bipedal robot. A serial link mechanism approach is used for its simplicity in design and kinematics. The bipedal robot is a fully powered active walker (i.e. every joint is actively controlled) with an electric motor drivetrain. DC motors with geared drives are selected because it is easy to model the actuator dynamics and achieve accurate joint level position control. 
 
 \begin{table}[h]
   \centering
@@ -263,7 +265,7 @@ The relationship between the torque of the motor and the speed of the revolving 
 
 \subsection{Power and Efficiency Analysis} % (fold)
 \label{sub:power_and_efficiency_analysis}
-Another key factor in comparing drivetrain components is the relationship between the power produced and the overall efficiency of the motor as a function of its torque. The efficiency curve compares the ratio of electrical power input to mechanical power output. While it is typically desirable to operate the motor at its peak efficiency, the torque demands fluctuate throughout the gait cycle making it difficult to base the motor selection process on this basis alone. However, it is desirable to ensure that the motor is reasonably efficient around the bounds of operation. The power and efficiency profile of the final motor selection is shown in Figure~\ref{fig:powerefficiency}. 
+Another key factor in comparing drivetrain components is the relationship between the power produced and the overall efficiency of the motor as a function of its torque. The efficiency curve compares the ratio of electrical power input to mechanical power output. While it is typically desirable to operate the motor at its peak efficiency, the torque demands fluctuate throughout the gait cycle making it difficult to base the motor selection process on this basis alone. However, it is desirable to ensure that the motor is reasonably efficient within the expected range of operation. The power and efficiency profile of the final motor selection is shown in Figure~\ref{fig:powerefficiency}. 
 
 \begin{figure}[!t]
 	\begin{center}
@@ -289,7 +291,7 @@ Where the temperature increase inside the motor core is provided by the followin
 	T_{inc} = I^{2}R \times (R_{th1} + R_{th2})
 \end{equation}
 
-$I$ and $R$ are the current through and the resistance of the motor windings, respectively. Constants $R_{th1}$ and $R_{th2}$ are specified by the motor manufacturer. The thermal characteristics of the final motor selection is shown in Figure~\ref{fig:thermal}.
+$I$ and $R$ are the current through and the resistance of the motor windings, respectively. Constants $R_{th1}$ and $R_{th2}$ are specified by the motor manufacturer. The thermal characteristics of the final motor selection are shown in Figure~\ref{fig:thermal}.
 
 
 \begin{figure}[!t]
@@ -405,14 +407,14 @@ The amount of stock material used in the frame itself also impacts the overall w
 \label{fig:miter}
 \end{figure}
 
-The initial chassis design of the legs for the 14 DOF bipedal robot was based on using C-Channel beams in the thigh and shank linkages. However, aluminum stock tolerances made it difficult to manufacture the initial chassis design with high accuracy. An engineering design trade-off decision was made in favour of manufacturability and the C-Channel design was replaced with a ladder-like structure with parallel plates and cross braces. The revised design was easily manufacturable with CNC machine tools and it reduced the overall weight of the legs (compared to the initial C-Channel design). 
+The initial chassis design of the legs for the 14 DOF bipedal robot was based on using C-Channel beams in the thigh and shank linkages. However, aluminum stock tolerances made it difficult to manufacture the initial chassis design with high accuracy. The C-Channel design was replaced with a ladder-like structure with parallel plates and cross braces to improve the manufacturability. The revised design was easily manufacturable with CNC machine tools and reduced the overall weight of the legs (compared to the initial C-Channel design). 
 % subsubsection structural_design (end)
 
 \subsection{Mechanical Power Transmission} % (fold)
 \label{sub:mechanical_power_transmission}
-The biped consists entirely of rotating mechanical joints between link segments. A common approach to shifting the COM position higher is to relocate motors higher in the lower body structure and couple the actuator output to drive the joints through mechanical power transmission components. Some existing electromechanical designs for the lower body use belts or pulleys to transmit the mechanical power from the actuator output to the joint axis. However, as discussed in Section~\ref{sec:related_electromechanical_design}, the drive flexibility introduced by these systems add additional complexity which is difficult to model and often requires tuning.  
+The biped consists entirely of rotating mechanical joints between link segments. A common approach to shifting the COM position higher is to relocate motors higher in the lower body structure and couple the actuator output to drive the joints through mechanical power transmission components. Some existing electromechanical designs for the lower body use belts or pulleys to transmit the mechanical power from the actuator output to the joint axis \cite{Ogura:2006bm,kim2002development,kim2005system,sardain1998anthropomorphic}. However, as discussed in Section~\ref{sec:related_electromechanical_design}, the drive flexibility introduced by these systems adds additional complexity which is difficult to model and often requires tuning.  
 
-Instead, rigid machine components such as shafts, bearings and gears are used to transmit the rotational mechanical power between links in the 14 DOF bipedal robot design. This approach simplifies the electromechanical design and produces a system which is easy to model in simulation, which is particularly useful for developing new walking control strategies. By using components such as miter gears, the mechanical power transmission is shifted with a perpendicular offset (90$^\circ$). This technique is used to strategically decouple the mounting position of a drivetrain assembly (i.e. motor with fixed gearhead) from the axis of rotation and relocate motors such that the weight distribution is manipulated in favour of having a higher COM position (illustrated in Figure \ref{fig:miter}).
+Instead, rigid machine components such as shafts, bearings and gears are used to transmit the rotational mechanical power between links in the 14 DOF bipedal robot design. This approach simplifies the electromechanical design and produces a system which is easy to model in simulation. By using components such as miter gears, the mechanical power transmission is shifted with a perpendicular offset (90$^\circ$). This technique is used to strategically decouple the mounting position of a drivetrain assembly (i.e. motor with fixed gearhead) from the axis of rotation and relocate motors such that the weight distribution is manipulated in favour of having a higher COM position (illustrated in Figure \ref{fig:miter}).
 
 Mechanical coupling and power transmission are also used to design  intersecting axes of rotation. By using spur gears with a 1:1 reduction ratio, the output shaft of a drivetrain assembly can be positioned in a parallel offset (illustrated in Figure \ref{fig:spur}).
 
