@@ -19,7 +19,7 @@ The electromechanical design presented in Chapter~\ref{cha:design} was realized 
 \subsection{Mechanical Implementation} % (fold)
 \label{sub:mechanical_implementation}
 
-The final mechanical design of the bipedal robot was developed on campus at the University of Waterloo. The on-site engineering machine shop manufactured the mechanical chassis components from the final CAD drawings (shown in Appendix~\ref{app:bipedcad}). The selected DC motors and gearhead combinations were sourced from a motor manufacturer. The drivetrain components (i.e. bearings, shafts, gears) used to relocate the output gearhead shaft from each joint axis were also sourced from a hardware vendor. The author of this thesis completed the mechanical assembly using the CAD model as a reference. The assembled joints and links of the bipedal robot leg are shown in more detail in Figure~\ref{fig:bipedcloseup}.
+The final mechanical design of the bipedal robot was developed on campus at the University of Waterloo. The on-site engineering machine shop manufactured the mechanical chassis components from the final CAD drawings (shown in Appendix~\ref{app:bipedcad}). The selected DC motors and gearhead combinations were sourced from a motor manufacturer. The drivetrain components (e.g. bearings, shafts, gears) used to relocate the output gearhead shaft from each joint axis were also sourced from a hardware vendor. The author of this thesis completed the mechanical assembly using the CAD model as a reference. The assembled joints and links of the bipedal robot leg are shown in more detail in Figure~\ref{fig:bipedcloseup}.
 
 \begin{figure}[!h]
 	\centering
@@ -28,7 +28,7 @@ The final mechanical design of the bipedal robot was developed on campus at the 
 	\label{fig:bipedcloseup}
 \end{figure}
 
-The mechanical chassis was composed primarily out of Aluminum 5052 and created using Computer Numerical-Controlled (CNC) machine tools directly from the CAD files. This enabled repeatable and accurate positioning of mechanical features in the chassis components (i.e. for the separation of holes for gearing components to mesh well). CNC machine tools also facilitated the production since some chassis components (i.e. motor mounts) were used multiple times in the design of each leg. The advantage here was that once the machine was setup to produce the first component, the remaining copies could be produced faster using the same setup. 
+The mechanical chassis was composed primarily out of Aluminum 5052 and created using Computer Numerical-Controlled (CNC) machine tools directly from the CAD files. This enabled repeatable and accurate positioning of mechanical features in the chassis components (i.e. for the separation of holes for gearing components to mesh well). CNC machine tools also facilitated the production since some chassis components (e.g. motor mounts) were used multiple times in the design of each leg. The advantage here was that once the machine was setup to produce the first component, the remaining copies could be produced faster using the same setup. 
 
 One of the key challenges in the assembled leg was the use of bevel gears for perpendicular mechanical coupling. It was difficult to position the gear axis with enough accuracy to achieve perfect clearance between mating components. As a result, some of the joints which use this design approach to shift the weight distribution suffer from backlash (or ``joint play''). In the current design, this is particularly evident for the knee joint, where one of the stock gearing components had to be modified due to clearance issues. 
 
@@ -98,7 +98,7 @@ Where $i_a$ is the current through the armature wiring. Substituting equations (
 	\label{eq:actdyn5}
 \end{equation}
 
-Note that the drivetrain constants specific to the $k$-th joint are used (i.e. ${J _{m_k}}$, ${B _{m_k}}$, $g _{r_k}$, etc.) in this equation (\ref{eq:actdyn5}). 
+Note that the drivetrain constants specific to the $k$-th joint are used (e.g. ${J _{m_k}}$, ${B _{m_k}}$, $g _{r_k}$, etc.) in this equation (\ref{eq:actdyn5}). 
 
 \subsection{Independent Joint Control} % (fold)
 \label{sub:independent_joint_control}
@@ -283,7 +283,7 @@ The experimental results presented in this section compare the tracking performa
  
 % subsection joint_tracking (end)
 
-With the tuned PD gains, the tracking performance on the physical hardware is nearly identical to the simulation environment. Hip yaw joint tracking (Figure~\ref{fig:hipyawtracking}) shows that there is a very small but negligible lag on the physical hardware when compared to the simulated system. Hip pitch joint tracking (Figure~\ref{fig:hippitchtracking}) shows perfect tracking for the simulated system while there are small disturbances near the peaks of the sinusoidal wave on the physical hardware. This discrepancy is due to the backlash problem discussed in Section~\ref{sub:mechanical_implementation}. The simulated system demonstrates perfect tracking since backlash is not modeled. The backlash in the joints further down the kinematic chain effect the tracking performance of the higher joints. For example, the play in the knee joint introduces a varying torque loading on the hip joint as it moves through the full range of motion. However, the PD controller gains are sufficiently high for the physical system to overcome the disturbances due to backlash and achieve near perfect tracking. 
+With the tuned PD gains, the tracking performance on the physical hardware is nearly identical to the simulation environment. Hip yaw joint tracking (Figure~\ref{fig:hipyawtracking}) shows that there is a very small but negligible lag on the physical hardware when compared to the simulated system. Hip pitch joint tracking (Figure~\ref{fig:hippitchtracking}) shows perfect tracking for the simulated system while there are small disturbances near the peaks of the sinusoidal wave on the physical hardware. This discrepancy is due to the backlash problem discussed in Section~\ref{sub:mechanical_implementation}. The simulated system demonstrates perfect tracking since backlash is not modeled. The backlash in the joints further down the kinematic chain affects the tracking performance of the proximal joints. For example, the play in the knee joint introduces a varying torque loading on the hip joint as it moves through the full range of motion. However, the PD controller gains are sufficiently high for the physical system to overcome the disturbances due to backlash and achieve near perfect tracking. 
 
 % When the hip joint motion changes direction (i.e. at the peaks of the wave) on the physical system, the backlash in the knee   
 
@@ -333,7 +333,7 @@ In this experiment, the foot position is raised vertically, resulting in a knee 
 
 PD control was also applied on the task space level to improve performance of the motion controller. The gains were tuned in simulation to achieve the desired tracking performance before attempting the experiment on the physical hardware. The foot position tracking using $K_P = 10$ and $K_D = 0.1$ is shown in Figure~\ref{fig:kneebendp} in simulation and on hardware. 
 
-The trajectory on the physical hardware along the $x$ direction is not as smooth as its simulated counterpart. Unmodeled backlash in the pitch joints (i.e. the knee) is the cause behind this difference. However, the PD control gains in the task space and joint space controllers are high enough to achieve the desired tracking performance. 
+The trajectory on the physical hardware along the $x$ direction is not as smooth as its simulated counterpart. Unmodeled backlash in the pitch joints (e.g. the knee) is the cause behind this difference. However, the PD control gains in the task space and joint space controllers are high enough to achieve the desired tracking performance. 
 
 The experimental results demonstrate the simplified version of the motion control framework with $n = 3$ DOF. The pitch joint trajectories are automatically generated from the desired swing foot height and the resulting motion bends the knee joint as the foot is raised. The joint level trajectories were tracked by the local PD controllers with individual gains tuned from Section~\ref{sec:1dof_validation}. 
 

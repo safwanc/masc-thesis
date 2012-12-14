@@ -22,7 +22,7 @@ SimMechanics \cite{sw:simmech} provides mechanical import functionality to gener
 \section{CAD Export} % (fold)
 \label{sec:cad_export}
 
-An add-in was developed for CAD software package SolidWorks to export a multibody system for dynamic simulations in Simulink with realtime visualization. Consider a standard multibody system with $n$ joints and $n + 1$ links. The links are numbered from 0 (base) to $n$ and each $joint_{i}$ connects $link_{i-1}$ to $link_{i}$. The mechanical design of each link is represented by its own CAD assembly (or part) file. The coordinate system at the origin of this CAD file is treated as the local coordinate system $xyz_{i}$ rigidly attached to the link $i$. The top-most CAD assembly (referred to as the \emph{master assembly}) contains all $n + 1$ links as subassembly files connected and constrained by the mechanical relationship which defines the behaviour of each joint $n$. For example, a revolute joint connecting two link subassemblies is defined by the appropriate constraints (i.e. concentric relationship).
+An add-in was developed for CAD software package SolidWorks to export a multibody system for dynamic simulations in Simulink with realtime visualization. Consider a standard multibody system with $n$ joints and $n + 1$ links. The links are numbered from 0 (base) to $n$ and each $joint_{i}$ connects $link_{i-1}$ to $link_{i}$. The mechanical design of each link is represented by its own CAD assembly (or part) file. The coordinate system at the origin of this CAD file is treated as the local coordinate system $xyz_{i}$ rigidly attached to the link $i$. The top-most CAD assembly (referred to as the \emph{master assembly}) contains all $n + 1$ links as subassembly files connected and constrained by the mechanical relationship which defines the behaviour of each joint $n$. For example, a revolute joint connecting two link subassemblies is defined by the appropriate constraints (e.g. concentric relationship).
 
 \begin{figure}[!h]
 	\centering
@@ -106,7 +106,7 @@ The physical model generation process parses the XML output files in the export 
 	\label{fig:quarcmech}
 \end{figure}
 
-The input to each link subsystem (\textbf{CS1}) is a connection from $link_{i-1}$ and the driving signal for the joint. The output of the link subsystem is its local coordinate system (\textbf{CS2}) and the joint sensor signals. The joint actuator/sensor signals are set depending on the type of dynamic simulation. By default the model generation process configures the physical model in forward dynamics mode so the joint actuator port is connected to the force/torque command input for $joint_{i}$ and joint angle/displacement is measured at the output. Alternatively, for the inverse dynamics simulation, the joint acceleration is set as the input, while the joint force/torque is the output. The output coordinate system of the $joint_{i}$ block is connected to a SimMechanics body block representing $link_{i}$. The masked parameters are preconfigured to set the local dynamic properties (i.e. COM position, inertia tensor) and relative frame transformation appropriately.
+The input to each link subsystem (\textbf{CS1}) is a connection from $link_{i-1}$ and the driving signal for the joint. The output of the link subsystem is its local coordinate system (\textbf{CS2}) and the joint sensor signals. The joint actuator/sensor signals are set depending on the type of dynamic simulation. By default the model generation process configures the physical model in forward dynamics mode so the joint actuator port is connected to the force/torque command input for $joint_{i}$ and joint angle/displacement is measured at the output. Alternatively, for the inverse dynamics simulation, the joint acceleration is set as the input, while the joint force/torque is the output. The output coordinate system of the $joint_{i}$ block is connected to a SimMechanics body block representing $link_{i}$. The masked parameters are preconfigured to set the local dynamic properties (e.g. COM position, inertia tensor) and relative frame transformation appropriately.
 
 \begin{figure}[!h]
 	\centering
@@ -131,7 +131,7 @@ The visualization model generation process generates a single subsystem containi
 	\label{fig:masterscene}
 \end{figure}
 
-This approach allows the user to receive immediate visual feedback of the CAD model under the influence of control. This also allows the user to make changes to the mechanical design from visual observations (i.e. quick changes to improve joint limits).
+This approach allows the user to receive immediate visual feedback of the CAD model under the influence of control. This also allows the user to make changes to the mechanical design from visual observations (e.g. quick changes to improve joint limits).
 % subsection visualization_model (end)
 
 \subsection{Model Update} % (fold)
@@ -146,7 +146,7 @@ This streamlines the iterative design process by allowing a user to export a sys
 \section{Case Study} % (fold)
 \label{sec:case_study}
 
-This toolchain was used to improve the initial design of the 14 DOF lower body humanoid robot\footnote{A video demonstration of the toolchain being used is available online at: \\ \url{https://ece.uwaterloo.ca/~dkulic/videos/Humanoids2012-480p.mp4}} discussed in Chapter \ref{cha:design}. The toolchain was used to quickly analyze the effects of design revisions (i.e. compare motor positioning) in simulation prior to manufacturing. The complete initial export and model generation process takes about two minutes for the 14 DOF bipedal robot. Since the kinematic hierarchy and joint information is stored during the initial export process, subsequent exports take around thirty seconds to reflect the design revisions from CAD back into the dynamic simulator. 
+This toolchain was used to improve the initial design of the 14 DOF lower body humanoid robot\footnote{A video demonstration of the toolchain being used is available online at: \\ \url{https://ece.uwaterloo.ca/~dkulic/videos/Humanoids2012-480p.mp4}} discussed in Chapter \ref{cha:design}. The toolchain was used to quickly analyze the effects of design revisions (e.g. compare motor positioning) in simulation prior to manufacturing. The complete initial export and model generation process takes about two minutes for the 14 DOF bipedal robot. Since the kinematic hierarchy and joint information is stored during the initial export process, subsequent exports take around thirty seconds to reflect the design revisions from CAD back into the dynamic simulator. 
 
 \subsection{Dynamic Simulations} % (fold)
 \label{sub:dynamic_simulations}
