@@ -78,9 +78,7 @@ Where the generalized acceleration vector $\ddq_{\mathbf{act}}$ represents the $
 The Recursive Newton-Euler (RNE) algorithm computes the inverse dynamics model recursively in order to arrive at a final solution for the direct dynamics \cite{Perrin:1997wn}. The algorithm serially traverses through the kinematic chain to perform calculations using Newtonian mechanics. The first pass of the algorithm starts at the base link and traverses down the serial chains of the left and right legs calculating the kinematics. The second pass starts at the end of the serial chain(s) and works back up to the base link calculating the force transmissions. After the final pass, the RNE algorithm produces the torques at each joint and the 6 dimensional forces and moments felt by the (floating) base joint. The RNE algorithm reformulates the equation representing the complete dynamics of the system (\ref{eq:eom2}) to obtain the direct dynamics model. 
 % The pseudocode listed in Appendix \ref{sec:rne_direct_dynamics} describes the procedure for computing the direct dynamics model by utilizing the RNE formulation.
 
-Kajita's toolbox \cite{kajitatxt} was used as a starting point for the direct dynamics model. The toolbox provides preprogrammed routines for common robotics algorithms (e.g. forward/inverse kinematics, etc). The kinematic and dynamic parameters of the robot are defined in a global structure variable called \texttt{uLINK}. The packaged scripts and functions access key information (e.g. kinematic hierarchy of links) from the global structure to perform the calculations. An external application was developed to interface with the CAD software package's application programming interface (API) to extract the kinematic and dynamic parameters directly. The application used the extracted data to automatically generate the CAD-equivalent \texttt{uLINK} representation in Matlab code (shown in Figure~\ref{fig:ulinkdrawn}).
-
-\begin{figure}[!ht]
+\begin{figure}[!b]
 	\begin{center}
     \includegraphics[scale=0.6]{fig/design/ulinkdrawn.eps}
 	\end{center}
@@ -88,12 +86,9 @@ Kajita's toolbox \cite{kajitatxt} was used as a starting point for the direct dy
   \label{fig:ulinkdrawn}
 \end{figure}
 
+Kajita's toolbox \cite{kajitatxt} was used as a starting point for the direct dynamics model. The toolbox provides preprogrammed routines for common robotics algorithms (e.g. forward/inverse kinematics, etc). The kinematic and dynamic parameters of the robot are defined in a global structure variable called \texttt{uLINK}. The packaged scripts and functions access key information (e.g. kinematic hierarchy of links) from the global structure to perform the calculations. An external application was developed to interface with the CAD software package's application programming interface (API) to extract the kinematic and dynamic parameters directly. The application used the extracted data to automatically generate the CAD-equivalent \texttt{uLINK} representation in Matlab code (shown in Figure~\ref{fig:ulinkdrawn}).
+
 With the \texttt{uLINK} structure generated, any of the preprogrammed routines in the toolbox can be used. The toolbox provides a function \texttt{ForwardDynamics} to compute the direct dynamics model using the RNE algorithm. However, the calculations omit the effects of any external forces acting on the system. Since it is important to incorporate the contribution of the ground reaction forces, the toolbox was modified to model the complete dynamics of the system. 
-
-\subsection{Contact Modeling} % (fold)
-\label{sub:initial_contact_modeling}
-
-One challenging aspect of dynamic simulations is to accurately model the effects of external forces on the system during the stance phase. To emulate the ground reaction forces during this period of the gait cycle, a contact model is used to generate an approximate contact force. For the initial design specifications, a spring-damper contact model is used (shown in Figure~\ref{fig:springdamper}). Both feet are modelled as point contacts which experience a normal force proportional to the output of the spring-damper system when in contact with the ground. A more complex version of (\ref{eq:contactf}) is used for full dynamic simulations in later chapters (Section~\ref{sub:full_contact_modeling}).
 
 \begin{figure}[!b]
 	\begin{center}
@@ -102,6 +97,11 @@ One challenging aspect of dynamic simulations is to accurately model the effects
   \caption{System diagram of spring-damper contact model used in dynamic simulations.}
   \label{fig:springdamper}
 \end{figure}
+
+\subsection{Contact Modeling} % (fold)
+\label{sub:initial_contact_modeling}
+
+One challenging aspect of dynamic simulations is to accurately model the effects of external forces on the system during the stance phase. To emulate the ground reaction forces during this period of the gait cycle, a contact model is used to generate an approximate contact force. For the initial design specifications, a spring-damper contact model is used (shown in Figure~\ref{fig:springdamper}). Both feet are modelled as point contacts which experience a normal force proportional to the output of the spring-damper system when in contact with the ground. A more complex version of (\ref{eq:contactf}) is used for full dynamic simulations in later chapters (Section~\ref{sub:full_contact_modeling}).
 
 To incorporate the effects of ground contact into the existing dynamic model, the resulting force produced by (\ref{eq:contactf}) is injected into the RNE algorithm between the end of the first pass and the start of the second pass. At the start of the second pass, the external contact force is used to initialize the backwards recursion. 
 
